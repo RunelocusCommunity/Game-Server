@@ -187,8 +187,8 @@ public final class Main implements Runnable {
                         acceptedClient.destroy();
                     }
                 }
-                ListNode node = null;
-                while((node = activeList.childNode) != null) { 
+                ListNode node = activeList;
+                while((node = node.childNode) != null) { 
                     if(!(node instanceof IntegerNode))
                         break;
                     IntegerNode position = (IntegerNode) node;
@@ -280,19 +280,60 @@ public final class Main implements Runnable {
                                         client.destroy();
                                         continue;
                                     }
-                                    /* SEEDS FOR ISAAC */
+                                    int[] seeds = new int[4];
                                     for(int i = 0; i < 4; i++)
-                                        buffer.getDword();
+                                        seeds[i] = buffer.getDword();
                                     client.uid = buffer.getDword();
                                     client.username = buffer.getString();
                                     client.password = buffer.getString();
                                     client.timeoutStamp = -1L;
-                                    /* REMOVE THIS LATER ON */
+                                    /* REDESIGN BIT */
                                     byte[] response = new byte[3];
                                     response[0] = (byte) 2;
                                     response[1] = (byte) 2;
-                                    client.outputStream.write(response);                                   
+                                    client.outputStream.write(response);     
+                                    client.outgoingBuffer = new byte[Client.BUFFER_SIZE];
+                                    client.incomingCipher = new IsaacCipher(seeds);
+                                    for(int i = 0; i < seeds.length; i++)
+                                        seeds[i] += 50;
+                                    client.outgoingCipher = new IsaacCipher(seeds);
                                     client.state = 1;
+                                }
+                                break;
+                                
+                            case 1:
+                                while(client.iReadPosition != client.iWritePosition) {
+                                    int opcode = client.incomingBuffer[client.iReadPosition];
+                                    int size = INCOMING_SIZES[opcode];
+                                    if(size < -2) {
+                                        LOGGER.log(Level.WARNING, "Client disconnected : unknown packet!");
+                                        removeClient(position);
+                                        client.destroy();
+                                        continue;
+                                    }
+                                    int avail = (client.iWritePosition < client.iReadPosition ? 
+                                                 client.iReadPosition - client.iWritePosition : 
+                                                 Client.BUFFER_SIZE - client.iWritePosition - client.iReadPosition);
+                                    if(size == -2)
+                                        if(avail < 2)
+                                            break;
+                                        else {
+                                            size = ((client.incomingBuffer[client.iReadPosition + 1] & 0xFF) << 8) | 
+                                                    (client.incomingBuffer[client.iReadPosition + 2] & 0xFF);
+                                            avail -= 2;
+                                            client.iReadPosition += 3;
+                                        }
+                                    if(size == -1)
+                                        if(avail < 1)
+                                            break;
+                                        else {
+                                            size = client.incomingBuffer[client.iReadPosition + 1] & 0xFF;
+                                            avail -= 1;
+                                            client.iReadPosition += 2;
+                                        }
+                                    if(avail < size)
+                                        break;
+                                    
                                 }
                                 break;
                         }
@@ -341,6 +382,9 @@ public final class Main implements Runnable {
                 } catch(InterruptedException ex) {
                 }
             }
+            activeList = null;
+            removedList = null;
+            clientArray = null;
             thread = null;
         }
     }
@@ -390,30 +434,30 @@ public final class Main implements Runnable {
     
     static {
         INCOMING_SIZES = new int[] {
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, -1, 0, -1,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3,
         };
         
         PRIVATE_KEY = new BigInteger("834770591012857827640080639045432158672036"

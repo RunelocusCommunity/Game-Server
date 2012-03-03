@@ -18,6 +18,11 @@ public final class Client {
     public final static int BUFFER_SIZE = 5000;
     
     /**
+     * The inbound {@link IsaacCipher}.
+     */
+    IsaacCipher incomingCipher;
+    
+    /**
      * The incoming byte buffer array.
      */
     byte[] incomingBuffer;
@@ -28,9 +33,24 @@ public final class Client {
     int iWritePosition;
     
     /**
+     * The outbound {@link IsaacCipher}.
+     */
+    IsaacCipher outgoingCipher;
+    
+    /**
      * The current incoming read position.
      */
     int iReadPosition;
+    
+    /**
+     * The outgoing byte array source.
+     */
+    byte[] outgoingBuffer;
+    
+    /**
+     * The current outgoing write position.
+     */
+    int oWritePosition;
     
     /**
      * The local id of this client.
@@ -71,6 +91,11 @@ public final class Client {
      * The client is currently using the low memory state.
      */
     boolean isLowMemory;
+    
+    /**
+     * The last time that the client was pinged by the server.
+     */
+    long lastRecievedPing;
    
     /**
      * The time that the client will timeoutStamp.
@@ -96,7 +121,12 @@ public final class Client {
             outputStream.close();
         } catch(IOException ioex) {}   
         incomingBuffer = null;
+        outgoingBuffer = null;
+        incomingCipher = null;
+        outgoingCipher = null;
         localId = null;
+        username = null;
+        password = null;
     }
     
     /**
