@@ -302,8 +302,10 @@ public final class Main implements Runnable {
                                 break;
                                 
                             case 1:
+                                if(client.lastRecievedPing + 15000L < System.currentTimeMillis())
+                                    client.timeoutStamp = System.currentTimeMillis() + 60000L;
                                 while(client.iReadPosition != client.iWritePosition) {
-                                    int opcode = client.incomingBuffer[client.iReadPosition];
+                                    int opcode = client.incomingBuffer[client.iReadPosition] - client.incomingCipher.getNextValue() & 0xFF;
                                     int size = INCOMING_SIZES[opcode];
                                     if(size < -2) {
                                         LOGGER.log(Level.WARNING, "Client disconnected : unknown packet!");
@@ -311,9 +313,10 @@ public final class Main implements Runnable {
                                         client.destroy();
                                         continue;
                                     }
-                                    int avail = (client.iWritePosition < client.iReadPosition ? 
+                                    int avail = client.iWritePosition < client.iReadPosition ? 
                                                  client.iReadPosition - client.iWritePosition : 
-                                                 Client.BUFFER_SIZE - client.iWritePosition - client.iReadPosition);
+                                                 Client.BUFFER_SIZE - client.iWritePosition - client.iReadPosition;
+                                    int offAmt = 1;
                                     if(size == -2)
                                         if(avail < 2)
                                             break;
@@ -321,7 +324,7 @@ public final class Main implements Runnable {
                                             size = ((client.incomingBuffer[client.iReadPosition + 1] & 0xFF) << 8) | 
                                                     (client.incomingBuffer[client.iReadPosition + 2] & 0xFF);
                                             avail -= 2;
-                                            client.iReadPosition += 3;
+                                            offAmt += 2;
                                         }
                                     if(size == -1)
                                         if(avail < 1)
@@ -329,16 +332,35 @@ public final class Main implements Runnable {
                                         else {
                                             size = client.incomingBuffer[client.iReadPosition + 1] & 0xFF;
                                             avail -= 1;
-                                            client.iReadPosition += 2;
+                                            offAmt += 1;
                                         }
                                     if(avail < size)
                                         break;
-                                    
+                                    client.iReadPosition = (client.iReadPosition + offAmt) % Client.BUFFER_SIZE;
+                                    ByteBuffer buffer = null;
+                                    if(size > 0) {
+                                        buffer = new ByteBuffer(size);
+                                        if(client.iReadPosition < client.iWritePosition) {
+                                            System.arraycopy(client.incomingBuffer, client.iReadPosition, buffer.payload, 0, size);
+                                        } else {
+                                            System.arraycopy(client.incomingBuffer, client.iReadPosition, buffer.payload, 0, Client.BUFFER_SIZE - client.iReadPosition);
+                                            System.arraycopy(client.incomingBuffer, 0, buffer.payload, 0, client.iWritePosition);
+                                        }
+                                        client.iReadPosition = (client.iReadPosition + size) % Client.BUFFER_SIZE;
+                                    }
+                                    switch(opcode) {
+                                        
+                                        /* Ping */
+                                        case 0:
+                                            client.lastRecievedPing = System.currentTimeMillis();
+                                            client.timeoutStamp = -1L;
+                                            break;
+                                    }
                                 }
                                 break;
                         }
                     } catch(Exception ex) {
-                        LOGGER.log(Level.WARNING, "Client disconnected : {0}!", ex);
+                        LOGGER.log(Level.WARNING, "Client disconnected : ", ex);
                         removeClient(position);
                         client.destroy();
                         continue;
@@ -434,8 +456,8 @@ public final class Main implements Runnable {
     
     static {
         INCOMING_SIZES = new int[] {
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+             0, -3, -3,  1, -1, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3,  8, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
