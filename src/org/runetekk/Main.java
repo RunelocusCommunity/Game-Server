@@ -396,6 +396,7 @@ public final class Main implements Runnable {
 
                            /* UNSURE ABOUT THIS */
                            case 1:
+                               Client.sendMessage(client, "Herro");
                                client.state = 2;
                                break;
                        }
@@ -428,7 +429,7 @@ public final class Main implements Runnable {
              client.childNode.parentNode = client;
          }
      }
-     
+       
     /**
      * Destroys this local application.
      */

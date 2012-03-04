@@ -18,6 +18,14 @@ public final class ByteBuffer {
     int offset;
     
     /**
+     * Puts a byte into the payload.
+     * @param value The byte value.
+     */
+    void putByte(int value) {
+        payload[offset++] = (byte) value;
+    }
+    
+    /**
      * Gets an unsigned byte from this buffer casted to an integer.
      * @return The unsigned byte value.
      */
@@ -43,6 +51,16 @@ public final class ByteBuffer {
                ((payload[offset++] & 0xFF) << 16) | 
                ((payload[offset++] & 0xFF) << 8) | 
                 (payload[offset++] & 0xFF);
+    }
+    
+    /**
+     * Puts a string into the payload.
+     * @param str The string to put into the payload.
+     */
+    void putString(String str) {
+        System.arraycopy(str.getBytes(), 0, payload, offset, str.length());
+        offset += str.length();
+        putByte(10);
     }
     
     /**

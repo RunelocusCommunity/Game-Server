@@ -123,6 +123,21 @@ public final class Client {
     OutputStream outputStream;
     
     /**
+     * Sends a message to a client.
+     * @param client The client to write the message to.
+     * @param message The message to write.
+     */
+    static void sendMessage(Client client, String message) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(253 + client.outgoingCipher.getNextValue());
+        buffer.putByte(message.length() + 1);
+        buffer.putString(message);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
      * Destroys this {@link Client}.
      */
     public void destroy() {

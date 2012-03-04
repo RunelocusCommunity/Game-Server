@@ -76,9 +76,8 @@ public final class IoWriter implements Runnable {
                     }
                 }
             }
-            long totalTime = System.nanoTime() - startTime;
             try {
-                long sleepTime = CYCLE_TIME - totalTime;
+                long sleepTime = CYCLE_TIME - (System.nanoTime() - startTime);
                 if(sleepTime > 0)
                     thread.sleep(sleepTime); 
             } catch(Exception ex) {}
