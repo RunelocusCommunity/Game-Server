@@ -23,6 +23,11 @@ public final class Client {
     IsaacCipher incomingCipher;
     
     /**
+     * The {@link Mob} that this client represents.
+     */
+    Mob playerMob;
+    
+    /**
      * The incoming byte buffer array.
      */
     byte[] incomingBuffer;
@@ -143,6 +148,20 @@ public final class Client {
     }
     
     /**
+     * Sends the current chunk coordinates of where the client is.
+     * @param client The client to write the packet to.
+     */
+    static void sendCurrentChunk(Client client) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(73 + client.outgoingCipher.getNextValue());
+        buffer.putWord128((client.playerMob.coordX >> 3) + 6);
+        buffer.putWord((client.playerMob.coordY >> 3) + 6);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
      * Destroys this {@link Client}.
      */
     public void destroy() {
@@ -168,6 +187,7 @@ public final class Client {
         this.outputStream = socket.getOutputStream();
         timeoutStamp = -1L;
         /* FIX THIS TIDBIT LATER */
+        playerMob = new Mob();
         rights = 2;
     } 
 }

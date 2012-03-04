@@ -391,11 +391,18 @@ public final class Main implements Runnable {
                        removeClient(position);
                        continue;
                    }
+                   if(client.playerMob == null) {
+                       LOGGER.log(Level.WARNING, "Client disconnected : Null player mob!");
+                       removeClient(position);
+                       client.destroy();
+                       continue;
+                   }
                    try {
                        switch(client.state) {
                            
                            case 1:
                                Client.sendMessage(client, "Welcome to Runescape.");
+                               Client.sendCurrentChunk(client);
                                client.state = 2;
                                break;
                                

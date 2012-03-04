@@ -34,6 +34,24 @@ public final class ByteBuffer {
     }
     
     /**
+     * Puts a word into the payload.
+     * @param value The word value.
+     */
+    void putWord(int value) {
+        payload[offset++] = (byte) (value >> 8);
+        payload[offset++] = (byte) (value & 0xFF);
+    }
+    
+    /**
+     * Puts a word plus 128 into the payload.
+     * @param value The word value.
+     */
+    void putWord128(int value) {
+        payload[offset++] = (byte) (value >> 8);
+        payload[offset++] = (byte) (value + 128 & 0xFF);
+    }
+    
+    /**
      * Gets an unsigned word from this buffer casted to an integer.
      * @return The unsigned word value.
      */
