@@ -469,7 +469,7 @@ public final class Main implements Runnable {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
-        args = args.length == 0 ? new String[] { "server", "1" } : args;
+        args = args.length == 0 ? new String[] { "server", "./etc/server.properties" } : args;
         printTag();
         if(args[0].equals("setup")) {
             

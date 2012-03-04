@@ -19,7 +19,7 @@ public final class IoWriter implements Runnable {
     /**
      * The amount of time that one cycle will take.
      */
-    private static final long CYCLE_TIME = 600L;
+    private static final long CYCLE_TIME = 6000000L;
     
     /**
      * The main handler.
@@ -78,7 +78,7 @@ public final class IoWriter implements Runnable {
                 }
             }
             try {
-                long sleepTime = CYCLE_TIME - (System.nanoTime() - startTime);
+                long sleepTime = (CYCLE_TIME - (System.nanoTime() - startTime))/10000L;
                 if(sleepTime > 0)
                     thread.sleep(sleepTime); 
             } catch(Exception ex) {}
