@@ -64,7 +64,7 @@ public final class IoWriter implements Runnable {
                         continue;
                     }
                     try {
-                        synchronized(client.outgoingBuffer) {
+                        if(client.oWritePosition > 0) {
                             client.outputStream.write(client.outgoingBuffer, 0, client.oWritePosition);
                             client.oWritePosition = 0;
                         }
