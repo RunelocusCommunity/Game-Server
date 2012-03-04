@@ -50,7 +50,12 @@ public final class Client {
     /**
      * The current outgoing write position.
      */
-    int oWritePosition;
+    volatile int oWritePosition;
+    
+    /**
+     * The output has been written to the client.
+     */
+    volatile boolean oWritten;
     
     /**
      * The local id of this client.

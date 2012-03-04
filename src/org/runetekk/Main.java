@@ -393,11 +393,16 @@ public final class Main implements Runnable {
                    }
                    try {
                        switch(client.state) {
-
-                           /* UNSURE ABOUT THIS */
+                           
                            case 1:
-                               Client.sendMessage(client, "Herro");
+                               Client.sendMessage(client, "Welcome to Runescape.");
                                client.state = 2;
+                               break;
+                               
+                           case 2:
+                               if(client.oWritten) {                                 
+                                   client.oWritten = false;
+                               }
                                break;
                        }
                    } catch(Exception ex) {
@@ -517,6 +522,12 @@ public final class Main implements Runnable {
             
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+             4, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
