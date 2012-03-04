@@ -88,9 +88,19 @@ public final class Client {
     int state;
     
     /**
+     * The amount of rights, admin/moderator/player, that this client has.
+     */
+    int rights;
+    
+    /**
      * The client is currently using the low memory state.
      */
     boolean isLowMemory;
+    
+    /**
+     * The client is currently reconnecting.
+     */
+    boolean isReconnecting;
     
     /**
      * The last time that the client was pinged by the server.
@@ -137,5 +147,7 @@ public final class Client {
         this.inputStream = socket.getInputStream();
         this.outputStream = socket.getOutputStream();
         timeoutStamp = -1L;
+        /* FIX THIS TIDBIT LATER */
+        rights = 2;
     } 
 }

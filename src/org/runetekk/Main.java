@@ -65,22 +65,27 @@ public final class Main implements Runnable {
     /**
      * The {@link Client} array.
      */
-    private Client[] clientArray;
+    Client[] clientArray;
     
     /**
      * The list of clients currently connected to the server.
      */
-    private ListNode activeList;
+    ListNode activeList;
     
     /**
      * The list of client ids removed from the server.
      */
-    private ListNode removedList;
+    ListNode removedList;
     
     /**
      * The offset in the client list.
      */
-    private int listOffset;
+    int listOffset;
+    
+    /**
+     * The {@link IoWriter} for this handler.
+     */
+    IoWriter writer;
     
     /**
      * Prints the application tag.
@@ -94,7 +99,7 @@ public final class Main implements Runnable {
         + "\n                    | | \\ \\ |_| | | | |  __/ |  __/   <|   <                    "
         + "\n                    |_|  \\_\\__,_|_| |_|\\___|_|\\___|_|\\_\\_|\\_\\             "
         + "\n----------------------------------------------------------------------------------"
-        + "\n                                Game Server 1.0.0                                "
+        + "\n                                Game Server 1.0.3                               "
         + "\n                                 See RuneTekk.com                                 "
         + "\n                               Created by SiniSoul                                "
         + "\n----------------------------------------------------------------------------------");
@@ -104,6 +109,7 @@ public final class Main implements Runnable {
      * Initializes the local thread.
      */
     private void initialize() {
+        writer = new IoWriter(this);
         thread = new Thread(this);
         thread.start();
     }
@@ -235,6 +241,7 @@ public final class Main implements Runnable {
                                         client.destroy();
                                         continue;
                                     }
+                                    client.isReconnecting = opcode == 18;
                                     int size = client.incomingBuffer[client.iReadPosition + 1] & 0xFF;
                                     if((client.iWritePosition < client.iReadPosition ? 
                                         client.iReadPosition - client.iWritePosition : 
@@ -290,7 +297,7 @@ public final class Main implements Runnable {
                                     /* REDESIGN BIT */
                                     byte[] response = new byte[3];
                                     response[0] = (byte) 2;
-                                    response[1] = (byte) 2;
+                                    response[1] = (byte) client.rights;
                                     client.outputStream.write(response);     
                                     client.outgoingBuffer = new byte[Client.BUFFER_SIZE];
                                     client.incomingCipher = new IsaacCipher(seeds);
@@ -300,8 +307,9 @@ public final class Main implements Runnable {
                                     client.state = 1;
                                 }
                                 break;
-                                
+                             
                             case 1:
+                            case 2:
                                 if(client.lastRecievedPing + 15000L < System.currentTimeMillis())
                                     client.timeoutStamp = System.currentTimeMillis() + 60000L;
                                 while(client.iReadPosition != client.iWritePosition) {
@@ -366,6 +374,38 @@ public final class Main implements Runnable {
                         continue;
                     }
                 }
+                /* PUT SERVER UPDATE PROCEDURES HERE 
+                 * Includes anything or any data that may
+                 * be sent out to the clients in the
+                 * client write block.
+                 */
+                
+                node = activeList;
+                while((node = node.childNode) != null) { 
+                   if(!(node instanceof IntegerNode))
+                       break;
+                   IntegerNode position = (IntegerNode) node;
+                   Client client = clientArray[position.value];
+                   if(client == null) {
+                       LOGGER.log(Level.WARNING, "Null client id, removed from active list!");
+                       removeClient(position);
+                       continue;
+                   }
+                   try {
+                       switch(client.state) {
+
+                           /* UNSURE ABOUT THIS */
+                           case 1:
+                               client.state = 2;
+                               break;
+                       }
+                   } catch(Exception ex) {
+                       LOGGER.log(Level.WARNING, "Client disconnected : ", ex);
+                       removeClient(position);
+                       client.destroy();
+                       continue;
+                   }           
+                }
             }
         }
      }
@@ -374,7 +414,7 @@ public final class Main implements Runnable {
       * Removes a client from this handler.
       * @param client The client to remove.
       */
-     private void removeClient(IntegerNode client) {
+     void removeClient(IntegerNode client) {
          synchronized(removedList) {             
              if(client.parentNode != null) {
                  client.childNode.parentNode = client.parentNode;
