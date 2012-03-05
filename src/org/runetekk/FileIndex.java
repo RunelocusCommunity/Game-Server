@@ -74,7 +74,7 @@ public final class FileIndex {
                 int expectedChunk = ((chunkBuffer[2] & 0xff) << 8) + (chunkBuffer[3] & 0xff);
                 int nextBlock = ((chunkBuffer[4] & 0xff) << 16) + ((chunkBuffer[5] & 0xff) << 8) + (chunkBuffer[6] & 0xff);
                 int expectedIndex = chunkBuffer[7] & 0xff;
-                if(expectedArchive != id || expectedChunk != chunk || expectedIndex != indexId)
+                if(expectedArchive != id || expectedChunk != chunk /* ||  expectedIndex != indexId */)
                     return null;
                 if(nextBlock < 0 || (long)nextBlock > mainFile.length() / 520L)
                     return null;

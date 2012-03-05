@@ -259,7 +259,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream implements
                    magic4 != 0x53 || // 'S'
                    magic5 != 0x59 // 'Y'
                    ) {
-			System.out.println(magic0 + "," + magic1 + "," + magic2 + "," + magic3 + "," + magic4 + "," + magic5);
+	    System.out.println(magic0 + "," + magic1 + "," + magic2 + "," + magic3 + "," + magic4 + "," + magic5);
             this.currentState = EOF;
             throw new IOException("bad block header");
         } else {

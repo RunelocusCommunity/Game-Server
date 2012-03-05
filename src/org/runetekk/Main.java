@@ -1,11 +1,18 @@
 package org.runetekk;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.math.BigInteger;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.Properties;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +53,11 @@ public final class Main implements Runnable {
      * The main handler.
      */
     private static Main main;
+    
+    /**
+     * The regions for this handler.
+     */
+    private static Region[][] regions;
     
     /**
      * The local thread.
@@ -99,10 +111,30 @@ public final class Main implements Runnable {
         + "\n                    | | \\ \\ |_| | | | |  __/ |  __/   <|   <                    "
         + "\n                    |_|  \\_\\__,_|_| |_|\\___|_|\\___|_|\\_\\_|\\_\\             "
         + "\n----------------------------------------------------------------------------------"
-        + "\n                                Game Server 1.0.3                               "
+        + "\n                                Game Server 1.0.4                               "
         + "\n                                 See RuneTekk.com                                 "
         + "\n                               Created by SiniSoul                                "
         + "\n----------------------------------------------------------------------------------");
+    }
+    
+    /**
+     * Loads the regions for the server.
+     */
+    private static void loadRegions(DataInputStream is) throws IOException {
+        regions = new Region[256][];
+        int opcode = 0;
+        while((opcode = is.read()) != 0) {
+            switch(opcode) {
+                case 1:
+                    int region = is.read();
+                    int amountRegions = is.read();
+                    regions[region] = new Region[255];                  
+                    for(int i = 0; i < amountRegions; i++) {
+                        regions[region][is.read()] = new Region();
+                    }
+                    break;
+            }
+        }
     }
     
     /**
@@ -465,21 +497,82 @@ public final class Main implements Runnable {
     }
     
     /**
+     * Report an error to the local logger for this class. All errors
+     * are reported as severe.
+     * @param message The message to report.
+     * @param ex The exceptions to report.
+     */
+    static void reportError(String message, Exception ex) {
+        LOGGER.log(Level.SEVERE, "{0} - {1}", new Object[]{ message, ex.getMessage()});
+    }
+    
+    /**
      * The starting point for this application.
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
         args = args.length == 0 ? new String[] { "server", "./etc/server.properties" } : args;
         printTag();
+        Properties serverProperties = new Properties();
+        try {
+            serverProperties.load(new FileReader(args[1]));
+        } catch(Exception ex) {
+            reportError("Exception thrown while loading the server properties", ex);
+            throw new RuntimeException();
+        }
         if(args[0].equals("setup")) {
-            
+            ArchivePackage versionPack = null;
+            try {
+                FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
+                versionPack = new ArchivePackage(index.get(Integer.parseInt(serverProperties.getProperty("V-ID"))));
+                index.destroy();
+            } catch(Exception ex) {
+                reportError("Exception thrown while loading the version pack", ex);
+                throw new RuntimeException();
+            }
+            try {
+                DataOutputStream os = new DataOutputStream(new FileOutputStream(serverProperties.getProperty("OUTDIR") + serverProperties.getProperty("RFILE")));
+                byte[] mapIndex = versionPack.getArchive("map_index");
+                int[][] count = new int[256][];
+                for(int i = 0; i < mapIndex.length; i += 7) {
+                    int hash = ((mapIndex[i] & 0xFF) << 8) | (mapIndex[i + 1] & 0xFF);
+                    hash >>= 8;
+                    if(count[hash] == null)
+                        count[hash] = new int[257];
+                    count[hash][count[hash][256]++] = hash;
+                }
+                for(int i = 0; i < count.length; i++) {
+                    if(count[i] != null) {
+                        os.write(1);
+                        os.write(i);
+                        os.write(count[i][256]);
+                        for(int j = 0; j < count[i][256]; j++) {
+                            os.write(count[i][j] & 0xFF);
+                        }
+                    }
+                }
+                os.writeByte(0);
+            } catch(Exception ex) {
+                reportError("Exception thrown while dumping the region files", ex);
+                throw new RuntimeException();
+            }
         } else if(args[0].equals("server")) {
             int portOff = -1;
             try {
-                portOff = Integer.parseInt(args[1]);
+                portOff = Integer.parseInt(serverProperties.getProperty("PORTOFF"));
             } catch(Exception ex) {
-                LOGGER.log(Level.SEVERE, "Exception thrown while parsing the port offset : {0}", ex);
+                reportError("Exception thrown while parsing the port offset", ex);
+                throw new RuntimeException();
             }
+            try {
+                DataInputStream is = new DataInputStream(new FileInputStream(serverProperties.getProperty("OUTDIR") + serverProperties.getProperty("RFILE")));
+                loadRegions(is);
+                is.close();
+            } catch(Exception ex) {
+                reportError("Exception thrown while reading the regions file", ex);
+                throw new RuntimeException();
+            }
+            serverProperties = null;
             main = new Main(portOff);
         }
     }  
