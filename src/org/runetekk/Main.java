@@ -1,5 +1,6 @@
 package org.runetekk;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
@@ -16,6 +17,7 @@ import java.util.Properties;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.GZIPInputStream;
 
 /**
  * Main.java
@@ -136,11 +138,24 @@ public final class Main implements Runnable {
         while((opcode = is.read()) != 0) {
             switch(opcode) {
                 case 1:
-                    int region = is.read();
-                    int amountRegions = is.read();
-                    regions[region] = new Region[255];                  
-                    for(int i = 0; i < amountRegions; i++) {
-                        regions[region][is.read()] = new Region();
+                    {
+                        int regionX = is.read();
+                        int amountRegions = is.read();
+                        regions[regionX] = new Region[255];                  
+                        for(int i = 0; i < amountRegions; i++) {
+                            int regionY = is.read();
+                            regions[regionX][regionY] = new Region();
+                            if(is.read() != 0) {
+                                int amountChunks = is.read();
+                                for(int j = 0; j < amountChunks; j++) {
+                                    int hash = is.read();
+                                    if(regions[regionX][regionY].chunks[hash >> 3] == null)
+                                        regions[regionX][regionY].chunks[hash >> 3] = new Chunk[8];
+                                    regions[regionX][regionY].chunks[hash >> 3][hash & 0x7] = new Chunk();
+                                }
+                            }
+                        }
+                        
                     }
                     break;
             }
@@ -526,7 +541,7 @@ public final class Main implements Runnable {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
-        args = args.length == 0 ? new String[] { "server", "./etc/server.properties" } : args;
+        args = args.length == 0 ? new String[] { "setup", "./etc/server.properties" } : args;
         printTag();
         Properties serverProperties = new Properties();
         try {
@@ -536,39 +551,94 @@ public final class Main implements Runnable {
             throw new RuntimeException();
         }
         if(args[0].equals("setup")) {
+            FileIndex landscapeIndex = null;
             ArchivePackage versionPack = null;
             try {
+                landscapeIndex = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("L-INDEX"), "r"));
                 FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
                 versionPack = new ArchivePackage(index.get(Integer.parseInt(serverProperties.getProperty("V-ID"))));
-                index.destroy();
+                index.destroy();              
             } catch(Exception ex) {
-                reportError("Exception thrown while loading the version pack", ex);
+                reportError("Exception thrown while loading the files for setup", ex);
                 throw new RuntimeException();
             }
             try {
                 DataOutputStream os = new DataOutputStream(new FileOutputStream(serverProperties.getProperty("OUTDIR") + serverProperties.getProperty("RFILE")));
                 byte[] mapIndex = versionPack.getArchive("map_index");
-                int[][] count = new int[256][];
+                int amountRegions = mapIndex.length/7;
+                int[][] rCount = new int[256][];
+                int[][] cCount = new int[amountRegions][];
+                int cCountOffset = 1;
                 for(int i = 0; i < mapIndex.length; i += 7) {
-                    int hash = ((mapIndex[i] & 0xFF) << 8) | (mapIndex[i + 1] & 0xFF);
-                    hash >>= 8;
-                    if(count[hash] == null)
-                        count[hash] = new int[257];
-                    count[hash][count[hash][256]++] = hash;
+                    int oldHash = ((mapIndex[i] & 0xFF) << 8) | (mapIndex[i + 1] & 0xFF);
+                    int floorId = ((mapIndex[i + 2] & 0xFF) << 8) | (mapIndex[i + 3] & 0xFF);
+                    int hash = oldHash >> 8;
+                    if(rCount[hash] == null)
+                        rCount[hash] = new int[257];
+                    int countOffset = rCount[hash][256]++;
+                    rCount[hash][countOffset] = (oldHash & 0xFF);
+                    DataInputStream is = new DataInputStream(new GZIPInputStream(new ByteArrayInputStream(landscapeIndex.get(floorId))));
+                    long updated = 0L;
+                    for(int z = 0; z < 4; z++) {
+                        for(int x = 0; x < 64; x++) {
+                            for(int y = 0; y < 64; y++) {
+                                for(;;) {
+                                    int opcode = is.read();
+                                    if(opcode == 0)
+                                        break;
+                                    if(opcode == 1) {
+                                        is.read();
+                                        break;
+                                    }
+                                    if(opcode <= 49) {
+                                        long bitValue = 1L << (long) ((x >> 3) + (8 * (y >> 3)));
+                                        if((bitValue & updated) == 0) {
+                                            if(cCount[cCountOffset - 1] == null) {
+                                                cCount[cCountOffset - 1] = new int[65];
+                                                rCount[hash][countOffset] |= cCountOffset << 8;
+                                            }
+                                            int chunkHash = ((x >> 3) << 3) | (y >> 3);
+                                            cCount[cCountOffset - 1][cCount[cCountOffset - 1][64]++] = chunkHash;
+                                            updated |= bitValue;
+                                        }
+                                        is.read();
+                                    }                                
+                                }
+                            }
+                        }
+                    }
+                    is.close();
+                    if(updated != 0L)
+                        cCountOffset++;
                 }
-                for(int i = 0; i < count.length; i++) {
-                    if(count[i] != null) {
+                for(int x = 0; x < rCount.length; x++) {
+                    if(rCount[x] != null) {
                         os.write(1);
-                        os.write(i);
-                        os.write(count[i][256]);
-                        for(int j = 0; j < count[i][256]; j++) {
-                            os.write(count[i][j] & 0xFF);
+                        os.write(x);
+                        os.write(rCount[x][256] & 0xFF);                     
+                        for(int i = 0; i < rCount[x][256]; i++) {
+                            os.write(rCount[x][i] & 0xFF);
+                            if((rCount[x][i] & ~0xFF) != 0) {
+                                os.write(1);
+                                int[] chunks = cCount[(rCount[x][i] >> 8) - 1];
+                                try {
+                                os.write(chunks[64]);
+                                } catch(Exception ex) {
+                                    int a = 5;
+                                }
+                                
+                                for(int k = 0; k < chunks[64]; k++) {
+                                    os.write(chunks[k]);
+                                }
+                            } else
+                                os.write(0);                            
                         }
                     }
                 }
                 os.writeByte(0);
             } catch(Exception ex) {
                 reportError("Exception thrown while dumping the region files", ex);
+                ex.printStackTrace();
                 throw new RuntimeException();
             }
         } else if(args[0].equals("server")) {

@@ -7,4 +7,9 @@ package org.runetekk;
  */
 public final class Region {
     
+    /**
+     * The {@link Region} chunks.
+     */
+    Chunk[][] chunks;
+    
 }
