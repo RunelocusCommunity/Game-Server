@@ -50,6 +50,11 @@ public final class Main implements Runnable {
     private static final BigInteger MODULUS;
     
     /**
+     * The amount of time in milliseconds before the garbage should be taken out.
+     */
+    private static final long GC_TIME = 30000;
+    
+    /**
      * The main handler.
      */
     private static Main main;
@@ -98,6 +103,11 @@ public final class Main implements Runnable {
      * The {@link IoWriter} for this handler.
      */
     IoWriter writer;
+    
+    /**
+     * The next time when the garbage will be taken out.
+     */
+    long nextGc;
     
     /**
      * Prints the application tag.
@@ -452,6 +462,11 @@ public final class Main implements Runnable {
                    }           
                 }
             }
+            long curTime = -1L;
+            if(nextGc < (curTime = System.currentTimeMillis())) {
+                nextGc = curTime + GC_TIME;
+                System.gc();
+            }
         }
      }
      
@@ -590,8 +605,10 @@ public final class Main implements Runnable {
             removedList.parentNode = removedList;
             removedList.childNode = removedList;
             clientArray = new Client[MAXIMUM_CLIENTS];
+            nextGc = System.currentTimeMillis() + GC_TIME;
             serverSocket = new ServerSocket();
             serverSocket.setSoTimeout(5);
+            serverSocket.setReceiveBufferSize(Client.BUFFER_SIZE);
             serverSocket.bind(new InetSocketAddress(43594 + portOff));
             initialize();
         } catch(Exception ex) {
