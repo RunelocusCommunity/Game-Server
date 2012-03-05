@@ -149,6 +149,8 @@ public final class Main implements Runnable {
                                 int amountChunks = is.read();
                                 for(int j = 0; j < amountChunks; j++) {
                                     int hash = is.read();
+                                    if(regions[regionX][regionY].chunks == null)
+                                        regions[regionX][regionY].chunks = new Chunk[8][];
                                     if(regions[regionX][regionY].chunks[hash >> 3] == null)
                                         regions[regionX][regionY].chunks[hash >> 3] = new Chunk[8];
                                     regions[regionX][regionY].chunks[hash >> 3][hash & 0x7] = new Chunk();
@@ -541,7 +543,7 @@ public final class Main implements Runnable {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
-        args = args.length == 0 ? new String[] { "setup", "./etc/server.properties" } : args;
+        args = args.length == 0 ? new String[] { "server", "./etc/server.properties" } : args;
         printTag();
         Properties serverProperties = new Properties();
         try {
@@ -621,12 +623,7 @@ public final class Main implements Runnable {
                             if((rCount[x][i] & ~0xFF) != 0) {
                                 os.write(1);
                                 int[] chunks = cCount[(rCount[x][i] >> 8) - 1];
-                                try {
-                                os.write(chunks[64]);
-                                } catch(Exception ex) {
-                                    int a = 5;
-                                }
-                                
+                                os.write(chunks[64]);                               
                                 for(int k = 0; k < chunks[64]; k++) {
                                     os.write(chunks[k]);
                                 }
@@ -638,7 +635,6 @@ public final class Main implements Runnable {
                 os.writeByte(0);
             } catch(Exception ex) {
                 reportError("Exception thrown while dumping the region files", ex);
-                ex.printStackTrace();
                 throw new RuntimeException();
             }
         } else if(args[0].equals("server")) {
@@ -655,6 +651,7 @@ public final class Main implements Runnable {
                 is.close();
             } catch(Exception ex) {
                 reportError("Exception thrown while reading the regions file", ex);
+                ex.printStackTrace();
                 throw new RuntimeException();
             }
             serverProperties = null;
