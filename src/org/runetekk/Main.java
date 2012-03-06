@@ -32,11 +32,6 @@ public final class Main implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     
     /**
-     * The maximum amount of players allowed to connect to this server.
-     */
-    private static final int MAXIMUM_CLIENTS = 2048;
-    
-    /**
      * The size of all the incoming packets from the client.
      */
     private static final int[] INCOMING_SIZES;
@@ -64,7 +59,12 @@ public final class Main implements Runnable {
     /**
      * The regions for this handler.
      */
-    private static Region[][] regions;
+    static Region[][] regions;
+    
+    /**
+     * The maximum amount of players allowed to connect to this server.
+     */
+    static final int MAXIMUM_CLIENTS = 2048;
     
     /**
      * The local thread.
@@ -354,7 +354,9 @@ public final class Main implements Runnable {
                                     response[1] = (byte) client.rights;
                                     client.outputStream.write(response);     
                                     client.outgoingBuffer = new byte[Client.BUFFER_SIZE];
+                                    client.playerIndex = new byte[(MAXIMUM_CLIENTS + 7) >> 3];
                                     client.playerBuffer = new BitBuffer(Client.PLAYER_UPDATES * 10);
+                                    client.addingBuffer = new BitBuffer(MAXIMUM_CLIENTS * 23);
                                     client.movementBuffer = new BitBuffer(21);
                                     client.flagBuffer = new ByteBuffer(120);
                                     client.incomingCipher = new IsaacCipher(seeds);
@@ -459,7 +461,7 @@ public final class Main implements Runnable {
                            
                            case 1:
                                Client.sendMessage(client, "Welcome to Runescape.");
-                               Client.sendCurrentChunk(client);
+                               client.player.updateRegion();
                                client.state = 2;
                                break;
                                

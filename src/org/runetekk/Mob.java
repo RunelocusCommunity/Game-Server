@@ -7,4 +7,23 @@ package org.runetekk;
  */
 public class Mob extends Entity {
     
+    /**
+     * The maximum amount of steps in a walking queue.
+     */
+    public final static int MAXIMUM_STEPS = 25;
+    
+    /**
+     * The walking queue in the form that the client reads
+     * to move the player. The read position is positioned 
+     * near the end of the queue along with the write 
+     * position.
+     */
+    int[] walkingQueue;
+    
+    /**
+     * Constructs a new {@link Mob};
+     */
+    Mob() {
+        walkingQueue = new int[MAXIMUM_STEPS + 2];
+    }  
 }

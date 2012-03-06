@@ -7,4 +7,16 @@ package org.runetekk;
  */
 public final class Player extends Mob {
     
+    /**
+     * The {@link Client} id that this player represents.
+     */
+    int id;
+    
+    /**
+     * Constructs a new {@link Player};
+     * @param id The id of the player.
+     */
+    Player(int id) {
+        this.id = id;
+    }  
 }

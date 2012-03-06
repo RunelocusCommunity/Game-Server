@@ -23,6 +23,11 @@ public final class Client {
     public final static int PLAYER_UPDATES = 256;
     
     /**
+     * The amount of chunks that can be viewed by the player on all sides.
+     */
+    public final static int CHUNK_RANGE = 2;
+    
+    /**
      * The inbound {@link IsaacCipher}.
      */
     IsaacCipher incomingCipher;
@@ -133,14 +138,34 @@ public final class Client {
     BitBuffer playerBuffer;
     
     /**
+     * The buffer that handles adding players.
+     */
+    BitBuffer addingBuffer;
+    
+    /**
      * The buffer that handles the player appearances and flags.
      */
     ByteBuffer flagBuffer;
+    
+    /**
+     * The list of players within coordinate range to update.
+     */
+    ListNode addedPlayers;
+    
+    /**
+     * The added player index.
+     */
+    byte[] playerIndex;
    
     /**
      * The time that the client will timeoutStamp.
      */
     long timeoutStamp;
+    
+    /**
+     * The last time that the buffers were written to.
+     */
+    long lastWriteTime;
     
     /**
      * The {@link InputStream} of this client.
@@ -181,6 +206,55 @@ public final class Client {
         client.oWritePosition += buffer.offset - position;
     }
     
+    static void updatePlayers(Client client) {
+        Player player = null;
+        if((player = client.player) == null)
+            throw new RuntimeException();      
+        BitBuffer buffer = client.addingBuffer;
+        buffer.offset = 0;
+        int cChunkX = (player.coordX >> 3) + 6;
+        int cChunkY = (player.coordY >> 3) + 6;
+        for(int chunkX = cChunkX - CHUNK_RANGE; chunkX <= cChunkX + CHUNK_RANGE; chunkX++) {
+            for(int chunkY = cChunkY - CHUNK_RANGE; chunkY <= cChunkY + CHUNK_RANGE; chunkY++) {
+                Region region = null;
+                if(Main.regions != null && Main.regions[chunkX << 3] != null && (region = Main.regions[chunkX << 3][chunkY << 3]) != null) {
+                    Chunk chunk = null;
+                    if(region.chunks != null && region.chunks[((player.coordX - (chunkX << 3)) >> 3)] 
+                                     != null && (chunk = region.chunks[((player.coordX - (chunkX << 3)) >> 3)]
+                                     [((player.coordY - (chunkY << 3)) >> 3)]) != null) {
+                        ListNode node = chunk.activeEntities; 
+                        while((node = node.childNode) != null) { 
+                            if(!(node instanceof Player) || node == player)
+                                continue;  
+                            int pos = ((Player) node).id;
+                            if((client.playerIndex[pos >> 3] & (1 << (pos & 7))) != 0)
+                                continue;
+                            int dx = player.coordX - ((Player) node).coordX;
+                            if(dx > 15 || dx < -16)
+                                continue;
+                            if(dx < 0)
+                                dx += 32;
+                            int dy = player.coordX - ((Player) node).coordX;
+                            if(dy > 15 || dy < -16)
+                                continue;
+                            if(dy < 0)
+                                dy += 32;
+                            buffer.put(pos, 11);
+                            /* FIX ME */
+                            buffer.put(0, 1);
+                            /* FIX ME */
+                            buffer.put(1, 1);
+                            buffer.put(dy, 5);
+                            buffer.put(dx, 5);
+                            client.playerIndex[pos >> 3] |= 1 << (pos & 7);
+                        }
+                    }
+                }
+            } 
+        }
+        buffer.put(2047, 11);
+    }
+    
     /**
      * Destroys this {@link Client}.
      */
@@ -209,7 +283,7 @@ public final class Client {
         this.outputStream = socket.getOutputStream();
         timeoutStamp = -1L;
         /* FIX THIS TIDBIT LATER */
-        player = new Player();
+        player = new Player(localId.value);
         rights = 2;
     } 
 }

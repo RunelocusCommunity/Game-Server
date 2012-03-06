@@ -67,6 +67,7 @@ public final class IoWriter implements Runnable {
                         if(client.oWritePosition > 0) {
                             client.outputStream.write(client.outgoingBuffer, 0, client.oWritePosition);
                             client.oWritePosition = 0;
+                            client.lastWriteTime = System.currentTimeMillis();
                             client.oWritten = true;
                         }
                     } catch(IOException ex) {
