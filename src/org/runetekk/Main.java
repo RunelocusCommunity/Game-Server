@@ -651,7 +651,6 @@ public final class Main implements Runnable {
                 is.close();
             } catch(Exception ex) {
                 reportError("Exception thrown while reading the regions file", ex);
-                ex.printStackTrace();
                 throw new RuntimeException();
             }
             serverProperties = null;

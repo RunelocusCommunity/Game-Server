@@ -5,7 +5,7 @@ package org.runetekk;
  * @version 1.0.0
  * @author RuneTekk Development (SiniSoul)
  */
-public class Entity {
+public class Entity extends ListNode {
     
     /**
      * The x coordinate of where this entity is located.
@@ -21,6 +21,18 @@ public class Entity {
      * The z coordinate of where this entity is located.
      */
     int coordZ;
+    
+    /**
+     * Removes this {@link Entity} from its chunk list.
+     */
+    public void removeFromList() {
+        if(parentNode != null) {
+             childNode.parentNode = parentNode;
+             parentNode.childNode = childNode;
+             childNode = null;
+             parentNode = null;
+         }
+    }
     
     /**
      * Constructs a new {@link Entity};
