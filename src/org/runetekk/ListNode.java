@@ -16,5 +16,16 @@ public class ListNode {
      * The child {@link ListNode}.
      */
     ListNode childNode;
-     
+    
+    /**
+     * Removes the node from the current queue list it is in.
+     */
+    public final void removeFromList() {
+        if(parentNode != null) {
+             childNode.parentNode = parentNode;
+             parentNode.childNode = childNode;
+             childNode = null;
+             parentNode = null;
+         }
+    }    
 }

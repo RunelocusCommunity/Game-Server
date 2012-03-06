@@ -23,18 +23,6 @@ public class Entity extends ListNode {
     int coordZ;
     
     /**
-     * Removes this {@link Entity} from its chunk list.
-     */
-    public void removeFromList() {
-        if(parentNode != null) {
-             childNode.parentNode = parentNode;
-             parentNode.childNode = childNode;
-             childNode = null;
-             parentNode = null;
-         }
-    }
-    
-    /**
      * Constructs a new {@link Entity};
      */
     Entity() {

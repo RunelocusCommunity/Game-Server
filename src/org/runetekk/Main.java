@@ -195,12 +195,7 @@ public final class Main implements Runnable {
                             ListNode node = removedList.childNode;
                             if(node != null) {
                                 position = ((IntegerNode) node).value;
-                                if(node.parentNode != null) {
-                                    node.childNode.parentNode = node.parentNode;
-                                    node.parentNode.childNode = node.childNode;
-                                    node.childNode = null;
-                                    node.parentNode = null;
-                                }
+                                node.removeFromList();
                             }   
                         }
                     } else
@@ -493,12 +488,7 @@ public final class Main implements Runnable {
       */
      void removeClient(IntegerNode client) {
          synchronized(removedList) {             
-             if(client.parentNode != null) {
-                 client.childNode.parentNode = client.parentNode;
-                 client.parentNode.childNode = client.childNode;
-                 client.childNode = null;
-                 client.parentNode = null;
-             }
+             client.removeFromList();
              client.parentNode = removedList.parentNode;
              client.childNode = removedList;
              client.parentNode.childNode = client;

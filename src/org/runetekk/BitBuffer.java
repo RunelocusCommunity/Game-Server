@@ -8,7 +8,7 @@ package org.runetekk;
 public final class BitBuffer {
     
     /**
-     * The bit masks.
+     * The mask array.
      */
     private final static int[] MASKS;
     
