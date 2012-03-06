@@ -52,6 +52,14 @@ public final class BitBuffer {
     }
     
     /**
+     * Resets the bit buffer.
+     */
+    void reset() {
+        for(int i = 0 ; i < payload.length; i++)
+            payload[i] = (byte) 0;
+    }
+    
+    /**
      * Constructs a new {@link BitBuffer};
      * @param size The size in bits of the buffer.
      */

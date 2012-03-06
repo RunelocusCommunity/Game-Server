@@ -498,6 +498,7 @@ public final class Main implements Runnable {
              client.childNode = removedList;
              client.parentNode.childNode = client;
              client.childNode.parentNode = client;
+             clientArray[client.value] = null;
          }
      }
        

@@ -206,11 +206,17 @@ public final class Client {
         client.oWritePosition += buffer.offset - position;
     }
     
-    static void updatePlayers(Client client) {
+    /**
+     * Adds the players currently around the client.
+     * @param client The client to add the players to the added list.
+     */
+    static void addPlayers(Client client) {
         Player player = null;
         if((player = client.player) == null)
             throw new RuntimeException();      
         BitBuffer buffer = client.addingBuffer;
+        /* CAN MOVE THIS */
+        buffer.reset();
         buffer.offset = 0;
         int cChunkX = (player.coordX >> 3) + 6;
         int cChunkY = (player.coordY >> 3) + 6;
@@ -239,13 +245,24 @@ public final class Client {
                                 continue;
                             if(dy < 0)
                                 dy += 32;
-                            buffer.put(pos, 11);
-                            /* FIX ME */
-                            buffer.put(0, 1);
-                            /* FIX ME */
+                            buffer.put(pos, 11);                       
+                            /* 
+                             * FIX ME 
+                             * -APPEND UPDATES
+                             */
+                            buffer.put(0, 1);                          
+                            /* 
+                             * FIX ME 
+                             * -CLEAR QUEUE FLAG
+                             */
                             buffer.put(1, 1);
                             buffer.put(dy, 5);
                             buffer.put(dx, 5);
+                            IntegerNode posNode = new IntegerNode(pos);
+                            posNode.parentNode = client.addedPlayers.parentNode;
+                            posNode.childNode = client.addedPlayers;
+                            posNode.parentNode.childNode = posNode;
+                            posNode.childNode.parentNode = posNode;                           
                             client.playerIndex[pos >> 3] |= 1 << (pos & 7);
                         }
                     }
@@ -255,6 +272,47 @@ public final class Client {
         buffer.put(2047, 11);
     }
     
+    static void writePlayers(Main main, Client client) {
+        Player player = null;
+        if((player = client.player) == null)
+            throw new RuntimeException();      
+        BitBuffer buffer = client.playerBuffer;
+        /* CAN MOVE THIS */
+        buffer.reset();
+        buffer.offset = 8;
+        int amountPlayers = 0;
+        ListNode node = client.addedPlayers;
+        while((node = node.childNode) != null) {
+            if(!(node instanceof IntegerNode) || node == player)
+                continue;  
+            /* FIX ME */
+            if(amountPlayers >= PLAYER_UPDATES)
+                break;
+            amountPlayers++;
+            int pos = ((IntegerNode) node).value;
+            Player aPlayer = null;
+            if((aPlayer = main.clientArray[pos].player) != null) {
+                int dx = player.coordX - ((Player) node).coordX;
+                int dy = player.coordX - ((Player) node).coordX;
+                if(dy > 15 || dy < -16 || dx > 15 || dx < -16)
+                    aPlayer = null;
+            }
+            if(aPlayer != null) {
+                /* MAJOR FIX ME */
+                buffer.put(0, 1);
+            } else {
+                buffer.put(1, 1);
+                buffer.put(3, 2);
+                node.removeFromList();
+                client.playerIndex[pos >> 3] &= ~(1 << (pos & 7));
+            }
+        }
+        int oldOffset = buffer.offset;
+        buffer.offset = 0;
+        buffer.put(amountPlayers, 8);
+        buffer.offset = oldOffset;
+    }
+    
     /**
      * Destroys this {@link Client}.
      */
@@ -262,7 +320,7 @@ public final class Client {
         try {
             inputStream.close();
             outputStream.close();
-        } catch(IOException ioex) {}   
+        } catch(IOException ioex) {}  
         incomingBuffer = null;
         outgoingBuffer = null;
         incomingCipher = null;
@@ -272,6 +330,8 @@ public final class Client {
         localId = null;
         username = null;
         password = null;
+        player.removeFromList();
+        player = null;
     }
     
     /**
