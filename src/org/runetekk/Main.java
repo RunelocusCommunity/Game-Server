@@ -354,6 +354,9 @@ public final class Main implements Runnable {
                                     response[1] = (byte) client.rights;
                                     client.outputStream.write(response);     
                                     client.outgoingBuffer = new byte[Client.BUFFER_SIZE];
+                                    client.playerBuffer = new BitBuffer(Client.PLAYER_UPDATES * 10);
+                                    client.movementBuffer = new BitBuffer(21);
+                                    client.flagBuffer = new ByteBuffer(120);
                                     client.incomingCipher = new IsaacCipher(seeds);
                                     for(int i = 0; i < seeds.length; i++)
                                         seeds[i] += 50;
@@ -445,8 +448,8 @@ public final class Main implements Runnable {
                        removeClient(position);
                        continue;
                    }
-                   if(client.playerMob == null) {
-                       LOGGER.log(Level.WARNING, "Client disconnected : Null player mob!");
+                   if(client.player == null) {
+                       LOGGER.log(Level.WARNING, "Client disconnected : Null player!");
                        removeClient(position);
                        client.destroy();
                        continue;

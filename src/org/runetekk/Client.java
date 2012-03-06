@@ -18,14 +18,19 @@ public final class Client {
     public final static int BUFFER_SIZE = 5000;
     
     /**
+     * The amount of players that can be updated per player update packet.
+     */
+    public final static int PLAYER_UPDATES = 256;
+    
+    /**
      * The inbound {@link IsaacCipher}.
      */
     IsaacCipher incomingCipher;
     
     /**
-     * The {@link Mob} that this client represents.
+     * The {@link Player} that this client represents.
      */
-    Mob playerMob;
+    Player player;
     
     /**
      * The incoming byte buffer array.
@@ -116,6 +121,21 @@ public final class Client {
      * The last time that the client was pinged by the server.
      */
     long lastRecievedPing;
+    
+    /**
+     * The buffer that handles movement updates.
+     */
+    BitBuffer movementBuffer;
+    
+    /**
+     * The buffer that handles player updates.
+     */
+    BitBuffer playerBuffer;
+    
+    /**
+     * The buffer that handles the player appearances and flags.
+     */
+    ByteBuffer flagBuffer;
    
     /**
      * The time that the client will timeoutStamp.
@@ -156,8 +176,8 @@ public final class Client {
         int position = client.oWritePosition;
         buffer.offset = position;
         buffer.putByte(73 + client.outgoingCipher.getNextValue());
-        buffer.putWord128((client.playerMob.coordX >> 3) + 6);
-        buffer.putWord((client.playerMob.coordY >> 3) + 6);
+        buffer.putWord128((client.player.coordX >> 3) + 6);
+        buffer.putWord((client.player.coordY >> 3) + 6);
         client.oWritePosition += buffer.offset - position;
     }
     
@@ -173,6 +193,8 @@ public final class Client {
         outgoingBuffer = null;
         incomingCipher = null;
         outgoingCipher = null;
+        movementBuffer = null;
+        playerBuffer = null;
         localId = null;
         username = null;
         password = null;
@@ -187,7 +209,7 @@ public final class Client {
         this.outputStream = socket.getOutputStream();
         timeoutStamp = -1L;
         /* FIX THIS TIDBIT LATER */
-        playerMob = new Mob();
+        player = new Player();
         rights = 2;
     } 
 }

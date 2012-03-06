@@ -17,5 +17,7 @@ public final class Chunk {
      */
     Chunk() {
         activeEntities = new ListNode();
+        activeEntities.parentNode = activeEntities;
+        activeEntities.childNode = activeEntities;
     }
 }
