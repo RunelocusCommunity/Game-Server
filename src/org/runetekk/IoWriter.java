@@ -37,6 +37,11 @@ public final class IoWriter implements Runnable {
     private boolean isPaused;
     
     /**
+     * The {@link IoWriter} has successfully ran.
+     */
+    volatile boolean hasRan;
+    
+    /**
      * Initializes the local thread.
      */
     private void initialize() {
@@ -67,8 +72,6 @@ public final class IoWriter implements Runnable {
                         if(client.oWritePosition > 0) {
                             client.outputStream.write(client.outgoingBuffer, 0, client.oWritePosition);
                             client.oWritePosition = 0;
-                            client.lastWriteTime = System.currentTimeMillis();
-                            client.oWritten = true;
                         }
                     } catch(IOException ex) {
                         LOGGER.log(Level.WARNING, "Exception thrown while writing : ", ex);
@@ -78,6 +81,7 @@ public final class IoWriter implements Runnable {
                     }
                 }
             }
+            hasRan = true;
             try {
                 long sleepTime = (CYCLE_TIME - (System.nanoTime() - startTime))/10000L;
                 if(sleepTime > 0)

@@ -208,13 +208,7 @@ public final class Main implements Runnable {
                             acceptedClient.destroy();
                         } else {
                             IntegerNode positionNode = new IntegerNode(position);
-                            acceptedClient.localId = positionNode;                          
-                            if(acceptedClient.inputStream.read() != 14) {
-                                response[8] = 20;
-                                acceptedClient.outputStream.write(response);
-                                LOGGER.log(Level.WARNING, "Client disconnected : Invalid op!");
-                                throw new IOException();
-                            }  
+                            acceptedClient.localId = positionNode;   
                             if((acceptedClient.nameHash = acceptedClient.inputStream.read()) < 0 || acceptedClient.nameHash > 31) {
                                 response[8] = 10;
                                 acceptedClient.outputStream.write(response);
@@ -355,6 +349,9 @@ public final class Main implements Runnable {
                                     client.outputStream.write(response);     
                                     client.outgoingBuffer = new byte[Client.BUFFER_SIZE];
                                     client.playerIndex = new byte[(MAXIMUM_CLIENTS + 7) >> 3];
+                                    client.addedPlayers = new ListNode();
+                                    client.addedPlayers.childNode = client.addedPlayers;
+                                    client.addedPlayers.parentNode = client.addedPlayers;
                                     client.playerBuffer = new BitBuffer(Client.PLAYER_UPDATES * 10);
                                     client.addingBuffer = new BitBuffer(MAXIMUM_CLIENTS * 23);
                                     client.movementBuffer = new BitBuffer(21);
@@ -432,13 +429,7 @@ public final class Main implements Runnable {
                         client.destroy();
                         continue;
                     }
-                }
-                /* PUT SERVER UPDATE PROCEDURES HERE 
-                 * Includes anything or any data that may
-                 * be sent out to the clients in the
-                 * client write block.
-                 */
-                
+                }               
                 node = activeList;
                 while((node = node.childNode) != null) { 
                    if(!(node instanceof IntegerNode))
@@ -450,25 +441,18 @@ public final class Main implements Runnable {
                        removeClient(position);
                        continue;
                    }
-                   if(client.player == null) {
-                       LOGGER.log(Level.WARNING, "Client disconnected : Null player!");
-                       removeClient(position);
-                       client.destroy();
-                       continue;
-                   }
                    try {
                        switch(client.state) {
                            
+                           /**
+                            * Initial connection state.
+                            */
                            case 1:
-                               Client.sendMessage(client, "Welcome to Runescape.");
-                               client.player.updateRegion();
                                client.state = 2;
                                break;
                                
                            case 2:
-                               if(client.oWritten) {                                 
-                                   client.oWritten = false;
-                               }
+                               
                                break;
                        }
                    } catch(Exception ex) {

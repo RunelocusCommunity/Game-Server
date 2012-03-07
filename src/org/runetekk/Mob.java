@@ -21,6 +21,14 @@ public class Mob extends Entity {
     int[] walkingQueue;
     
     /**
+     * Puts the walk opcode into the walking queue.
+     * @param opcode The opcode.
+     */
+    void putWalkOpcode(int opcode) {
+        walkingQueue[walkingQueue[walkingQueue.length - 1]++] = opcode;
+    }
+    
+    /**
      * Constructs a new {@link Mob};
      */
     Mob() {
