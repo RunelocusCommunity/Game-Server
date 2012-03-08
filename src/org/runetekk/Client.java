@@ -245,20 +245,20 @@ public final class Client extends Mob {
         if(localUpdate | localMovementUpdate) {
             if(localMovementUpdate) {
                 int updateHash = client.lastUpdates[client.lastUpdates[Mob.MAXIMUM_STEPS - 1]];
-                buffer.putBits((updateHash & 7) >> 1, 2);
-                if((updateHash & 1) != 0) {
-                    buffer.putBits(updateHash >> 3, 3); 
+                buffer.putBits(updateHash & 3, 2);
+                if((updateHash & 3) == 1) {
+                    buffer.putBits(updateHash >> 2, 3); 
                     buffer.putBits(localUpdate ? 1 : 0, 1);
-                } else if((updateHash & 2) != 0) {
-                    buffer.putBits((updateHash >> 3) & 7, 3);
-                    buffer.putBits(updateHash >> 6, 3);
+                } else if((updateHash & 3) == 2) {
+                    buffer.putBits((updateHash >> 2) & 7, 3);
+                    buffer.putBits(updateHash >> 5, 3);
                     buffer.putBits(localUpdate ? 1 : 0, 1);
-                } else if((updateHash & 4) != 0) {
-                    buffer.putBits((updateHash >> 3) & 3, 2);
-                    buffer.putBits((updateHash >> 5) & 1, 1);
+                } else if((updateHash & 3) == 3) {
+                    buffer.putBits((updateHash >> 2) & 3, 2);
+                    buffer.putBits((updateHash >> 4) & 1, 1);
                     buffer.putBits(localUpdate ? 1 : 0, 1);
-                    buffer.putBits((updateHash >> 6) & 127, 7);
-                    buffer.putBits((updateHash >> 13) & 127, 7);
+                    buffer.putBits(/*(updateHash >> 12) & 127*/ 40, 7);
+                    buffer.putBits(/*(updateHash >> 5) & 127*/ 40, 7);
                 }
             } else
                 buffer.putBits(0, 2);
@@ -283,17 +283,18 @@ public final class Client extends Mob {
             }
             boolean update = pClient.activeFlags != 0;
             boolean movementUpdate = true;
-            if((pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[Mob.MAXIMUM_STEPS - 2] && (pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]] & 4) != 0)
+            if((pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[Mob.MAXIMUM_STEPS - 2] && (pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]] & 3) == 3)
                 movementUpdate = false;
             buffer.putBits(update | movementUpdate ? 1 : 0, 1);
             if(update | movementUpdate) {
                 int updateHash = pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]];
-                if((updateHash & 1) != 0) {
-                    buffer.putBits(updateHash >> 3, 3); 
+                buffer.putBits(updateHash & 3, 2);
+                if((updateHash & 3) == 1) {
+                    buffer.putBits(updateHash >> 2, 3); 
                     buffer.putBits(localUpdate ? 1 : 0, 1);
-                } else if((updateHash & 2) != 0) {
-                    buffer.putBits((updateHash >> 3) & 7, 3);
-                    buffer.putBits(updateHash >> 6, 3);
+                } else if((updateHash & 3) == 2) {
+                    buffer.putBits((updateHash >> 2) & 7, 3);
+                    buffer.putBits(updateHash >> 5, 3);
                     buffer.putBits(localUpdate ? 1 : 0, 1);
                 } 
             }
@@ -303,7 +304,6 @@ public final class Client extends Mob {
         buffer.putBits(updatedPlayers, 8);
         buffer.bitOffset = bitOffset;
         node = client.addedPlayers;
-        boolean flagEnding = false;
         while((node = node.childNode) != null) {
             if(!(node instanceof IntegerNode))
                 break;
@@ -322,7 +322,6 @@ public final class Client extends Mob {
                         dy += 32;
                     buffer.putBits(dy, 5);
                     buffer.putBits(dx, 5);
-                    flagEnding = true;
                     node.removeFromList();
                     node.parentNode = client.activePlayers.parentNode;
                     node.childNode = client.activePlayers;
@@ -333,8 +332,7 @@ public final class Client extends Mob {
             }
             node.removeFromList();
         }
-        if(flagEnding)
-            buffer.putBits(2047, 11);
+        buffer.putBits(2047, 11);
         buffer.resetBitOffset();
         node = client.activePlayers;
         if(localUpdate) {
@@ -362,9 +360,8 @@ public final class Client extends Mob {
         }
         int oldOffset = buffer.offset;
         buffer.offset = position + 1;
-        buffer.putWord(oldOffset - (position + 1));
-        buffer.offset = oldOffset;
-        client.oWritePosition += buffer.offset - position;
+        buffer.putWord(oldOffset - (position + 3));
+        client.oWritePosition += oldOffset - position;
     }
     
     /**

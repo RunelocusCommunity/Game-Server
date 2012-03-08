@@ -57,9 +57,9 @@ public class Mob extends Entity {
                 coordX += Client.WALK_DELTA[opcode][0];
                 coordY += Client.WALK_DELTA[opcode][1];
                 if(i < 1)
-                    writeOpcode = 1 | opcode << 3;
+                    writeOpcode = 1 | opcode << 2;
                 else
-                    writeOpcode = writeOpcode & ~7 | 2 | opcode << 6;
+                    writeOpcode = writeOpcode & ~3 | 2 | opcode << 5;
                 if(this instanceof Client) {
                     int dx = updatedLocalX - (coordX - ((coordX >> 3) << 3));
                     int dy = updatedLocalX - (coordX - ((coordX >> 3) << 3));
@@ -67,15 +67,17 @@ public class Mob extends Entity {
                         int writePosition = lastUpdates[MAXIMUM_STEPS - 2];
                         updatedLocalX = coordX - ((coordX >> 3) << 3);
                         updatedLocalY = coordY - ((coordX >> 3) << 3);
-                        lastUpdates[writePosition] = 4 | coordZ << 3 | updatedLocalX << 6 | updatedLocalY << 13;
+                        lastUpdates[writePosition] = 3 | coordZ << 2 | updatedLocalX << 5 | updatedLocalY << 12;
                         lastUpdates[MAXIMUM_STEPS - 2] = (writePosition + 1) % MAXIMUM_STEPS;
+                        Client.sendCurrentChunk((Client) this);
                     }
                 }
             } else if(opcode == 8 && this instanceof Client) {
-                updatedLocalX = coordX - ((coordX >> 3) << 3);
-                updatedLocalY = coordY - ((coordX >> 3) << 3);
-                writeOpcode = 4 | coordZ << 3 | 1 << 5 | updatedLocalX << 6 | updatedLocalY << 13;
+                updatedLocalX = coordX - ((coordX >> 6) << 6);
+                updatedLocalY = coordY - ((coordX >> 6) << 6);
+                writeOpcode = 3 | coordZ << 2 | 1 << 4 | updatedLocalX << 5 | updatedLocalY << 12;
                 walkingQueue[MAXIMUM_STEPS - 2] = walkingQueue[MAXIMUM_STEPS - 1];
+                Client.sendCurrentChunk((Client) this);
                 break;
             }
             readPosition = (readPosition + 1) % MAXIMUM_STEPS;

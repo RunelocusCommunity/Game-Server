@@ -123,7 +123,7 @@ public final class Main implements Runnable {
         + "\n                    | | \\ \\ |_| | | | |  __/ |  __/   <|   <                    "
         + "\n                    |_|  \\_\\__,_|_| |_|\\___|_|\\___|_|\\_\\_|\\_\\             "
         + "\n----------------------------------------------------------------------------------"
-        + "\n                                Game Server 1.0.4                               "
+        + "\n                                Game Server 1.0.7                                 "
         + "\n                                 See RuneTekk.com                                 "
         + "\n                               Created by SiniSoul                                "
         + "\n----------------------------------------------------------------------------------");
@@ -208,7 +208,13 @@ public final class Main implements Runnable {
                             acceptedClient.destroy();
                         } else {
                             IntegerNode positionNode = new IntegerNode(position);
-                            acceptedClient.localId = positionNode;   
+                            acceptedClient.localId = positionNode;  
+                            if(acceptedClient.inputStream.read() != 14) {
+                                response[8] = 10;
+                                acceptedClient.outputStream.write(response);
+                                LOGGER.log(Level.WARNING, "Client disconnected : Invalid handshake op!");
+                                throw new IOException();
+                            }
                             if((acceptedClient.nameHash = acceptedClient.inputStream.read()) < 0 || acceptedClient.nameHash > 31) {
                                 response[8] = 10;
                                 acceptedClient.outputStream.write(response);
@@ -368,6 +374,9 @@ public final class Main implements Runnable {
                                 }
                                 break;
                              
+                            case 2:
+                            case 3:
+                            case 4:
                             case 5:
                                 if(client.lastRecievedPing + 15000L < System.currentTimeMillis())
                                     client.timeoutStamp = System.currentTimeMillis() + 60000L;
@@ -375,7 +384,7 @@ public final class Main implements Runnable {
                                     int opcode = client.incomingBuffer[client.iReadPosition] - client.incomingCipher.getNextValue() & 0xFF;
                                     int size = INCOMING_SIZES[opcode];
                                     if(size < -2) {
-                                        LOGGER.log(Level.WARNING, "Client disconnected : unknown packet!");
+                                        LOGGER.log(Level.WARNING, "Client disconnected : unknown packet - {0}!", opcode);
                                         removeClient(position);
                                         client.destroy();
                                         continue;
@@ -704,28 +713,29 @@ public final class Main implements Runnable {
             -3, -3, -3, -3,  8, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,          
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,        
+            -3, -3, -3, -3, -3, -3, -3, -1, -3, -3,
+            -3, -3, -3, -3, -3, -3,  4, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,           
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3,  0, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,           
+            -3, -3,  0, -3, -3, -3, -3, -3, -3, -3,
             
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3,  4, -3, -3, -3, -3, -3, -3, -3, -3,        
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
              4, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,

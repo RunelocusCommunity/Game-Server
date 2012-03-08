@@ -158,8 +158,8 @@ public final class ByteBuffer {
             payload[byteOffset] &= ~MASKS[off];
             payload[byteOffset] |= value & MASKS[off];
         } else {
-            payload[byteOffset] &= ~MASKS[off] << (off - amountBits);
-            payload[byteOffset] |= (value & MASKS[off]) << (off - amountBits);            
+            payload[byteOffset] &= ~MASKS[amountBits] << (off - amountBits);
+            payload[byteOffset] |= (value & MASKS[amountBits]) << (off - amountBits);            
         }
     }
     
