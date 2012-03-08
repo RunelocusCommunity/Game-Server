@@ -364,6 +364,8 @@ public final class Main implements Runnable {
                                     client.addedPlayers.parentNode = client.addedPlayers;
                                     /* APPEARANCE STUFF */
                                     client.appearanceStates = new int[12];
+                                    //client.appearanceStates[0] = 31 | 256;
+                                    //client.activeFlags |= 1 << 7;
                                     client.colorIds = new int[5];
                                     client.animationIds = new int[7];
                                     client.incomingCipher = new IsaacCipher(seeds);
@@ -460,13 +462,17 @@ public final class Main implements Runnable {
                             * Initial connection state.
                             */
                            case 1:
+                               Client.sendMessage(client, "Welcome to RuneTekk.");
                                client.state = 2;
                                break;
                               
                            /**
                             * Initial loop state.
                             */
-                           case 2:  
+                           case 2:
+                               Client.writeFlaggedUpdates(client);
+                               client.updateMovement();
+                               client.updateRegion();
                                client.state = 3;
                                break;
                             
@@ -474,9 +480,6 @@ public final class Main implements Runnable {
                             * Update state.
                             */
                            case 3:
-                               Client.writeFlaggedUpdates(client);
-                               client.updateMovement();
-                               client.updateRegion();
                                client.state = 4;
                                break;
                              
@@ -487,12 +490,18 @@ public final class Main implements Runnable {
                                Client.sendPlayerUpdate(client);
                                client.state = 5;
                                break;
+                               
+                           /** 
+                            * Reset state.
+                            */
+                           case 5:
+                               client.activeFlags = 0;
+                               break;
                             
                            /**
                             * Idle state.
                             */
-                           case 5:
-                               client.activeFlags = 0; 
+                           case 6:
                                if(client.hasWritten) {
                                    client.hasWritten = false;
                                    client.state = 2;

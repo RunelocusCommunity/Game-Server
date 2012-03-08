@@ -371,11 +371,10 @@ public final class Client extends Mob {
     public static void writeFlaggedUpdates(Client client) {
         ByteBuffer buffer = client.flagBuffer;
         buffer.offset = 2;
-        int mask = 0x40;
+        int mask = 0;
         for(int bitOff = 0; bitOff < 10; bitOff++) {
-            int opcode;
-            if((opcode = (client.activeFlags & 1 << bitOff)) != 0) {
-                switch(opcode) {
+            if((client.activeFlags & 1 << (bitOff + 1)) != 0) {
+                switch(bitOff) {
                     
                     /* Async Walk */
                     case 0:
@@ -405,6 +404,7 @@ public final class Client extends Mob {
                     case 6:
                         mask |= 0x10;
                         int oldOffset = buffer.offset;
+                        buffer.putByte(0);
                         writeAppearance(client, buffer);
                         int size = buffer.offset - (oldOffset + 1);
                         buffer.offset = oldOffset;
@@ -428,7 +428,8 @@ public final class Client extends Mob {
         }
         int oldOffset = buffer.offset;
         buffer.offset = 0;
-        buffer.putWord(mask);
+        buffer.putByte(mask | 0x40);
+        buffer.putByte(mask >> 8);
         buffer.offset = oldOffset;
     }
     
@@ -441,7 +442,10 @@ public final class Client extends Mob {
         buffer.putByte(0);
         buffer.putByte(client.headIcons);
         for(int i = 0; i < 12; i++) {
-            buffer.putWord(client.appearanceStates[i]);
+            if(client.appearanceStates[i] != 0)
+                buffer.putWord(client.appearanceStates[i]);
+            else
+                buffer.putByte(0);
         }
         for(int i = 0; i < 5; i++) {
             buffer.putByte(client.colorIds[i]);
@@ -451,7 +455,7 @@ public final class Client extends Mob {
         }
         buffer.putQword(encodeBase37(client.username));
         buffer.putByte(client.combatLevel);
-        buffer.putByte(client.skillTotal);        
+        buffer.putWord(client.skillTotal);        
     }
     
     /**
