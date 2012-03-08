@@ -255,10 +255,10 @@ public final class Client extends Mob {
                     buffer.putBits(localUpdate ? 1 : 0, 1);
                 } else if((updateHash & 4) != 0) {
                     buffer.putBits((updateHash >> 3) & 3, 2);
-                    buffer.putBits((updateHash >> 4) & 1, 1);
+                    buffer.putBits((updateHash >> 5) & 1, 1);
                     buffer.putBits(localUpdate ? 1 : 0, 1);
-                    buffer.putBits((updateHash >> 11) & 127, 7);
-                    buffer.putBits((updateHash >> 18) & 127, 7);
+                    buffer.putBits((updateHash >> 6) & 127, 7);
+                    buffer.putBits((updateHash >> 13) & 127, 7);
                 }
             } else
                 buffer.putBits(0, 2);
@@ -308,7 +308,6 @@ public final class Client extends Mob {
             if(!(node instanceof IntegerNode))
                 break;
             Client pClient = Main.clientArray[((IntegerNode) node).value];
-
             if(pClient != null) {
                 int dx = client.coordX - pClient.coordX;
                 int dy = client.coordY - pClient.coordY;
@@ -407,6 +406,7 @@ public final class Client extends Mob {
                     
                     /* Appearance */
                     case 6:
+                        mask |= 0x10;
                         int oldOffset = buffer.offset;
                         writeAppearance(client, buffer);
                         int size = buffer.offset - (oldOffset + 1);

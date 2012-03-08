@@ -350,6 +350,12 @@ public final class Main implements Runnable {
                                     client.outgoingBuffer = new byte[Client.BUFFER_SIZE];
                                     /* UPDATE STUFF */
                                     client.flagBuffer = new ByteBuffer(122);
+                                    client.activePlayers = new ListNode();
+                                    client.activePlayers.childNode = client.activePlayers;
+                                    client.activePlayers.parentNode = client.activePlayers;
+                                    client.addedPlayers = new ListNode();
+                                    client.addedPlayers.childNode = client.addedPlayers;
+                                    client.addedPlayers.parentNode = client.addedPlayers;
                                     /* APPEARANCE STUFF */
                                     client.appearanceStates = new int[12];
                                     client.colorIds = new int[5];
@@ -451,8 +457,8 @@ public final class Main implements Runnable {
                            /**
                             * Initial loop state.
                             */
-                           case 2:
-                               client.activeFlags = 0;                              
+                           case 2:  
+                               client.state = 3;
                                break;
                             
                            /**
@@ -460,6 +466,9 @@ public final class Main implements Runnable {
                             */
                            case 3:
                                Client.writeFlaggedUpdates(client);
+                               client.updateMovement();
+                               client.updateRegion();
+                               client.state = 4;
                                break;
                              
                            /**
@@ -467,12 +476,14 @@ public final class Main implements Runnable {
                             */
                            case 4:
                                Client.sendPlayerUpdate(client);
+                               client.state = 5;
                                break;
                             
                            /**
                             * Idle state.
                             */
                            case 5:
+                               client.activeFlags = 0; 
                                if(client.hasWritten) {
                                    client.hasWritten = false;
                                    client.state = 2;
