@@ -10,12 +10,12 @@ public class Entity extends ListNode {
     /**
      * The default X coordinate.
      */
-    private static final int DEFAULT_X = 3222;
+    private static final int DEFAULT_X = 3190;
     
     /**
      * The default Y coordinate.
      */
-    private static final int DEFAULT_Y = 3218;
+    private static final int DEFAULT_Y = 3235;
     
     /**
      * The x coordinate of where this entity is located.
@@ -73,7 +73,7 @@ public class Entity extends ListNode {
      * Constructs a new {@link Entity};
      */
     Entity() {
-        coordX = DEFAULT_X + (int) (Math.random() * 8);
+        coordX = DEFAULT_X;
         coordY = DEFAULT_Y;
     }
 }

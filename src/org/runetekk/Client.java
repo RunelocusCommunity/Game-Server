@@ -274,13 +274,17 @@ public final class Client extends Mob {
         buffer.initializeBitOffset();
         boolean localUpdate = client.activeFlags != 0;
         boolean localMovementUpdate = true;
-        if((client.lastUpdates[Mob.MAXIMUM_STEPS - 1] + 1) % Client.MAXIMUM_STEPS > client.lastUpdates[Mob.MAXIMUM_STEPS - 2])
+        if((client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > client.lastUpdates[client.lastUpdates.length - 2])
             localMovementUpdate = false;
+        System.out.println(localMovementUpdate);
+        System.out.println(localUpdate);
         buffer.putBits(localUpdate | localMovementUpdate ? 1 : 0, 1);
         if(localUpdate | localMovementUpdate) {
             if(localMovementUpdate) {
-                int updateHash = client.lastUpdates[client.lastUpdates[Mob.MAXIMUM_STEPS - 1]];
+                int updateHash = client.lastUpdates[client.lastUpdates[client.lastUpdates.length - 1]];
                 buffer.putBits(updateHash & 3, 2);
+                System.out.println("OP " + (updateHash & 3));
+                System.out.println("HASH " + updateHash);
                 if((updateHash & 3) == 1) {
                     buffer.putBits(updateHash >> 2, 3); 
                     buffer.putBits(localUpdate ? 1 : 0, 1);
@@ -323,12 +327,12 @@ public final class Client extends Mob {
             }
             boolean update = pClient.activeFlags != 0;
             boolean movementUpdate = true;
-            if((pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[Mob.MAXIMUM_STEPS - 2] || (pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]] & 3) == 3)
+            if((pClient.lastUpdates[pClient.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[pClient.lastUpdates.length - 2] || (pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]] & 3) == 3)
                 movementUpdate = false;
             buffer.putBits(update | movementUpdate ? 1 : 0, 1);
             if(update | movementUpdate) {
                 if(movementUpdate) {
-                    int updateHash = pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]];
+                    int updateHash = pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]];
                     buffer.putBits(updateHash & 3, 2);
                     if((updateHash & 3) == 1) {
                         buffer.putBits(updateHash >> 2, 3); 

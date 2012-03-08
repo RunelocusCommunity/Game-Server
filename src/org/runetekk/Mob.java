@@ -28,12 +28,12 @@ public class Mob extends Entity {
     /**
      * The local x coordinate where everything is centered from.
      */
-    int updatedLocalX;
+    int updatedChunkX;
     
     /**
      * The local y coordinate where everything is centered from.
      */
-    int updatedLocalY;
+    int updatedChunkY;
     
     /**
      * Updates the movement of this mob.
@@ -42,17 +42,18 @@ public class Mob extends Entity {
         boolean runToggled = false;
         if(this instanceof Client)
             runToggled = ((Client) this).isRunActive;
-        if(updatedLocalX < 0 && updatedLocalY < 0) {
-            walkingQueue[MAXIMUM_STEPS - 2] = 1;
-            walkingQueue[MAXIMUM_STEPS - 1] = 0;
+        if(updatedChunkX < 0 && updatedChunkY < 0) {
+            walkingQueue[walkingQueue.length - 2] = 1;
+            walkingQueue[walkingQueue.length - 1] = 0;
             walkingQueue[0] = 8;
         }
-        int readPosition = walkingQueue[MAXIMUM_STEPS - 1];
+        int readPosition = walkingQueue[walkingQueue.length - 1];
         int writeOpcode = -1;
         for(int i = 0; i < (runToggled ? 2 : 1); i++) {
-            if((readPosition + 1) % MAXIMUM_STEPS > walkingQueue[MAXIMUM_STEPS - 2])
+            if((readPosition + 1) % MAXIMUM_STEPS > walkingQueue[walkingQueue.length - 2])
                 break;
-            int opcode = walkingQueue[readPosition++];
+            int opcode = walkingQueue[readPosition];
+            System.out.println("OPCODE " + opcode);
             if(opcode < 8) {
                 coordX += Client.WALK_DELTA[opcode][0];
                 coordY += Client.WALK_DELTA[opcode][1];
@@ -61,31 +62,32 @@ public class Mob extends Entity {
                 else
                     writeOpcode = writeOpcode & ~3 | 2 | opcode << 5;
                 if(this instanceof Client) {
-                    int dx = updatedLocalX - (coordX - ((coordX >> 3) << 3));
-                    int dy = updatedLocalX - (coordX - ((coordX >> 3) << 3));
-                    if(dx > 15 || dx < -16 || dy > 15 || dy < -16) {
-                        int writePosition = lastUpdates[MAXIMUM_STEPS - 2];
-                        updatedLocalX = coordX - (((coordX >> 3) - 6) << 3);
-                        updatedLocalY = coordY - (((coordY >> 3) - 6) << 3);
-                        lastUpdates[writePosition] = 3 | coordZ << 2 | updatedLocalX << 5 | updatedLocalY << 12;
-                        lastUpdates[MAXIMUM_STEPS - 2] = (writePosition + 1) % MAXIMUM_STEPS;
+                    int dx = updatedChunkX - ((coordX >> 3) - 6);
+                    int dy = updatedChunkY - ((coordY >> 3) - 6);
+                    System.out.println("dx: " + dx + ", dy: " + dy);
+                    if(dx > 4 || dx < -4 || dy > 4 || dy < -4) {
+                        int writePosition = lastUpdates[lastUpdates.length - 2];
+                        updatedChunkX = (coordX >> 3) - 6;
+                        updatedChunkY = (coordY >> 3) - 6;
+                        lastUpdates[writePosition] = 3 | coordZ << 2 | (coordX - (updatedChunkX << 3)) << 5 | (coordY - (updatedChunkY << 3)) << 12;
+                        lastUpdates[lastUpdates.length - 2] = (writePosition + 1) % MAXIMUM_STEPS;
                         Client.sendCurrentChunk((Client) this);
                     }
                 }
+                readPosition = walkingQueue[walkingQueue.length - 1] = (readPosition + 1) % MAXIMUM_STEPS;
             } else if(opcode == 8 && this instanceof Client) {
-                updatedLocalX = coordX - (((coordX >> 3) - 6) << 3);
-                updatedLocalY = coordY - (((coordY >> 3) - 6) << 3);
-                writeOpcode = 3 | coordZ << 2 | 1 << 4 | updatedLocalX << 5 | updatedLocalY << 12;
-                walkingQueue[MAXIMUM_STEPS - 2] = walkingQueue[MAXIMUM_STEPS - 1];
+                updatedChunkX = (coordX >> 3) - 6;
+                updatedChunkY = (coordY >> 3) - 6;
+                writeOpcode = 3 | coordZ << 2 | 1 << 4 | (coordX - (updatedChunkX << 3)) << 5 | (coordY - (updatedChunkY << 3)) << 12;
+                walkingQueue[walkingQueue.length - 2] = walkingQueue[walkingQueue.length - 1];
                 Client.sendCurrentChunk((Client) this);
                 break;
             }
-            readPosition = (readPosition + 1) % MAXIMUM_STEPS;
         }
         if(writeOpcode != -1) {
-            int writePosition = lastUpdates[MAXIMUM_STEPS - 2];
+            int writePosition = lastUpdates[lastUpdates.length - 2];
             lastUpdates[writePosition] = writeOpcode;
-            lastUpdates[MAXIMUM_STEPS - 2] = (writePosition + 1) % MAXIMUM_STEPS;
+            lastUpdates[lastUpdates.length - 2] = (writePosition + 1) % MAXIMUM_STEPS;
         }
     }
     
@@ -95,6 +97,6 @@ public class Mob extends Entity {
     Mob() {
         walkingQueue = new int[MAXIMUM_STEPS + 2];
         lastUpdates = new int[MAXIMUM_STEPS + 2];
-        updatedLocalX = updatedLocalY = -1;
+        updatedChunkX = updatedChunkY = -1;
     }  
 }

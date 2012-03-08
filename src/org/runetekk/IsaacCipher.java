@@ -68,9 +68,7 @@ public final class IsaacCipher {
          * @param seed The seed.
          */
         public IsaacCipher(int[] seed) {
-                for(int i = 0; i < seed.length; i++) {
-                        results[i] = seed[i];
-                }
+        System.arraycopy(seed, 0, results, 0, seed.length);
                 init(true);
         }
 
