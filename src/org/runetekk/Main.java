@@ -123,7 +123,7 @@ public final class Main implements Runnable {
         + "\n                    | | \\ \\ |_| | | | |  __/ |  __/   <|   <                    "
         + "\n                    |_|  \\_\\__,_|_| |_|\\___|_|\\___|_|\\_\\_|\\_\\             "
         + "\n----------------------------------------------------------------------------------"
-        + "\n                                Game Server 1.0.8                                 "
+        + "\n                                Game Server 1.0.9                                 "
         + "\n                                 See RuneTekk.com                                 "
         + "\n                               Created by SiniSoul                                "
         + "\n----------------------------------------------------------------------------------");
@@ -356,14 +356,17 @@ public final class Main implements Runnable {
                                     client.outgoingBuffer = new byte[Client.BUFFER_SIZE];
                                     /* UPDATE STUFF */
                                     client.flagBuffer = new ByteBuffer(122);
+                                    client.appearanceUpdates = new boolean[MAXIMUM_CLIENTS];
                                     client.activePlayers = new ListNode();
                                     client.activePlayers.childNode = client.activePlayers;
                                     client.activePlayers.parentNode = client.activePlayers;
                                     client.addedPlayers = new ListNode();
                                     client.addedPlayers.childNode = client.addedPlayers;
                                     client.addedPlayers.parentNode = client.addedPlayers;
+                                    client.playerIndex = new byte[(MAXIMUM_CLIENTS + 7) >> 3];
                                     /* APPEARANCE STUFF */
                                     client.appearanceStates = new int[12];
+                                    client.appearanceStates[0] = 31 | 256;
                                     client.colorIds = new int[5];
                                     client.animationIds = new int[7];
                                     client.incomingCipher = new IsaacCipher(seeds);
@@ -430,8 +433,8 @@ public final class Main implements Runnable {
                                             break;
                                         
                                         /* Command */
-                                        case 103:                                         
-                                            String commandStr = new String(buffer.payload, 0, size - 1);
+                                        case 103:        
+                                            client.commandStr = new String(buffer.payload, 0, size);                                      
                                             break;
                                     }
                                 }
@@ -470,7 +473,8 @@ public final class Main implements Runnable {
                             * Initial loop state.
                             */
                            case 2:
-                               Client.writeFlaggedUpdates(client);
+                               if(client.activeFlags != 0)
+                                  Client.writeFlaggedUpdates(client, client.flagBuffer, client.activeFlags);
                                client.updateMovement();
                                client.updateRegion();
                                client.state = 3;
@@ -480,6 +484,7 @@ public final class Main implements Runnable {
                             * Update state.
                             */
                            case 3:
+                               Client.populatePlayers(client);
                                client.state = 4;
                                break;
                              
@@ -502,7 +507,7 @@ public final class Main implements Runnable {
                            /**
                             * Idle state.
                             */
-                           case 6:
+                           case 6:                              
                                if(client.hasWritten) {
                                    client.hasWritten = false;
                                    client.state = 2;
@@ -747,7 +752,7 @@ public final class Main implements Runnable {
              4, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -1, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3,  4, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3,
         };

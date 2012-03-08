@@ -51,16 +51,16 @@ public class Entity extends ListNode {
         if(rUpdatedHash != rHash) {
             if(Main.regions != null && Main.regions[coordX >> 6] != null && (region = Main.regions[coordX >> 6][coordY >> 6]) != null) {
                 Chunk chunk = null;
-                int cHash = ((coordX - ((coordX >> 6) << 6) >> 3) << 8) | (coordY - ((coordY >> 6) << 6) >> 3);
+                int cHash = (((coordX >> 3) - ((coordX >> 6) << 3)) << 8) | ((coordY >> 3) - ((coordY >> 6) << 3));
                 if(cUpdatedHash != cHash) {
-                    if(region.chunks != null && region.chunks[(coordX - ((coordX >> 6) << 6) >> 3)] != null &&
-                                       (chunk = region.chunks[(coordX - ((coordX >> 6) << 6) >> 3)]
-                                                             [(coordY - ((coordY >> 6) << 6) >> 3)]) != null) {
+                    if(region.chunks != null && region.chunks[(coordX >> 3) - ((coordX >> 6) << 3)] != null &&
+                                       (chunk = region.chunks[(coordX >> 3) - ((coordX >> 6) << 3)]
+                                                             [(coordY >> 3) - ((coordY >> 6) << 3)]) != null) {
                          removeFromList();           
                          parentNode = chunk.activeEntities.parentNode;
                          childNode = chunk.activeEntities;
-                         parentNode.childNode = chunk.activeEntities;
-                         childNode.parentNode = chunk.activeEntities;   
+                         parentNode.childNode = this;
+                         childNode.parentNode = this;   
                          rUpdatedHash = rHash;
                          cUpdatedHash = cHash;
                     }
@@ -73,7 +73,7 @@ public class Entity extends ListNode {
      * Constructs a new {@link Entity};
      */
     Entity() {
-        coordX = DEFAULT_X;
+        coordX = DEFAULT_X + (int) (Math.random() * 8);
         coordY = DEFAULT_Y;
     }
 }

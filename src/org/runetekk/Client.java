@@ -138,6 +138,17 @@ public final class Client extends Mob {
     ListNode activePlayers;
     
     /**
+     * The collection of flags for indexed players.
+     */
+    byte[] playerIndex;
+    
+    /**
+     * Force an appearance update if the client does not currently have
+     * an active appearance update ready.
+     */
+    boolean[] appearanceUpdates;
+    
+    /**
      * The buffer that handles the player appearances and flags.
      */
     ByteBuffer flagBuffer;
@@ -183,6 +194,12 @@ public final class Client extends Mob {
     boolean isRunActive;
     
     /**
+     * The currently pending commands separated by a new line character for
+     * each command.
+     */
+    String commandStr;
+    
+    /**
      * The time that the client will timeoutStamp.
      */
     long timeoutStamp;
@@ -223,6 +240,24 @@ public final class Client extends Mob {
         buffer.putByte(73 + client.outgoingCipher.getNextValue());
         buffer.putWord128(client.coordX >> 3);
         buffer.putWord(client.coordY >> 3);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    long test;
+    
+    /**
+     * Sets the tab interface id for a client.
+     * @param client The client to send the set tab interface packet to.
+     * @param tabId The tab id.
+     * @param interId The interface id.
+     */
+    public static void sendTabInterface(Client client, int tabId, int interId) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(71 + client.outgoingCipher.getNextValue());
+        buffer.putWord(interId);
+        buffer.putByteA(tabId);
         client.oWritePosition += buffer.offset - position;
     }
     
@@ -272,10 +307,15 @@ public final class Client extends Mob {
                 break;
             updatedPlayers++;
             Client pClient = Main.clientArray[((IntegerNode) node).value];
-            int dx = client.coordX - pClient.coordX;
-            int dy = client.coordY - pClient.coordY;
+            int dx = 0;
+            int dy = 0;
+            if(pClient != null) {
+                dx = client.coordX - pClient.coordX;
+                dy = client.coordY - pClient.coordY;
+            }
             boolean remove = pClient == null || dx > 15 || dx < -16 || dy > 15 || dy < -16;
             if(remove) {
+                client.playerIndex[((IntegerNode) node).value >> 3] &= ~(1 << (((IntegerNode) node).value & 7));
                 buffer.putBits(1, 1);
                 buffer.putBits(3, 2);
                 node.removeFromList();
@@ -283,20 +323,23 @@ public final class Client extends Mob {
             }
             boolean update = pClient.activeFlags != 0;
             boolean movementUpdate = true;
-            if((pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[Mob.MAXIMUM_STEPS - 2] && (pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]] & 3) == 3)
+            if((pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[Mob.MAXIMUM_STEPS - 2] || (pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]] & 3) == 3)
                 movementUpdate = false;
             buffer.putBits(update | movementUpdate ? 1 : 0, 1);
             if(update | movementUpdate) {
-                int updateHash = pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]];
-                buffer.putBits(updateHash & 3, 2);
-                if((updateHash & 3) == 1) {
-                    buffer.putBits(updateHash >> 2, 3); 
-                    buffer.putBits(localUpdate ? 1 : 0, 1);
-                } else if((updateHash & 3) == 2) {
-                    buffer.putBits((updateHash >> 2) & 7, 3);
-                    buffer.putBits(updateHash >> 5, 3);
-                    buffer.putBits(localUpdate ? 1 : 0, 1);
-                } 
+                if(movementUpdate) {
+                    int updateHash = pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]];
+                    buffer.putBits(updateHash & 3, 2);
+                    if((updateHash & 3) == 1) {
+                        buffer.putBits(updateHash >> 2, 3); 
+                        buffer.putBits(localUpdate ? 1 : 0, 1);
+                    } else if((updateHash & 3) == 2) {
+                        buffer.putBits((updateHash >> 2) & 7, 3);
+                        buffer.putBits(updateHash >> 5, 3);
+                        buffer.putBits(localUpdate ? 1 : 0, 1);
+                    }
+                } else
+                    buffer.putBits(0, 2);
             }
         }
         int bitOffset = buffer.bitOffset;
@@ -309,11 +352,11 @@ public final class Client extends Mob {
                 break;
             Client pClient = Main.clientArray[((IntegerNode) node).value];
             if(pClient != null) {
-                int dx = client.coordX - pClient.coordX;
-                int dy = client.coordY - pClient.coordY;
+                int dx = pClient.coordX - client.coordX;
+                int dy = pClient.coordY - client.coordY;
                 if(dx <= 15 || dx >= -16 || dy <= 15 || dy >= -16) {
                     buffer.putBits(((IntegerNode) node).value, 11);
-                    buffer.putBits(pClient.activeFlags != 0 ? 1 : 0, 1);
+                    buffer.putBits(1, 1);
                     /* Unsure about what else this value could be used for */
                     buffer.putBits(1, 1); 
                     if(dx < 0)
@@ -323,6 +366,7 @@ public final class Client extends Mob {
                     buffer.putBits(dy, 5);
                     buffer.putBits(dx, 5);
                     node.removeFromList();
+                    client.appearanceUpdates[((IntegerNode) node).value] = true;
                     node.parentNode = client.activePlayers.parentNode;
                     node.childNode = client.activePlayers;
                     node.parentNode.childNode = node;
@@ -348,12 +392,18 @@ public final class Client extends Mob {
             if(!(node instanceof IntegerNode))
                 break;
             Client pClient = Main.clientArray[((IntegerNode) node).value];
-            if(pClient.activeFlags != 0) {
-                int len = pClient.flagBuffer.offset;
+            ByteBuffer flagBuffer = pClient.activeFlags != 0 ? pClient.flagBuffer : null;
+            if(client.appearanceUpdates[((IntegerNode) node).value] && (pClient.activeFlags & 1 << 7) == 0) {
+                flagBuffer = new ByteBuffer(122);
+                Client.writeFlaggedUpdates(pClient, flagBuffer, pClient.activeFlags | 1 << 7);
+                client.appearanceUpdates[((IntegerNode) node).value] = false;
+            }
+            if(flagBuffer != null) {
+                int len = flagBuffer.offset;
                 if(len < 1)
                     buffer.putByte(0);
                 else {
-                    System.arraycopy(pClient.flagBuffer.payload, 0, buffer.payload, buffer.offset, len);  
+                    System.arraycopy(flagBuffer.payload, 0, buffer.payload, buffer.offset, len);  
                     buffer.offset += len;
                 }
             }
@@ -368,12 +418,11 @@ public final class Client extends Mob {
      * Writes the flagged updates for a {@link Client} to the flag buffer.
      * @param client The client to write the updates for.
      */
-    public static void writeFlaggedUpdates(Client client) {
-        ByteBuffer buffer = client.flagBuffer;
+    public static void writeFlaggedUpdates(Client client, ByteBuffer buffer, int activeFlags) {
         buffer.offset = 2;
         int mask = 0;
         for(int bitOff = 0; bitOff < 10; bitOff++) {
-            if((client.activeFlags & 1 << (bitOff + 1)) != 0) {
+            if((activeFlags & 1 << (bitOff + 1)) != 0) {
                 switch(bitOff) {
                     
                     /* Async Walk */
@@ -459,6 +508,40 @@ public final class Client extends Mob {
     }
     
     /**
+     * Populates the added list for players that are around the client.
+     * @param client The client to populate its list for.
+     */
+    public static void populatePlayers(Client client) {
+        for(int chunkX = (client.coordX >> 3) - Client.CHUNK_RANGE; chunkX <= (client.coordX >> 3) + Client.CHUNK_RANGE; chunkX++) {
+            for(int chunkY = (client.coordY >> 3) - Client.CHUNK_RANGE; chunkY <= (client.coordY >> 3) + Client.CHUNK_RANGE; chunkY++) {
+                Region region = null;
+                if(Main.regions != null && Main.regions[chunkX >> 3] != null && (region = Main.regions[chunkX >> 3][chunkY >> 3]) != null) {
+                    Chunk chunk = null;
+                    if(region.chunks != null && region.chunks[chunkX - ((chunkX >> 3) << 3)] != null && (chunk = region.chunks[chunkX - ((chunkX >> 3) << 3)][chunkY - ((chunkY >> 3) << 3)]) != null) {
+                        ListNode node = chunk.activeEntities;
+                        while((node = node.childNode) != null) {
+                            if(!(node instanceof Entity))
+                                break;
+                            if(!(node instanceof Client))
+                                continue;
+                            Client pClient = (Client) node;
+                            int pos = pClient.localId.value;
+                            if(pos == client.localId.value || (client.playerIndex[pos >> 3] & (1 << (pos & 7))) != 0)
+                                continue;
+                            ListNode idNode = new IntegerNode(pos);
+                            idNode.parentNode = client.addedPlayers.parentNode;
+                            idNode.childNode = client.addedPlayers;
+                            idNode.parentNode.childNode = idNode;
+                            idNode.childNode.parentNode = idNode;
+                            client.playerIndex[pos >> 3] |= 1 << (pos & 7);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
      * Encodes a string to be a base 37 long value.
      * @param s The string to encode.
      * @return The encoded value.
@@ -485,6 +568,7 @@ public final class Client extends Mob {
      * Destroys this {@link Client}.
      */
     public void destroy() {
+        removeFromList();
         try {
             inputStream.close();
             outputStream.close();
@@ -499,6 +583,7 @@ public final class Client extends Mob {
         appearanceStates = null;
         colorIds = null;
         flagBuffer = null;
+        commandStr = null;
         localId = null;
         username = null;
         password = null;
