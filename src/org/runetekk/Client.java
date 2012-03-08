@@ -489,6 +489,12 @@ public final class Client extends Mob {
         outgoingBuffer = null;
         incomingCipher = null;
         outgoingCipher = null;
+        activePlayers = null;
+        addedPlayers = null;
+        animationIds = null;
+        appearanceStates = null;
+        colorIds = null;
+        flagBuffer = null;
         localId = null;
         username = null;
         password = null;
