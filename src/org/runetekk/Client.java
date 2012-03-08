@@ -276,15 +276,12 @@ public final class Client extends Mob {
         boolean localMovementUpdate = true;
         if((client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > client.lastUpdates[client.lastUpdates.length - 2])
             localMovementUpdate = false;
-        System.out.println(localMovementUpdate);
-        System.out.println(localUpdate);
         buffer.putBits(localUpdate | localMovementUpdate ? 1 : 0, 1);
+        System.out.println(localMovementUpdate);
         if(localUpdate | localMovementUpdate) {
             if(localMovementUpdate) {
                 int updateHash = client.lastUpdates[client.lastUpdates[client.lastUpdates.length - 1]];
                 buffer.putBits(updateHash & 3, 2);
-                System.out.println("OP " + (updateHash & 3));
-                System.out.println("HASH " + updateHash);
                 if((updateHash & 3) == 1) {
                     buffer.putBits(updateHash >> 2, 3); 
                     buffer.putBits(localUpdate ? 1 : 0, 1);

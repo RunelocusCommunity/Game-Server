@@ -501,9 +501,8 @@ public final class Main implements Runnable {
                             * Reset state.
                             */
                            case 5:
-                               if((client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS <= client.lastUpdates[client.lastUpdates.length - 2]) {
+                               if((client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS <= client.lastUpdates[client.lastUpdates.length - 2])
                                    client.lastUpdates[client.lastUpdates.length - 1] = (client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS;
-                               }
                                client.activeFlags = 0;
                                client.state = 6;
                                break;
