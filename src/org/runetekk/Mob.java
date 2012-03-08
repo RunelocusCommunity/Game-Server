@@ -21,17 +21,15 @@ public class Mob extends Entity {
     int[] walkingQueue;
     
     /**
-     * Puts the walk opcode into the walking queue.
-     * @param opcode The opcode.
+     * The queue of the last updates that this mob was affected by.
      */
-    void putWalkOpcode(int opcode) {
-        walkingQueue[walkingQueue[walkingQueue.length - 1]++] = opcode;
-    }
+    int[] lastUpdates;
     
     /**
      * Constructs a new {@link Mob};
      */
     Mob() {
         walkingQueue = new int[MAXIMUM_STEPS + 2];
+        lastUpdates = new int[MAXIMUM_STEPS + 2];
     }  
 }

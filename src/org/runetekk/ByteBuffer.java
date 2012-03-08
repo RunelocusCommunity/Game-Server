@@ -8,6 +8,11 @@ package org.runetekk;
 public final class ByteBuffer {
     
     /**
+     * The mask array.
+     */
+    private final static int[] MASKS;
+    
+    /**
      * The byte array payload of this {@link ByteBuffer}.
      */
     byte[] payload;
@@ -16,6 +21,11 @@ public final class ByteBuffer {
      * The current offset in the payload.
      */
     int offset;
+    
+    /**
+     * The current bit offset in the payload.
+     */
+    int bitOffset;
     
     /**
      * Puts a byte into the payload.
@@ -31,6 +41,14 @@ public final class ByteBuffer {
      */
     int getUbyte() {
         return payload[offset++] & 0xFF;
+    }
+    
+    /**
+     * Puts a byte form a into the payload.
+     * @param value The byte value.
+     */
+    void putByteA(int value) {
+        payload[offset++] = (byte) (-value);
     }
     
     /**
@@ -72,8 +90,23 @@ public final class ByteBuffer {
     }
     
     /**
+     * Puts a qword into the payload.
+     * @param value The qword value.
+     */
+    void putQword(long value) {
+        payload[offset++] = (byte) (value >> 56);
+        payload[offset++] = (byte) (value >> 48);
+        payload[offset++] = (byte) (value >> 40);
+        payload[offset++] = (byte) (value >> 32);
+        payload[offset++] = (byte) (value >> 24);
+        payload[offset++] = (byte) (value >> 16);
+        payload[offset++] = (byte) (value >> 8);
+        payload[offset++] = (byte) (value & 0xFF);
+    }
+    
+    /**
      * Puts a string into the payload.
-     * @param str The string to put into the payload.
+     * @param str The string to putBits into the payload.
      */
     void putString(String str) {
         System.arraycopy(str.getBytes(), 0, payload, offset, str.length());
@@ -93,6 +126,44 @@ public final class ByteBuffer {
     }
     
     /**
+     * Initializes the bit offset.
+     */
+    void initializeBitOffset() {
+        bitOffset = offset * 8;
+    }
+    
+    /**
+     * Sets the current offset of the byte buffer from the bit offset.
+     */
+    void resetBitOffset() {
+        offset = (bitOffset + 7) / 8;
+    }
+    
+    /**
+     * Puts a value into the payload array.
+     * @param value The value to putBits into the payload array.
+     * @param amountBits The amount of bits to write the value as.
+     */
+    void putBits(int value, int amountBits) {
+        int byteOffset = bitOffset >> 3;
+        int off = 8 - (bitOffset & 7);
+        bitOffset += amountBits;
+        for (; amountBits > off; off = 8) {
+            payload[byteOffset] &= ~MASKS[off];
+            payload[byteOffset] |= value >> (amountBits - off) & MASKS[off];            
+            amountBits -= off;
+            byteOffset++;
+        }
+        if (amountBits == off) {
+            payload[byteOffset] &= ~MASKS[off];
+            payload[byteOffset] |= value & MASKS[off];
+        } else {
+            payload[byteOffset] &= ~MASKS[off] << (off - amountBits);
+            payload[byteOffset] |= (value & MASKS[off]) << (off - amountBits);            
+        }
+    }
+    
+    /**
      * Constructs a new {@link ByteBuffer};
      * @param size The size of the payload array. 
      */
@@ -107,4 +178,10 @@ public final class ByteBuffer {
     ByteBuffer(byte[] src) {
         this.payload = src;
     }   
+          
+    static {
+        MASKS = new int[32];
+        for (int i = 0; i < 32; i++)
+            MASKS[i] = (1 << i) - 1;
+    } 
 }

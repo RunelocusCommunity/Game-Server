@@ -47,11 +47,11 @@ public class Entity extends ListNode {
      */
     void updateRegion() {
         Region region = null;
-        int rHash = ((coordX >> 6) << 10) | ((coordY) >> 6);
+        int rHash = ((coordX >> 6) << 8) | ((coordY) >> 6);
         if(rUpdatedHash != rHash) {
             if(Main.regions != null && Main.regions[coordX >> 6] != null && (region = Main.regions[coordX >> 6][coordY >> 6]) != null) {
                 Chunk chunk = null;
-                int cHash = ((coordX - ((coordX >> 6) << 6) >> 3) << 13) | (coordY - ((coordY >> 6) << 6) >> 3);
+                int cHash = ((coordX - ((coordX >> 6) << 6) >> 3) << 8) | (coordY - ((coordY >> 6) << 6) >> 3);
                 if(cUpdatedHash != cHash) {
                     if(region.chunks != null && region.chunks[(coordX - ((coordX >> 6) << 6) >> 3)] != null &&
                                        (chunk = region.chunks[(coordX - ((coordX >> 6) << 6) >> 3)]

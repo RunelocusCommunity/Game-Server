@@ -28,6 +28,11 @@ public final class Client extends Mob {
     public final static int CHUNK_RANGE = 2;
     
     /**
+     * The offset for each type of walk step in the amount of coordinates.
+     */
+    public final static int[][] WALK_DELTA;
+    
+    /**
      * The inbound {@link IsaacCipher}.
      */
     IsaacCipher incomingCipher;
@@ -118,19 +123,14 @@ public final class Client extends Mob {
     long lastRecievedPing;
     
     /**
-     * The buffer that handles movement updates.
+     * The list of added players around this client.
      */
-    BitBuffer movementBuffer;
+    ListNode addedPlayers;
     
     /**
-     * The buffer that handles player updates.
+     * The list of active players around this client.
      */
-    BitBuffer playerBuffer;
-    
-    /**
-     * The buffer that handles adding players.
-     */
-    BitBuffer addingBuffer;
+    ListNode activePlayers;
     
     /**
      * The buffer that handles the player appearances and flags.
@@ -138,15 +138,45 @@ public final class Client extends Mob {
     ByteBuffer flagBuffer;
     
     /**
-     * The list of players within coordinate range to update.
+     * The active flags variable.
      */
-    ListNode addedPlayers;
+    int activeFlags;
     
     /**
-     * The added player index.
+     * The active head icons.
      */
-    byte[] playerIndex;
-   
+    int headIcons;
+    
+    /**
+     * The current appearance states for the client.
+     */
+    int[] appearanceStates;
+    
+    /**
+     * The color ids for the appearance states.
+     */
+    int[] colorIds;
+    
+    /**
+     * The current appearance animations.
+     */
+    int[] animationIds;
+    
+    /**
+     * The combat level for this client.
+     */
+    int combatLevel;
+    
+    /**
+     * The skill total for this client.
+     */
+    int skillTotal;
+    
+    /**
+     * Run is currently toggled.
+     */
+    boolean isRunActive;
+    
     /**
      * The time that the client will timeoutStamp.
      */
@@ -167,7 +197,7 @@ public final class Client extends Mob {
      * @param client The client to write the message to.
      * @param message The message to write.
      */
-    static void sendMessage(Client client, String message) {
+    public static void sendMessage(Client client, String message) {
         ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
         int position = client.oWritePosition;
         buffer.offset = position;
@@ -181,7 +211,7 @@ public final class Client extends Mob {
      * Sends the current chunk coordinates of where the client is.
      * @param client The client to write the packet to.
      */
-    static void sendCurrentChunk(Client client) {
+    public static void sendCurrentChunk(Client client) {
         ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
         int position = client.oWritePosition;
         buffer.offset = position;
@@ -189,6 +219,185 @@ public final class Client extends Mob {
         buffer.putWord128((client.coordX >> 3) + 6);
         buffer.putWord((client.coordY >> 3) + 6);
         client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
+     * Sends the update for the player.
+     * @param client 
+     */
+    public static void sendPlayerUpdate(Client client) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(81 + client.outgoingCipher.getNextValue());
+        buffer.putWord(0);
+        buffer.initializeBitOffset();
+        boolean localUpdate = client.activeFlags != 0;
+        boolean movementUpdate = true;
+        if(client.lastUpdates[Mob.MAXIMUM_STEPS - 1] >= client.lastUpdates[Mob.MAXIMUM_STEPS - 2])
+            movementUpdate = false;
+        buffer.putBits(localUpdate | movementUpdate ? 1 : 0, 1);
+        if(localUpdate | movementUpdate) {
+            if(movementUpdate) {
+                int updateHash = client.lastUpdates[client.lastUpdates[Mob.MAXIMUM_STEPS - 1]];
+                buffer.putBits((updateHash & 7) >> 1, 2);
+                if((updateHash & 1) != 0) {
+                    buffer.putBits(updateHash >> 3, 3); 
+                    buffer.putBits(localUpdate ? 1 : 0, 1);
+                } else if((updateHash & 2) != 0) {
+                    buffer.putBits((updateHash >> 3) & 7, 3);
+                    buffer.putBits(updateHash >> 6, 3);
+                    buffer.putBits(localUpdate ? 1 : 0, 1);
+                } else if((updateHash & 4) != 0) {
+                    buffer.putBits((updateHash >> 3) & 3, 2);
+                    buffer.putBits((updateHash >> 4) & 1, 1);
+                    buffer.putBits(localUpdate ? 1 : 0, 1);
+                    buffer.putBits((updateHash >> 11) & 127, 7);
+                    buffer.putBits((updateHash >> 18) & 127, 7);
+                }
+            } else
+                buffer.putBits(0, 2);
+        }
+        int oldBitOffset = buffer.bitOffset;
+        buffer.bitOffset += 8;
+        int updatedPlayers = 0;
+        ListNode node = client.activePlayers;
+        while((node = node.childNode) != null) {
+            if(!(node instanceof IntegerNode))
+                break;
+            Client pClient = Main.clientArray[((IntegerNode) node).value];
+            int dx = client.coordX - pClient.coordX;
+            int dy = client.coordY - pClient.coordY;
+            boolean remove = pClient == null || dx > 15 || dx < -16 || dy > 15 || dy < -16;
+            if(remove) {
+                
+                node.removeFromList();
+                continue;
+            }
+            updatedPlayers++;
+        }
+        int bitOffset = buffer.bitOffset;
+        buffer.bitOffset = oldBitOffset;
+        buffer.putBits(updatedPlayers, 8);
+        buffer.bitOffset = bitOffset;
+        buffer.resetBitOffset();
+        int oldOffset = buffer.offset;
+        buffer.offset = position + 1;
+        buffer.putWord(oldOffset - (position + 1));
+        buffer.offset = oldOffset;
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
+     * Writes the flagged updates for a {@link Client} to the flag buffer.
+     * @param client The client to write the updates for.
+     */
+    public static void writeFlaggedUpdates(Client client) {
+        ByteBuffer buffer = client.flagBuffer;
+        buffer.offset = 2;
+        int mask = 0x40;
+        for(int bitOff = 0; bitOff < 10; bitOff++) {
+            int opcode;
+            if((opcode = (client.activeFlags & 1 << bitOff)) != 0) {
+                switch(opcode) {
+                    
+                    /* Async Walk */
+                    case 0:
+                        break;
+                     
+                    /* Force Move */
+                    case 1:
+                        break;
+                    
+                    /* Animation */
+                    case 2:
+                        break;
+                        
+                    /* Force text */
+                    case 3:
+                        break;
+                        
+                    /* Chat text */
+                    case 4:
+                        break;
+                     
+                    /* Turn to NPC */
+                    case 5:
+                        break;
+                    
+                    /* Appearance */
+                    case 6:
+                        int oldOffset = buffer.offset;
+                        writeAppearance(client, buffer);
+                        int size = buffer.offset - (oldOffset + 1);
+                        buffer.offset = oldOffset;
+                        buffer.putByteA(size);
+                        buffer.offset += size;
+                        break;
+                        
+                    /* Turn to Loc */
+                    case 7:
+                        break;
+                       
+                    /* Hit One */
+                    case 8:
+                        break;
+                    
+                    /* Hit Two */
+                    case 9:
+                        break;
+                }
+            }
+        }
+        int oldOffset = buffer.offset;
+        buffer.offset = 0;
+        buffer.putWord(mask);
+        buffer.offset = oldOffset;
+    }
+    
+    /**
+     * Writes the appearance for a client.
+     * @param client The client to write the appearance for.
+     * @param buffer The buffer to write the appearance data to.
+     */
+    public static void writeAppearance(Client client, ByteBuffer buffer) {
+        buffer.putByte(0);
+        buffer.putByte(client.headIcons);
+        for(int i = 0; i < 12; i++) {
+            buffer.putWord(client.appearanceStates[i]);
+        }
+        for(int i = 0; i < 5; i++) {
+            buffer.putByte(client.colorIds[i]);
+        }
+        for(int i = 0; i < 7; i++) {
+            buffer.putWord(client.animationIds[i]);
+        }
+        buffer.putQword(encodeBase37(client.username));
+        buffer.putByte(client.combatLevel);
+        buffer.putByte(client.skillTotal);        
+    }
+    
+    /**
+     * Encodes a string to be a base 37 long value.
+     * @param s The string to encode.
+     * @return The encoded value.
+     */
+    public static long encodeBase37(String s) {
+        long l = 0L;
+        for(int i = 0; i < s.length() && i < 12; i++) {
+            char c = s.charAt(i);
+            l *= 37L;
+            if(c >= 'A' && c <= 'Z')
+                l += (1 + c) - 65;
+            else
+            if(c >= 'a' && c <= 'z')
+                l += (1 + c) - 97;
+            else
+            if(c >= '0' && c <= '9')
+                l += (27 + c) - 48;
+        }
+        for(; l % 37L == 0L && l != 0L; l /= 37L);
+        return l;
     }
     
     /**
@@ -203,8 +412,6 @@ public final class Client extends Mob {
         outgoingBuffer = null;
         incomingCipher = null;
         outgoingCipher = null;
-        movementBuffer = null;
-        playerBuffer = null;
         localId = null;
         username = null;
         password = null;
@@ -218,7 +425,21 @@ public final class Client extends Mob {
         this.inputStream = socket.getInputStream();
         this.outputStream = socket.getOutputStream();
         timeoutStamp = -1L;
-        /* FIX THIS TIDBIT LATER */
-        rights = 2;
     } 
+    
+    static {
+        WALK_DELTA = new int[8][2];
+        WALK_DELTA[0][0] = -1;
+        WALK_DELTA[0][1] =  1;
+        WALK_DELTA[1][1] =  1;
+        WALK_DELTA[2][0] =  1;
+        WALK_DELTA[2][1] =  1;
+        WALK_DELTA[3][0] = -1;
+        WALK_DELTA[4][0] =  1;
+        WALK_DELTA[5][0] = -1;
+        WALK_DELTA[5][1] = -1;
+        WALK_DELTA[6][1] = -1;
+        WALK_DELTA[7][0] =  1;
+        WALK_DELTA[7][1] = -1;
+    }
 }

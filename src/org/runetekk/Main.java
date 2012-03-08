@@ -62,6 +62,11 @@ public final class Main implements Runnable {
     static Region[][] regions;
     
     /**
+     * The {@link Client} array.
+     */
+    static Client[] clientArray;
+    
+    /**
      * The maximum amount of players allowed to connect to this server.
      */
     static final int MAXIMUM_CLIENTS = 2048;
@@ -80,11 +85,6 @@ public final class Main implements Runnable {
      * The {@link ServerSocket} to accept connections from.
      */
     private ServerSocket serverSocket;
-    
-    /**
-     * The {@link Client} array.
-     */
-    Client[] clientArray;
     
     /**
      * The list of clients currently connected to the server.
@@ -348,14 +348,12 @@ public final class Main implements Runnable {
                                     response[1] = (byte) client.rights;
                                     client.outputStream.write(response);     
                                     client.outgoingBuffer = new byte[Client.BUFFER_SIZE];
-                                    client.playerIndex = new byte[(MAXIMUM_CLIENTS + 7) >> 3];
-                                    client.addedPlayers = new ListNode();
-                                    client.addedPlayers.childNode = client.addedPlayers;
-                                    client.addedPlayers.parentNode = client.addedPlayers;
-                                    client.playerBuffer = new BitBuffer(Client.PLAYER_UPDATES * 10);
-                                    client.addingBuffer = new BitBuffer(MAXIMUM_CLIENTS * 23);
-                                    client.movementBuffer = new BitBuffer(21);
-                                    client.flagBuffer = new ByteBuffer(120);
+                                    /* UPDATE STUFF */
+                                    client.flagBuffer = new ByteBuffer(122);
+                                    /* APPEARANCE STUFF */
+                                    client.appearanceStates = new int[12];
+                                    client.colorIds = new int[5];
+                                    client.animationIds = new int[7];
                                     client.incomingCipher = new IsaacCipher(seeds);
                                     for(int i = 0; i < seeds.length; i++)
                                         seeds[i] += 50;
@@ -450,6 +448,7 @@ public final class Main implements Runnable {
                            case 1:
                                client.state = 2;
                                break;
+                              
                                
                            case 2:
                                
