@@ -123,7 +123,7 @@ public final class Main implements Runnable {
         + "\n                    | | \\ \\ |_| | | | |  __/ |  __/   <|   <                    "
         + "\n                    |_|  \\_\\__,_|_| |_|\\___|_|\\___|_|\\_\\_|\\_\\             "
         + "\n----------------------------------------------------------------------------------"
-        + "\n                                Game Server 1.0.7                                 "
+        + "\n                                Game Server 1.0.8                                 "
         + "\n                                 See RuneTekk.com                                 "
         + "\n                               Created by SiniSoul                                "
         + "\n----------------------------------------------------------------------------------");
@@ -351,7 +351,7 @@ public final class Main implements Runnable {
                                     /* REDESIGN BIT */
                                     byte[] response = new byte[3];
                                     response[0] = (byte) 2;
-                                    response[1] = (byte) client.rights;
+                                    response[1] = (byte) 2; //client.rights;
                                     client.outputStream.write(response);     
                                     client.outgoingBuffer = new byte[Client.BUFFER_SIZE];
                                     /* UPDATE STUFF */
@@ -364,8 +364,6 @@ public final class Main implements Runnable {
                                     client.addedPlayers.parentNode = client.addedPlayers;
                                     /* APPEARANCE STUFF */
                                     client.appearanceStates = new int[12];
-                                    //client.appearanceStates[0] = 31 | 256;
-                                    //client.activeFlags |= 1 << 7;
                                     client.colorIds = new int[5];
                                     client.animationIds = new int[7];
                                     client.incomingCipher = new IsaacCipher(seeds);
@@ -376,9 +374,6 @@ public final class Main implements Runnable {
                                 }
                                 break;
                              
-                            case 2:
-                            case 3:
-                            case 4:
                             case 5:
                                 if(client.lastRecievedPing + 15000L < System.currentTimeMillis())
                                     client.timeoutStamp = System.currentTimeMillis() + 60000L;
@@ -432,6 +427,11 @@ public final class Main implements Runnable {
                                         case 0:
                                             client.lastRecievedPing = System.currentTimeMillis();
                                             client.timeoutStamp = -1L;
+                                            break;
+                                        
+                                        /* Command */
+                                        case 103:                                         
+                                            String commandStr = new String(buffer.payload, 0, size - 1);
                                             break;
                                     }
                                 }
@@ -496,6 +496,7 @@ public final class Main implements Runnable {
                             */
                            case 5:
                                client.activeFlags = 0;
+                               client.state = 6;
                                break;
                             
                            /**
@@ -729,7 +730,7 @@ public final class Main implements Runnable {
             -3, -3, -3, -3, -3, -3, -3, -1, -3, -3,
             -3, -3, -3, -3, -3, -3,  4, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,           
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -1, -3, -3, -3, -3, -3, -3,
             
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3,  0, -3, -3, -3, -3, -3, -3, -3, -3,
@@ -744,7 +745,7 @@ public final class Main implements Runnable {
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             
              4, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -1, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
