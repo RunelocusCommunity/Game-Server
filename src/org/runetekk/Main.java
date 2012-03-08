@@ -362,8 +362,7 @@ public final class Main implements Runnable {
                                 }
                                 break;
                              
-                            case 1:
-                            case 2:
+                            case 5:
                                 if(client.lastRecievedPing + 15000L < System.currentTimeMillis())
                                     client.timeoutStamp = System.currentTimeMillis() + 60000L;
                                 while(client.iReadPosition != client.iWritePosition) {
@@ -449,9 +448,35 @@ public final class Main implements Runnable {
                                client.state = 2;
                                break;
                               
-                               
+                           /**
+                            * Initial loop state.
+                            */
                            case 2:
-                               
+                               client.activeFlags = 0;                              
+                               break;
+                            
+                           /**
+                            * Update state.
+                            */
+                           case 3:
+                               Client.writeFlaggedUpdates(client);
+                               break;
+                             
+                           /**
+                            * Write update state.
+                            */
+                           case 4:
+                               Client.sendPlayerUpdate(client);
+                               break;
+                            
+                           /**
+                            * Idle state.
+                            */
+                           case 5:
+                               if(client.hasWritten) {
+                                   client.hasWritten = false;
+                                   client.state = 2;
+                               }
                                break;
                        }
                    } catch(Exception ex) {

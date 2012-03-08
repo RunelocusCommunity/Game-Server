@@ -68,6 +68,11 @@ public final class Client extends Mob {
     volatile int oWritePosition;
     
     /**
+     * The buffer has been written to the client.
+     */
+    volatile boolean hasWritten;
+    
+    /**
      * The local id of this client.
      */
     IntegerNode localId;
@@ -223,7 +228,7 @@ public final class Client extends Mob {
     
     /**
      * Sends the update for the player.
-     * @param client 
+     * @param client The client to send the player update to.
      */
     public static void sendPlayerUpdate(Client client) {
         ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
@@ -233,12 +238,12 @@ public final class Client extends Mob {
         buffer.putWord(0);
         buffer.initializeBitOffset();
         boolean localUpdate = client.activeFlags != 0;
-        boolean movementUpdate = true;
-        if(client.lastUpdates[Mob.MAXIMUM_STEPS - 1] >= client.lastUpdates[Mob.MAXIMUM_STEPS - 2])
-            movementUpdate = false;
-        buffer.putBits(localUpdate | movementUpdate ? 1 : 0, 1);
-        if(localUpdate | movementUpdate) {
-            if(movementUpdate) {
+        boolean localMovementUpdate = true;
+        if((client.lastUpdates[Mob.MAXIMUM_STEPS - 1] + 1) % Client.MAXIMUM_STEPS > client.lastUpdates[Mob.MAXIMUM_STEPS - 2])
+            localMovementUpdate = false;
+        buffer.putBits(localUpdate | localMovementUpdate ? 1 : 0, 1);
+        if(localUpdate | localMovementUpdate) {
+            if(localMovementUpdate) {
                 int updateHash = client.lastUpdates[client.lastUpdates[Mob.MAXIMUM_STEPS - 1]];
                 buffer.putBits((updateHash & 7) >> 1, 2);
                 if((updateHash & 1) != 0) {
@@ -265,22 +270,97 @@ public final class Client extends Mob {
         while((node = node.childNode) != null) {
             if(!(node instanceof IntegerNode))
                 break;
+            updatedPlayers++;
             Client pClient = Main.clientArray[((IntegerNode) node).value];
             int dx = client.coordX - pClient.coordX;
             int dy = client.coordY - pClient.coordY;
             boolean remove = pClient == null || dx > 15 || dx < -16 || dy > 15 || dy < -16;
             if(remove) {
-                
+                buffer.putBits(1, 1);
+                buffer.putBits(3, 2);
                 node.removeFromList();
                 continue;
             }
-            updatedPlayers++;
+            boolean update = pClient.activeFlags != 0;
+            boolean movementUpdate = true;
+            if((pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[Mob.MAXIMUM_STEPS - 2] && (pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]] & 4) != 0)
+                movementUpdate = false;
+            buffer.putBits(update | movementUpdate ? 1 : 0, 1);
+            if(update | movementUpdate) {
+                int updateHash = pClient.lastUpdates[pClient.lastUpdates[Mob.MAXIMUM_STEPS - 1]];
+                if((updateHash & 1) != 0) {
+                    buffer.putBits(updateHash >> 3, 3); 
+                    buffer.putBits(localUpdate ? 1 : 0, 1);
+                } else if((updateHash & 2) != 0) {
+                    buffer.putBits((updateHash >> 3) & 7, 3);
+                    buffer.putBits(updateHash >> 6, 3);
+                    buffer.putBits(localUpdate ? 1 : 0, 1);
+                } 
+            }
         }
         int bitOffset = buffer.bitOffset;
         buffer.bitOffset = oldBitOffset;
         buffer.putBits(updatedPlayers, 8);
         buffer.bitOffset = bitOffset;
+        node = client.addedPlayers;
+        boolean flagEnding = false;
+        while((node = node.childNode) != null) {
+            if(!(node instanceof IntegerNode))
+                break;
+            Client pClient = Main.clientArray[((IntegerNode) node).value];
+
+            if(pClient != null) {
+                int dx = client.coordX - pClient.coordX;
+                int dy = client.coordY - pClient.coordY;
+                if(dx <= 15 || dx >= -16 || dy <= 15 || dy >= -16) {
+                    buffer.putBits(((IntegerNode) node).value, 11);
+                    buffer.putBits(pClient.activeFlags != 0 ? 1 : 0, 1);
+                    /* Unsure about what else this value could be used for */
+                    buffer.putBits(1, 1); 
+                    if(dx < 0)
+                        dx += 32;
+                    if(dy < 0)
+                        dy += 32;
+                    buffer.putBits(dy, 5);
+                    buffer.putBits(dx, 5);
+                    flagEnding = true;
+                    node.removeFromList();
+                    node.parentNode = client.activePlayers.parentNode;
+                    node.childNode = client.activePlayers;
+                    node.parentNode.childNode = node;
+                    node.childNode.parentNode = node;
+                    continue;
+                }
+            }
+            node.removeFromList();
+        }
+        if(flagEnding)
+            buffer.putBits(2047, 11);
         buffer.resetBitOffset();
+        node = client.activePlayers;
+        if(localUpdate) {
+            int len = client.flagBuffer.offset;
+            if(len < 1)
+                buffer.putByte(0);
+            else {
+                System.arraycopy(client.flagBuffer.payload, 0, buffer.payload, buffer.offset, len);  
+                buffer.offset += len;
+            }
+        }
+        while((node = node.childNode) != null) {
+            if(!(node instanceof IntegerNode))
+                break;
+            Client pClient = Main.clientArray[((IntegerNode) node).value];
+            if(pClient.activeFlags != 0) {
+                int len = pClient.flagBuffer.offset;
+                if(len < 1)
+                    buffer.putByte(0);
+                else {
+                    System.arraycopy(pClient.flagBuffer.payload, 0, buffer.payload, buffer.offset, len);  
+                    buffer.offset += len;
+                }
+            }
+        }
         int oldOffset = buffer.offset;
         buffer.offset = position + 1;
         buffer.putWord(oldOffset - (position + 1));
