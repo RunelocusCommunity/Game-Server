@@ -65,16 +65,16 @@ public class Mob extends Entity {
                     int dy = updatedLocalX - (coordX - ((coordX >> 3) << 3));
                     if(dx > 15 || dx < -16 || dy > 15 || dy < -16) {
                         int writePosition = lastUpdates[MAXIMUM_STEPS - 2];
-                        updatedLocalX = coordX - ((coordX >> 3) << 3);
-                        updatedLocalY = coordY - ((coordX >> 3) << 3);
+                        updatedLocalX = coordX - (((coordX >> 3) - 6) << 3);
+                        updatedLocalY = coordY - (((coordY >> 3) - 6) << 3);
                         lastUpdates[writePosition] = 3 | coordZ << 2 | updatedLocalX << 5 | updatedLocalY << 12;
                         lastUpdates[MAXIMUM_STEPS - 2] = (writePosition + 1) % MAXIMUM_STEPS;
                         Client.sendCurrentChunk((Client) this);
                     }
                 }
             } else if(opcode == 8 && this instanceof Client) {
-                updatedLocalX = coordX - ((coordX >> 6) << 6);
-                updatedLocalY = coordY - ((coordX >> 6) << 6);
+                updatedLocalX = coordX - (((coordX >> 3) - 6) << 3);
+                updatedLocalY = coordY - (((coordY >> 3) - 6) << 3);
                 writeOpcode = 3 | coordZ << 2 | 1 << 4 | updatedLocalX << 5 | updatedLocalY << 12;
                 walkingQueue[MAXIMUM_STEPS - 2] = walkingQueue[MAXIMUM_STEPS - 1];
                 Client.sendCurrentChunk((Client) this);

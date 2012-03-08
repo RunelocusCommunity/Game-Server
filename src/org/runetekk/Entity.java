@@ -10,12 +10,12 @@ public class Entity extends ListNode {
     /**
      * The default X coordinate.
      */
-    private static final int DEFAULT_X = 3200;
+    private static final int DEFAULT_X = 3222;
     
     /**
      * The default Y coordinate.
      */
-    private static final int DEFAULT_Y = 3200;
+    private static final int DEFAULT_Y = 3218;
     
     /**
      * The x coordinate of where this entity is located.

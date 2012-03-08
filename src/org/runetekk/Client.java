@@ -221,8 +221,8 @@ public final class Client extends Mob {
         int position = client.oWritePosition;
         buffer.offset = position;
         buffer.putByte(73 + client.outgoingCipher.getNextValue());
-        buffer.putWord128((client.coordX >> 3) + 6);
-        buffer.putWord((client.coordY >> 3) + 6);
+        buffer.putWord128(client.coordX >> 3);
+        buffer.putWord(client.coordY >> 3);
         client.oWritePosition += buffer.offset - position;
     }
     
@@ -257,8 +257,8 @@ public final class Client extends Mob {
                     buffer.putBits((updateHash >> 2) & 3, 2);
                     buffer.putBits((updateHash >> 4) & 1, 1);
                     buffer.putBits(localUpdate ? 1 : 0, 1);
-                    buffer.putBits(/*(updateHash >> 12) & 127*/ 40, 7);
-                    buffer.putBits(/*(updateHash >> 5) & 127*/ 40, 7);
+                    buffer.putBits((updateHash >> 12) & 127, 7);
+                    buffer.putBits((updateHash >> 5) & 127, 7);
                 }
             } else
                 buffer.putBits(0, 2);
