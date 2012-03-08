@@ -387,7 +387,7 @@ public final class Main implements Runnable {
                                         LOGGER.log(Level.WARNING, "Client disconnected : unknown packet - {0}!", opcode);
                                         removeClient(position);
                                         client.destroy();
-                                        continue;
+                                        break;
                                     }
                                     int avail = client.iWritePosition < client.iReadPosition ? 
                                                  client.iReadPosition - client.iWritePosition : 
