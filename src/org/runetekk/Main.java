@@ -588,7 +588,6 @@ public final class Main implements Runnable {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
-        args = args.length == 0 ? new String[] { "server", "./etc/server.properties" } : args;
         printTag();
         Properties serverProperties = new Properties();
         try {
@@ -637,7 +636,7 @@ public final class Main implements Runnable {
                                         is.read();
                                         break;
                                     }
-                                    if(opcode <= 49) {
+                                    if(opcode <= 49 || opcode > 81) {
                                         long bitValue = 1L << (long) ((x >> 3) + (8 * (y >> 3)));
                                         if((bitValue & updated) == 0) {
                                             if(cCount[cCountOffset - 1] == null) {
@@ -648,7 +647,8 @@ public final class Main implements Runnable {
                                             cCount[cCountOffset - 1][cCount[cCountOffset - 1][64]++] = chunkHash;
                                             updated |= bitValue;
                                         }
-                                        is.read();
+                                        if(opcode <= 49)
+                                            is.read();
                                     }                                
                                 }
                             }

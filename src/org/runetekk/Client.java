@@ -143,6 +143,11 @@ public final class Client extends Mob {
     byte[] playerIndex;
     
     /**
+     * The current amount of listed players.
+     */
+    int listedPlayers;
+    
+    /**
      * Force an appearance update if the client does not currently have
      * an active appearance update ready.
      */
@@ -277,7 +282,6 @@ public final class Client extends Mob {
         if((client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > client.lastUpdates[client.lastUpdates.length - 2])
             localMovementUpdate = false;
         buffer.putBits(localUpdate | localMovementUpdate ? 1 : 0, 1);
-        System.out.println(localMovementUpdate);
         if(localUpdate | localMovementUpdate) {
             if(localMovementUpdate) {
                 int updateHash = client.lastUpdates[client.lastUpdates[client.lastUpdates.length - 1]];
@@ -299,14 +303,11 @@ public final class Client extends Mob {
             } else
                 buffer.putBits(0, 2);
         }
-        int oldBitOffset = buffer.bitOffset;
-        buffer.bitOffset += 8;
-        int updatedPlayers = 0;
+        buffer.putBits(client.listedPlayers, 8);
         ListNode node = client.activePlayers;
         while((node = node.childNode) != null) {
             if(!(node instanceof IntegerNode))
                 break;
-            updatedPlayers++;
             Client pClient = Main.clientArray[((IntegerNode) node).value];
             int dx = 0;
             int dy = 0;
@@ -316,6 +317,7 @@ public final class Client extends Mob {
             }
             boolean remove = pClient == null || dx > 15 || dx < -16 || dy > 15 || dy < -16;
             if(remove) {
+                client.listedPlayers--;
                 client.playerIndex[((IntegerNode) node).value >> 3] &= ~(1 << (((IntegerNode) node).value & 7));
                 buffer.putBits(1, 1);
                 buffer.putBits(3, 2);
@@ -326,10 +328,13 @@ public final class Client extends Mob {
             boolean movementUpdate = true;
             if((pClient.lastUpdates[pClient.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[pClient.lastUpdates.length - 2] || (pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]] & 3) == 3)
                 movementUpdate = false;
+            System.out.println("PID: " + ((IntegerNode) node).value + ", LID: " + client.localId.value);
+            System.out.println("Update: " + (update | movementUpdate));
             buffer.putBits(update | movementUpdate ? 1 : 0, 1);
             if(update | movementUpdate) {
                 if(movementUpdate) {
                     int updateHash = pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]];
+                    System.out.println("Update hash: " + updateHash);
                     buffer.putBits(updateHash & 3, 2);
                     if((updateHash & 3) == 1) {
                         buffer.putBits(updateHash >> 2, 3); 
@@ -343,10 +348,6 @@ public final class Client extends Mob {
                     buffer.putBits(0, 2);
             }
         }
-        int bitOffset = buffer.bitOffset;
-        buffer.bitOffset = oldBitOffset;
-        buffer.putBits(updatedPlayers, 8);
-        buffer.bitOffset = bitOffset;
         node = client.addedPlayers;
         while((node = node.childNode) != null) {
             if(!(node instanceof IntegerNode))
@@ -367,6 +368,7 @@ public final class Client extends Mob {
                     buffer.putBits(dy, 5);
                     buffer.putBits(dx, 5);
                     node.removeFromList();
+                    client.listedPlayers++;
                     client.appearanceUpdates[((IntegerNode) node).value] = true;
                     node.parentNode = client.activePlayers.parentNode;
                     node.childNode = client.activePlayers;
