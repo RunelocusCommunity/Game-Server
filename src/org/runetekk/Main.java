@@ -123,7 +123,7 @@ public final class Main implements Runnable {
         + "\n                    | | \\ \\ |_| | | | |  __/ |  __/   <|   <                    "
         + "\n                    |_|  \\_\\__,_|_| |_|\\___|_|\\___|_|\\_\\_|\\_\\             "
         + "\n----------------------------------------------------------------------------------"
-        + "\n                                Game Server 1.0.9                                 "
+        + "\n                                Game Server 1.1.0                                 "
         + "\n                                 See RuneTekk.com                                 "
         + "\n                               Created by SiniSoul                                "
         + "\n----------------------------------------------------------------------------------");
@@ -436,6 +436,30 @@ public final class Main implements Runnable {
                                         case 103:        
                                             client.commandStr = new String(buffer.payload, 0, size);                                      
                                             break;
+                                            
+                                        /* Game click walk */
+                                        case 164:
+                                            int firstX = buffer.getUwordLe128();
+                                            buffer.offset = buffer.payload.length - 3;
+                                            int firstY = buffer.getUwordLe();
+                                            int amountSteps = (size - 3)/2 - 1;
+                                            if(amountSteps > Client.MAXIMUM_STEPS)
+                                                throw new RuntimeException();
+                                            int writePosition = 0;
+                                            client.stepQueue[client.walkingQueue.length - 2] = amountSteps + 1;
+                                            client.stepQueue[client.walkingQueue.length - 1] = 0;
+                                            client.stepQueue[writePosition++] = firstX << 15 | firstY;
+                                            buffer.offset = 2;
+                                            int lastX = firstX;
+                                            int lastY = firstY;
+                                            while(amountSteps-- > 0) {
+                                                int x = buffer.getByte();
+                                                int y = buffer.getByte();
+                                                client.stepQueue[writePosition++] = ((x + lastX) << 15) | (y + lastY);
+                                                lastX += x;
+                                                lastY += y;
+                                            }                                    
+                                            break;
                                     }
                                 }
                                 break;
@@ -476,6 +500,7 @@ public final class Main implements Runnable {
                            case 2:
                                if(client.activeFlags != 0)
                                   Client.writeFlaggedUpdates(client, client.flagBuffer, client.activeFlags);
+                               client.updateSteps();
                                client.updateMovement();
                                client.updateRegion();
                                client.state = 3;
@@ -511,10 +536,7 @@ public final class Main implements Runnable {
                             * Idle state.
                             */
                            case 6:    
-                               if(client.hasWritten) {
-                                   int writePosition = client.walkingQueue[client.walkingQueue.length - 2];
-                                   client.walkingQueue[writePosition] = 1;
-                                   client.walkingQueue[client.walkingQueue.length - 2] = (writePosition + 1) % Mob.MAXIMUM_STEPS;
+                               if(client.hasWritten) {                                   
                                    client.hasWritten = false;
                                    client.state = 2;
                                }
@@ -749,7 +771,7 @@ public final class Main implements Runnable {
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,           
             -3, -3,  0, -3, -3, -3, -3, -3, -3, -3,
             
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -1, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3,  4, -3, -3, -3, -3, -3, -3, -3, -3,        

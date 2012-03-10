@@ -70,7 +70,7 @@ public final class IoWriter implements Runnable {
                             client.hasWritten = true;
                         }
                     } catch(IOException ex) {
-                        LOGGER.log(Level.WARNING, "Exception thrown while writing : ", ex);
+                        LOGGER.log(Level.WARNING, "Exception thrown while writing.");
                         main.removeClient(position);
                         client.destroy();
                         continue;

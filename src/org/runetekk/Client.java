@@ -248,8 +248,6 @@ public final class Client extends Mob {
         client.oWritePosition += buffer.offset - position;
     }
     
-    long test;
-    
     /**
      * Sets the tab interface id for a client.
      * @param client The client to send the set tab interface packet to.
@@ -328,13 +326,10 @@ public final class Client extends Mob {
             boolean movementUpdate = true;
             if((pClient.lastUpdates[pClient.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[pClient.lastUpdates.length - 2] || (pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]] & 3) == 3)
                 movementUpdate = false;
-            System.out.println("PID: " + ((IntegerNode) node).value + ", LID: " + client.localId.value);
-            System.out.println("Update: " + (update | movementUpdate));
             buffer.putBits(update | movementUpdate ? 1 : 0, 1);
             if(update | movementUpdate) {
                 if(movementUpdate) {
                     int updateHash = pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]];
-                    System.out.println("Update hash: " + updateHash);
                     buffer.putBits(updateHash & 3, 2);
                     if((updateHash & 3) == 1) {
                         buffer.putBits(updateHash >> 2, 3); 
@@ -523,7 +518,7 @@ public final class Client extends Mob {
                     if(region.chunks != null && region.chunks[chunkX - ((chunkX >> 3) << 3)] != null && (chunk = region.chunks[chunkX - ((chunkX >> 3) << 3)][chunkY - ((chunkY >> 3) << 3)]) != null) {
                         ListNode node = chunk.activeEntities;
                         while((node = node.childNode) != null) {
-                            if(!(node instanceof Entity))
+                            if(!(node instanceof Entity) || client.listedPlayers > Client.PLAYER_UPDATES)
                                 break;
                             if(!(node instanceof Client))
                                 continue;

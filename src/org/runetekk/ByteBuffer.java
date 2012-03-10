@@ -44,6 +44,14 @@ public final class ByteBuffer {
     }
     
     /**
+     * Gets an signed byte from this buffer.
+     * @return The byte value.
+     */
+    byte getByte() {
+        return payload[offset++];
+    }
+    
+    /**
      * Puts a byte form a into the payload.
      * @param value The byte value.
      */
@@ -76,6 +84,24 @@ public final class ByteBuffer {
     int getUword() {
         return  ((payload[offset++] & 0xFF) << 8) | 
                  (payload[offset++] & 0xFF);
+    }
+    
+    /**
+     * Gets an little endian unsigned word casted to an integer. 
+     * @return The unsigned word value.
+     */
+    int getUwordLe() {
+        return  (payload[offset++] & 0xFF) | 
+               ((payload[offset++] & 0xFF) << 8);
+    }
+    
+    /**
+     * Gets an little endian unsigned word translated by 128 casted to an integer. 
+     * @return The unsigned word value.
+     */
+    int getUwordLe128() {
+        return  (payload[offset++] - 128 & 0xFF) | 
+               ((payload[offset++] & 0xFF) << 8);
     }
     
     /**
