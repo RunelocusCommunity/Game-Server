@@ -597,6 +597,7 @@ public final class Client extends Mob {
     public Client(Socket socket) throws IOException {
         this.inputStream = socket.getInputStream();
         this.outputStream = socket.getOutputStream();
+        isRunActive = true;
         timeoutStamp = -1L;
     } 
     

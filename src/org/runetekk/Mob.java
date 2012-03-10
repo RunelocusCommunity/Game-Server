@@ -49,40 +49,47 @@ public class Mob extends Entity {
      */
     void updateSteps() {
         if(stepQueue[stepQueue.length - 2] > 0) {
-            if(stepQueue[stepQueue.length - 1] >= stepQueue[stepQueue.length - 2])
-                return;
-            int position = stepQueue[stepQueue.length - 1];
-            int dx = ((stepQueue[position] >> 15) & 0x7FFF) - coordX;
-            int dy = (stepQueue[position] & 0x7FFF) - coordY;
-            if(dx == 0 && dy == 0) {
-                stepQueue[stepQueue.length - 1] = position + 1; 
-                updateSteps();
-                return;
+            boolean runToggled = false;
+            if(this instanceof Client)
+                runToggled = ((Client) this).isRunActive;
+            int lastOpcode = -1;
+            for(int i = 0; i < (runToggled ? 2 : 1); i++) {
+                if(stepQueue[stepQueue.length - 1] >= stepQueue[stepQueue.length - 2])
+                    return;
+                int position = stepQueue[stepQueue.length - 1];
+                int dx = ((stepQueue[position] >> 15) & 0x7FFF) - (coordX + (i < 1 ? 0 : Client.WALK_DELTA[lastOpcode][0]));
+                int dy = (stepQueue[position] & 0x7FFF) - (coordY + (i < 1 ? 0 : Client.WALK_DELTA[lastOpcode][1]));
+                if(dx == 0 && dy == 0) {
+                    stepQueue[stepQueue.length - 1] = position + 1; 
+                    updateSteps();
+                    return;
+                }
+                /* Doesn't really matter what you use as the hypo value */
+                int writePosition = walkingQueue[walkingQueue.length - 2];
+                int opcode = -1;
+                if(dx == 0)
+                    if(dy > 0)
+                       opcode = 1;
+                    else
+                       opcode = 6;
+                else if(dy == 0)
+                    if(dx > 0)
+                        opcode = 4;
+                    else
+                        opcode = 3;
+                else if(dx < 0)
+                    if(dy < 0)
+                        opcode = 5;
+                    else
+                        opcode = 0;
+                else if(dy < 0)
+                    opcode = 7;
+                else
+                    opcode = 2;
+                walkingQueue[writePosition] = opcode;
+                walkingQueue[walkingQueue.length - 2] = writePosition + 1;
+                lastOpcode = opcode;
             }
-            /* Doesn't really matter what you use as the hypo value */
-            int writePosition = walkingQueue[walkingQueue.length - 2];
-            int opcode = -1;
-            if(dx == 0)
-                if(dy > 0)
-                   opcode = 1;
-                else
-                   opcode = 6;
-            else if(dy == 0)
-                if(dx > 0)
-                    opcode = 4;
-                else
-                    opcode = 3;
-            else if(dx < 0)
-                if(dy < 0)
-                    opcode = 5;
-                else
-                    opcode = 0;
-            else if(dy < 0)
-                opcode = 7;
-            else
-                opcode = 2;
-            walkingQueue[writePosition] = opcode;
-            walkingQueue[walkingQueue.length - 2] = writePosition + 1;
         }
     }
     

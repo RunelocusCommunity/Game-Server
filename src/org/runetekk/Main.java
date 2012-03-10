@@ -535,7 +535,7 @@ public final class Main implements Runnable {
                                    client.hasWritten = false;
                                    client.state = 2;
                                }
-                               break;
+                                   break;
                        }
                    } catch(Exception ex) {
                        LOGGER.log(Level.WARNING, "Client disconnected : ", ex);
