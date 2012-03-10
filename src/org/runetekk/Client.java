@@ -313,7 +313,7 @@ public final class Client extends Mob {
                 dx = client.coordX - pClient.coordX;
                 dy = client.coordY - pClient.coordY;
             }
-            boolean remove = pClient == null || dx > 15 || dx < -16 || dy > 15 || dy < -16;
+            boolean remove = pClient == null || dx > 15 || dx < -15 || dy > 15 || dy < -15;
             if(remove) {
                 client.listedPlayers--;
                 client.playerIndex[((IntegerNode) node).value >> 3] &= ~(1 << (((IntegerNode) node).value & 7));
@@ -351,26 +351,25 @@ public final class Client extends Mob {
             if(pClient != null) {
                 int dx = pClient.coordX - client.coordX;
                 int dy = pClient.coordY - client.coordY;
-                if(dx <= 15 || dx >= -16 || dy <= 15 || dy >= -16) {
-                    buffer.putBits(((IntegerNode) node).value, 11);
-                    buffer.putBits(1, 1);
-                    /* Unsure about what else this value could be used for */
-                    buffer.putBits(1, 1); 
-                    if(dx < 0)
-                        dx += 32;
-                    if(dy < 0)
-                        dy += 32;
-                    buffer.putBits(dy, 5);
-                    buffer.putBits(dx, 5);
-                    node.removeFromList();
-                    client.listedPlayers++;
-                    client.appearanceUpdates[((IntegerNode) node).value] = true;
-                    node.parentNode = client.activePlayers.parentNode;
-                    node.childNode = client.activePlayers;
-                    node.parentNode.childNode = node;
-                    node.childNode.parentNode = node;
-                    continue;
-                }
+                buffer.putBits(((IntegerNode) node).value, 11);
+                buffer.putBits(1, 1);
+                /* Unsure about what else this value could be used for */
+                buffer.putBits(1, 1); 
+                if(dx < 0)
+                    dx += 32;
+                if(dy < 0)
+                    dy += 32;
+                buffer.putBits(dy, 5);
+                buffer.putBits(dx, 5);
+                System.out.println(dy);
+                System.out.println(dx);
+                node.removeFromList();
+                client.listedPlayers++;
+                client.appearanceUpdates[((IntegerNode) node).value] = true;
+                node.parentNode = client.activePlayers.parentNode;
+                node.childNode = client.activePlayers;
+                node.parentNode.childNode = node;
+                continue;
             }
             node.removeFromList();
         }
@@ -524,7 +523,11 @@ public final class Client extends Mob {
                                 continue;
                             Client pClient = (Client) node;
                             int pos = pClient.localId.value;
-                            if(pos == client.localId.value || (client.playerIndex[pos >> 3] & (1 << (pos & 7))) != 0)
+                            int dCx = (pClient.coordX >> 3) - (client.coordX >> 3);
+                            int dCy = (pClient.coordY >> 3) - (client.coordY >> 3);
+                            if(pos == client.localId.value || (client.playerIndex[pos >> 3] & (1 << (pos & 7))) != 0 || 
+                               dCx >= Client.CHUNK_RANGE  || dCy >= Client.CHUNK_RANGE || 
+                               dCx <= -Client.CHUNK_RANGE || dCy <= -Client.CHUNK_RANGE)
                                 continue;
                             ListNode idNode = new IntegerNode(pos);
                             idNode.parentNode = client.addedPlayers.parentNode;

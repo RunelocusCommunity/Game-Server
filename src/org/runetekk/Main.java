@@ -376,8 +376,9 @@ public final class Main implements Runnable {
                                     client.state = 1;
                                 }
                                 break;
-                             
-                            case 5:
+                            
+                            
+                            case 6:
                                 if(client.lastRecievedPing + 15000L < System.currentTimeMillis())
                                     client.timeoutStamp = System.currentTimeMillis() + 60000L;
                                 while(client.iReadPosition != client.iWritePosition) {
@@ -451,9 +452,7 @@ public final class Main implements Runnable {
                                             client.stepQueue[writePosition++] = firstX << 15 | firstY;
                                             buffer.offset = 2;
                                             while(amountSteps-- > 0) {
-                                                int x = buffer.getByte();
-                                                int y = buffer.getByte();
-                                                client.stepQueue[writePosition++] = ((x + firstX) << 15) | (y + firstY);
+                                                client.stepQueue[writePosition++] = ((buffer.getByte() + firstX) << 15) | (buffer.getByte() + firstY);
                                             }                                    
                                             break;
                                     }
@@ -466,7 +465,7 @@ public final class Main implements Runnable {
                         client.destroy();
                         continue;
                     }
-                }               
+                }           
                 node = activeList;
                 while((node = node.childNode) != null) { 
                    if(!(node instanceof IntegerNode))
@@ -756,7 +755,7 @@ public final class Main implements Runnable {
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,        
-            -3, -3, -3, -3, -3, -3, -3, -1, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -1,  0, -3,
             -3, -3, -3, -3, -3, -3,  4, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,           
             -3, -3, -3, -1, -3, -3, -3, -3, -3, -3,
