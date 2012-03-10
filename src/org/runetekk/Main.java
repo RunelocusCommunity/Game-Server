@@ -450,14 +450,10 @@ public final class Main implements Runnable {
                                             client.stepQueue[client.walkingQueue.length - 1] = 0;
                                             client.stepQueue[writePosition++] = firstX << 15 | firstY;
                                             buffer.offset = 2;
-                                            int lastX = firstX;
-                                            int lastY = firstY;
                                             while(amountSteps-- > 0) {
                                                 int x = buffer.getByte();
                                                 int y = buffer.getByte();
-                                                client.stepQueue[writePosition++] = ((x + lastX) << 15) | (y + lastY);
-                                                lastX += x;
-                                                lastY += y;
+                                                client.stepQueue[writePosition++] = ((x + firstX) << 15) | (y + firstY);
                                             }                                    
                                             break;
                                     }
