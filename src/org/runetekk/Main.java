@@ -1,11 +1,13 @@
 package org.runetekk;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.math.BigInteger;
@@ -621,7 +623,303 @@ public final class Main implements Runnable {
             reportError("Exception thrown while loading the server properties", ex);
             throw new RuntimeException();
         }
-        if(args[0].equals("setup")) {
+        if(args[0].equals("wdump")) {
+            ArchivePackage widgetPack = null;
+            try {
+                FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
+                widgetPack = new ArchivePackage(index.get(Integer.parseInt(serverProperties.getProperty("W-ID"))));
+                index.destroy();              
+            } catch(Exception ex) {
+                reportError("Exception thrown while loading the files for the widget dump", ex);
+                throw new RuntimeException();
+            }
+            ByteBuffer buffer = new ByteBuffer(widgetPack.getArchive("data"));                 
+            int amountWidgets = buffer.getUword();
+            int[][] scriptInstructions = new int[amountWidgets][];
+            int[][] scriptConditions = new int[amountWidgets][];
+            int[][][] scriptOpcodes = new int[amountWidgets][][];
+            while(buffer.offset < buffer.payload.length) {
+                int widgetId = buffer.getUword();
+                if(widgetId == 65535) {
+                    buffer.getUword();
+                    widgetId = buffer.getUword();
+                }
+                int type = buffer.getUbyte();
+                int fieldType = buffer.getUbyte();
+                buffer.getUword();
+                buffer.getUword();
+                buffer.getUword();
+                buffer.getUbyte();
+                if(buffer.getUbyte() != 0)
+                    buffer.getUbyte();
+                int amountScriptInstructions = buffer.getUbyte();
+                if(amountScriptInstructions > 0) {
+                    scriptInstructions[widgetId] = new int[amountScriptInstructions];
+                    scriptConditions[widgetId] = new int[amountScriptInstructions];
+                    for(int i = 0; i < amountScriptInstructions; i++) {
+                        scriptInstructions[widgetId][i] = buffer.getUbyte();
+                        scriptConditions[widgetId][i] = buffer.getUword();
+                    }
+                }
+                int amountScripts = buffer.getUbyte();
+                if(amountScripts > 0) {
+                    scriptOpcodes[widgetId] = new int[amountScripts][];
+                    for(int i = 0; i < amountScripts; i++) {
+                        int size = buffer.getUword();
+                        scriptOpcodes[widgetId][i] = new int[size];
+                        for(int j = 0; j < size; j++) {
+                            scriptOpcodes[widgetId][i][j] = buffer.getUword();
+                        }
+                    }
+                }
+                if(type == 0) {
+                    buffer.getUword();
+                    buffer.getUbyte();
+                    int amountchildren = buffer.getUword();
+                    for(int i = 0; i < amountchildren; i++) {
+                        buffer.getUword();
+                        buffer.getUword();
+                        buffer.getUword();
+                    }
+                }
+                if(type == 1) {
+                    buffer.getUword();
+                    buffer.getUbyte();
+                }
+                if(type == 2) {
+                    buffer.getUbyte();
+                    buffer.getUbyte();
+                    buffer.getUbyte();
+                    buffer.getUbyte();
+                    buffer.getUbyte();
+                    buffer.getUbyte();
+                    for(int i = 0; i < 20; i++) {
+                        int op = buffer.getUbyte();
+                        if(op == 1) {
+                            buffer.getUword();
+                            buffer.getUword();
+                            buffer.getString();
+                        }
+                    }
+                    for(int i = 0; i < 5; i++) {
+                        buffer.getString();
+                    }
+
+                }
+                if(type == 3)
+                    buffer.getUbyte();
+                if(type == 4 || type == 1) {
+                    buffer.getUbyte();
+                    buffer.getUbyte();
+                    buffer.getUbyte();
+                }
+                if(type == 4) {
+                    buffer.getString();
+                    buffer.getString();
+                }
+                if(type == 1 || type == 3 || type == 4)
+                    buffer.getDword();
+                if(type == 3 || type == 4) {
+                    buffer.getDword();
+                    buffer.getDword();
+                    buffer.getDword();
+                }
+                if(type == 5) {
+                    buffer.getString();
+                    buffer.getString();
+                }
+                if(type == 6) {
+                    int modelId = buffer.getUbyte();
+                    if(modelId != 0) {
+                        buffer.getUbyte();
+                    }
+                    modelId = buffer.getUbyte();
+                    if(modelId != 0) {
+                        buffer.getUbyte();
+                    }
+                    modelId = buffer.getUbyte();
+                    if(modelId != 0)
+                        buffer.getUbyte();
+                    modelId = buffer.getUbyte();
+                    if(modelId != 0)
+                        buffer.getUbyte();
+                    buffer.getUword();
+                    buffer.getUword();
+                    buffer.getUword();
+                }
+                if(type == 7){
+                    buffer.getUbyte();
+                    buffer.getUbyte();
+                    buffer.getUbyte();
+                    buffer.getDword();
+                    buffer.getUword();
+                    buffer.getUword();
+                    buffer.getUbyte();
+                    for(int k4 = 0; k4 < 5; k4++) {
+                        buffer.getString();
+                    }
+                }
+                if(fieldType == 2 || type == 2)
+                {
+                    buffer.getString();
+                    buffer.getString();
+                    buffer.getUword();
+                }
+                if(type == 8)
+                    buffer.getString();
+                if(fieldType == 1 || fieldType == 4 || fieldType == 5 || fieldType == 6) {
+                    buffer.getString();
+                }
+            }
+            try {               
+                BufferedWriter writer = new BufferedWriter(new FileWriter(serverProperties.getProperty("OUTDIR") + "wscripts.txt"));
+                for(int widgetId = 0; widgetId < scriptInstructions.length; widgetId++) {
+                    if(scriptInstructions[widgetId] != null) {
+                        writer.append("Widget " + widgetId + ", Scripts: " + scriptInstructions[widgetId].length + "\n\n");
+                        for(int scriptId = 0; scriptId < scriptInstructions[widgetId].length; scriptId++) {
+                            if(scriptOpcodes[widgetId] != null &&  scriptOpcodes[widgetId].length > scriptId && scriptOpcodes[widgetId][scriptId] != null) {                               
+                                int[] opcodes = scriptOpcodes[widgetId][scriptId];
+                                String script = "";
+                                String op = "";
+                                char logicOp = '+';
+                                char lastLogicOp = '+';
+                                boolean bool = false;
+                                int offset = 0;
+                                logic:
+                                for(; offset < opcodes.length;) {
+                                    int opcode = opcodes[offset++];
+                                    bool = false;
+                                    switch(opcode) {
+
+                                        case 0:
+                                            break logic;
+
+                                        case 1:
+                                            op = "getDynamicLevel(Id => " + opcodes[offset++] + ")";
+                                            break;
+
+                                        case 2:
+                                            op = "getStaticLevel(Id => " + opcodes[offset++] + ")";
+                                            break;
+
+                                        case 3:
+                                            op = "getExperience(Id => " + opcodes[offset++] + ")";
+                                            break;
+
+                                        case 4:
+                                            op = "getItemAmount(WidgetId => " + opcodes[offset++] + ", ItemId => " + opcodes[offset++] + ")";
+                                            break;
+
+                                        case 5:
+                                            op = "getConfigValue(Id => " + opcodes[offset++] + ")";
+                                            break;
+
+                                        case 6:
+                                            op = "getXpForNextLevel(Id => " + opcodes[offset++] + ")";
+                                            break;
+
+                                        case 7:
+                                            op = "unknown(Id => " + opcodes[offset++] + ")";
+                                            break;
+
+                                        case 8:
+                                            op = "getCombatLevel()";
+                                            break;
+
+                                        case 9:
+                                            op = "getSkillTotal()";
+                                            break;
+
+                                        case 10:
+                                            op = "hasAmountItem(Id => " + opcodes[offset++] + ", Amount => " + opcodes[offset++] + ")";
+                                            break;
+
+                                        case 11:
+                                            op = "getUnusedValue0()";
+                                            break;
+
+                                        case 12:
+                                            op = "getUnusedValue1()";
+                                            break;
+
+                                        case 13:
+                                            op = "isConfigBitToggled(Id => " + opcodes[offset++] + ", Bit => " + opcodes[offset++] + ")";
+                                            break;
+
+                                        case 14:
+                                            op = "getConfigValue(VarbitId => " + opcodes[offset++] + ")";
+                                            break;
+
+                                        case 15:
+                                            logicOp = '-';
+                                            bool = true;
+                                            break;
+
+                                        case 16:
+                                            logicOp = '\\';
+                                            bool = true;
+                                            break;
+
+                                        case 17:
+                                            logicOp = '*';
+                                            bool = true;
+                                            break;
+
+                                        case 18:
+                                            op = "getX()";
+                                            break;
+
+                                        case 19:
+                                            op = "getY()";
+                                            break;
+
+                                        case 20:
+                                            op = "" + opcodes[offset++];
+                                            break;
+
+                                        default:
+                                            op = "null";
+                                            break;
+                                    }
+                                    if(!bool) {
+                                        script = (!script.equals("") && lastLogicOp != logicOp ? "(" : "") + script;
+                                        script += (!script.equals("") ? " " + logicOp : "") + (script.length() > 40 ? "\n\t\t   " : "") + op + (offset != opcodes.length - 1 && lastLogicOp != logicOp ? ") " : "");
+                                        if(logicOp != '\\')
+                                            lastLogicOp = logicOp;
+                                        logicOp = '+';
+                                    }
+                                }
+                                String scriptInstruction = "!=";
+                                if(scriptInstructions[widgetId] != null) {
+                                    switch(scriptInstructions[widgetId][scriptId]) {
+
+                                        case 2:
+                                            scriptInstruction = ">=";
+                                            break;
+
+                                        case 3:
+                                            scriptInstruction = "<=";
+                                            break;
+
+                                        case 4:
+                                            scriptInstruction = "==";
+                                            break;
+                                    }
+                                    int scriptCondition = scriptConditions[widgetId][scriptId];                           
+                                    writer.append("\t\tif(" + script + " " + scriptInstruction + " " + scriptCondition + ")\n\t\t\treturn false\n");
+                                }
+                            }
+                            writer.append("\n");
+                        }
+                    }
+                }
+                writer.close(); 
+            } catch(Exception ex) {
+                ex.printStackTrace();
+                reportError("Exception thrown while dumping the widget script file", ex);
+                throw new RuntimeException();
+            }
+        } else if(args[0].equals("setup")) {
             FileIndex landscapeIndex = null;
             ArchivePackage versionPack = null;
             try {
@@ -772,13 +1070,13 @@ public final class Main implements Runnable {
             -3,  0, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3,  6, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,           
-            -3, -3,  0, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             
             -3, -3, -3, -3, -1, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3,  4, -3, -3, -3, -3, -3, -3, -3, -3,        
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3,  0, -3, -3, -3, -3, -3, -3, -3,
             
              4, -3,  0, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -1, -3, -3, -3,

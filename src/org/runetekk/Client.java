@@ -389,7 +389,6 @@ public final class Client extends Mob {
             Client pClient = Main.clientArray[((IntegerNode) node).value];
             ByteBuffer flagBuffer = pClient.activeFlags != 0 ? pClient.flagBuffer : null;
             if(client.appearanceUpdates[((IntegerNode) node).value] && (pClient.activeFlags & 1 << 7) == 0) {
-                System.out.println("App");
                 flagBuffer = new ByteBuffer(122);
                 Client.writeFlaggedUpdates(pClient, flagBuffer, pClient.activeFlags | 1 << 7);
                 client.appearanceUpdates[((IntegerNode) node).value] = false;
@@ -407,7 +406,6 @@ public final class Client extends Mob {
         int oldOffset = buffer.offset;
         buffer.offset = position + 1;
         buffer.putWord(oldOffset - (position + 3));
-        System.out.println(oldOffset - (position + 3));
         client.oWritePosition += oldOffset - position;
     }
     
