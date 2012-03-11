@@ -1,2 +1,6 @@
 RuneTekk
 ==========
+
+### Philosophy
+
+### Authors
