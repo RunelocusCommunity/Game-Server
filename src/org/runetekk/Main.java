@@ -611,6 +611,447 @@ public final class Main implements Runnable {
     }
     
     /**
+     * Dumps the interface scripts into a text file called 'wscripts' in the
+     * output directory. Where the output directory is can be configured from
+     * the server configuration file.
+     * @param serverProperties The server properties to get the information from
+     *                         to dump the interface scripts with.
+     */
+    private static void unpackWidgetScripts(Properties serverProperties) {
+        ArchivePackage widgetPack = null;
+        try {
+            FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
+            widgetPack = new ArchivePackage(index.get(Integer.parseInt(serverProperties.getProperty("W-ID"))));
+            index.destroy();              
+        } catch(Exception ex) {
+            reportError("Exception thrown while loading the files for the widget dump", ex);
+            throw new RuntimeException();
+        }
+        ByteBuffer buffer = new ByteBuffer(widgetPack.getArchive("data"));                 
+        int amountWidgets = buffer.getUword();
+        int[][] scriptInstructions = new int[amountWidgets][];
+        int[][] scriptConditions = new int[amountWidgets][];
+        int[][][] scriptOpcodes = new int[amountWidgets][][];
+        while(buffer.offset < buffer.payload.length) {
+            int widgetId = buffer.getUword();
+            if(widgetId == 65535) {
+                buffer.getUword();
+                widgetId = buffer.getUword();
+            }
+            int type = buffer.getUbyte();
+            int fieldType = buffer.getUbyte();
+            buffer.getUword();
+            buffer.getUword();
+            buffer.getUword();
+            buffer.getUbyte();
+            if(buffer.getUbyte() != 0)
+                buffer.getUbyte();
+            int amountScriptInstructions = buffer.getUbyte();
+            if(amountScriptInstructions > 0) {
+                scriptInstructions[widgetId] = new int[amountScriptInstructions];
+                scriptConditions[widgetId] = new int[amountScriptInstructions];
+                for(int i = 0; i < amountScriptInstructions; i++) {
+                    scriptInstructions[widgetId][i] = buffer.getUbyte();
+                    scriptConditions[widgetId][i] = buffer.getUword();
+                }
+            }
+            int amountScripts = buffer.getUbyte();
+            if(amountScripts > 0) {
+                scriptOpcodes[widgetId] = new int[amountScripts][];
+                for(int i = 0; i < amountScripts; i++) {
+                    int size = buffer.getUword();
+                    scriptOpcodes[widgetId][i] = new int[size];
+                    for(int j = 0; j < size; j++) {
+                        scriptOpcodes[widgetId][i][j] = buffer.getUword();
+                    }
+                }
+            }
+            if(type == 0) {
+                buffer.getUword();
+                buffer.getUbyte();
+                int amountchildren = buffer.getUword();
+                for(int i = 0; i < amountchildren; i++) {
+                    buffer.getUword();
+                    buffer.getUword();
+                    buffer.getUword();
+                }
+            }
+            if(type == 1) {
+                buffer.getUword();
+                buffer.getUbyte();
+            }
+            if(type == 2) {
+                buffer.getUbyte();
+                buffer.getUbyte();
+                buffer.getUbyte();
+                buffer.getUbyte();
+                buffer.getUbyte();
+                buffer.getUbyte();
+                for(int i = 0; i < 20; i++) {
+                    int op = buffer.getUbyte();
+                    if(op == 1) {
+                        buffer.getUword();
+                        buffer.getUword();
+                        buffer.getString();
+                    }
+                }
+                for(int i = 0; i < 5; i++) {
+                    buffer.getString();
+                }
+
+            }
+            if(type == 3)
+                buffer.getUbyte();
+            if(type == 4 || type == 1) {
+                buffer.getUbyte();
+                buffer.getUbyte();
+                buffer.getUbyte();
+            }
+            if(type == 4) {
+                buffer.getString();
+                buffer.getString();
+            }
+            if(type == 1 || type == 3 || type == 4)
+                buffer.getDword();
+            if(type == 3 || type == 4) {
+                buffer.getDword();
+                buffer.getDword();
+                buffer.getDword();
+            }
+            if(type == 5) {
+                buffer.getString();
+                buffer.getString();
+            }
+            if(type == 6) {
+                int modelId = buffer.getUbyte();
+                if(modelId != 0) {
+                    buffer.getUbyte();
+                }
+                modelId = buffer.getUbyte();
+                if(modelId != 0) {
+                    buffer.getUbyte();
+                }
+                modelId = buffer.getUbyte();
+                if(modelId != 0)
+                    buffer.getUbyte();
+                modelId = buffer.getUbyte();
+                if(modelId != 0)
+                    buffer.getUbyte();
+                buffer.getUword();
+                buffer.getUword();
+                buffer.getUword();
+            }
+            if(type == 7){
+                buffer.getUbyte();
+                buffer.getUbyte();
+                buffer.getUbyte();
+                buffer.getDword();
+                buffer.getUword();
+                buffer.getUword();
+                buffer.getUbyte();
+                for(int k4 = 0; k4 < 5; k4++) {
+                    buffer.getString();
+                }
+            }
+            if(fieldType == 2 || type == 2) {
+                buffer.getString();
+                buffer.getString();
+                buffer.getUword();
+            }
+            if(type == 8)
+                buffer.getString();
+            if(fieldType == 1 || fieldType == 4 || fieldType == 5 || fieldType == 6) {
+                buffer.getString();
+            }
+        }
+        try {               
+            BufferedWriter writer = new BufferedWriter(new FileWriter(serverProperties.getProperty("OUTDIR") + "wscripts.txt"));
+            for(int widgetId = 0; widgetId < scriptInstructions.length; widgetId++) {
+                if(scriptInstructions[widgetId] != null) {
+                    writer.append("Widget " + widgetId + ", Scripts: " + scriptInstructions[widgetId].length + "\n\n");
+                    for(int scriptId = 0; scriptId < scriptInstructions[widgetId].length; scriptId++) {
+                        if(scriptOpcodes[widgetId] != null &&  scriptOpcodes[widgetId].length > scriptId && scriptOpcodes[widgetId][scriptId] != null) {                               
+                            int[] opcodes = scriptOpcodes[widgetId][scriptId];
+                            String script = "";
+                            String op = "";
+                            char logicOp = '+';
+                            char lastLogicOp = '+';
+                            boolean bool = false;
+                            int offset = 0;
+                            logic:
+                            for(; offset < opcodes.length;) {
+                                int opcode = opcodes[offset++];
+                                bool = false;
+                                switch(opcode) {
+
+                                    case 0:
+                                        break logic;
+
+                                    case 1:
+                                        op = "getDynamicLevel(Id => " + opcodes[offset++] + ")";
+                                        break;
+
+                                    case 2:
+                                        op = "getStaticLevel(Id => " + opcodes[offset++] + ")";
+                                        break;
+
+                                    case 3:
+                                        op = "getExperience(Id => " + opcodes[offset++] + ")";
+                                        break;
+
+                                    case 4:
+                                        op = "getItemAmount(WidgetId => " + opcodes[offset++] + ", ItemId => " + opcodes[offset++] + ")";
+                                        break;
+
+                                    case 5:
+                                        op = "getConfigValue(Id => " + opcodes[offset++] + ")";
+                                        break;
+
+                                    case 6:
+                                        op = "getXpForNextLevel(Id => " + opcodes[offset++] + ")";
+                                        break;
+
+                                    case 7:
+                                        op = "unknown(Id => " + opcodes[offset++] + ")";
+                                        break;
+
+                                    case 8:
+                                        op = "getCombatLevel()";
+                                        break;
+
+                                    case 9:
+                                        op = "getSkillTotal()";
+                                        break;
+
+                                    case 10:
+                                        op = "hasAmountItem(Id => " + opcodes[offset++] + ", Amount => " + opcodes[offset++] + ")";
+                                        break;
+
+                                    case 11:
+                                        op = "getUnusedValue0()";
+                                        break;
+
+                                    case 12:
+                                        op = "getUnusedValue1()";
+                                        break;
+
+                                    case 13:
+                                        op = "isConfigBitToggled(Id => " + opcodes[offset++] + ", Bit => " + opcodes[offset++] + ")";
+                                        break;
+
+                                    case 14:
+                                        op = "getConfigValue(VarbitId => " + opcodes[offset++] + ")";
+                                        break;
+
+                                    case 15:
+                                        logicOp = '-';
+                                        bool = true;
+                                        break;
+
+                                    case 16:
+                                        logicOp = '\\';
+                                        bool = true;
+                                        break;
+
+                                    case 17:
+                                        logicOp = '*';
+                                        bool = true;
+                                        break;
+
+                                    case 18:
+                                        op = "getX()";
+                                        break;
+
+                                    case 19:
+                                        op = "getY()";
+                                        break;
+
+                                    case 20:
+                                        op = "" + opcodes[offset++];
+                                        break;
+                                }
+                                if(!bool) {
+                                    script = (!script.equals("") && lastLogicOp != logicOp ? "(" : "") + script;
+                                    script += (!script.equals("") ? " " + logicOp : "") + (script.length() > 40 ? "\n\t\t   " : "") + op + (offset != opcodes.length - 1 && lastLogicOp != logicOp ? ") " : "");
+                                    if(logicOp != '\\')
+                                        lastLogicOp = logicOp;
+                                    logicOp = '+';
+                                }
+                            }
+                            String scriptInstruction = "!=";
+                            if(scriptInstructions[widgetId] != null) {
+                                switch(scriptInstructions[widgetId][scriptId]) {
+
+                                    case 2:
+                                        scriptInstruction = ">=";
+                                        break;
+
+                                    case 3:
+                                        scriptInstruction = "<=";
+                                        break;
+
+                                    case 4:
+                                        scriptInstruction = "==";
+                                        break;
+                                }
+                                int scriptCondition = scriptConditions[widgetId][scriptId];                           
+                                writer.append("\t\tif(" + script + " " + scriptInstruction + " " + scriptCondition + ")\n\t\t\treturn false\n");
+                            }
+                        }
+                        writer.append("\n");
+                    }
+                }
+            }
+            writer.close(); 
+        } catch(Exception ex) {
+            reportError("Exception thrown while dumping the widget script file", ex);
+            throw new RuntimeException();
+        }
+    }
+    
+    /**
+     * Executes the server setup.
+     * @param serverProperties The properties file that includes all the information
+     *                         needed to run the setup.
+     */
+    private static void executeServerSetup(Properties serverProperties) {
+        FileIndex landscapeIndex = null;
+        ArchivePackage versionPack = null;
+        try {
+            landscapeIndex = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("L-INDEX"), "r"));
+            FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
+            versionPack = new ArchivePackage(index.get(Integer.parseInt(serverProperties.getProperty("V-ID"))));
+            index.destroy();              
+        } catch(Exception ex) {
+            reportError("Exception thrown while loading the files for setup", ex);
+            throw new RuntimeException();
+        }
+        try {
+            DataOutputStream os = new DataOutputStream(new FileOutputStream(serverProperties.getProperty("OUTDIR") + serverProperties.getProperty("RFILE")));
+            byte[] mapIndex = versionPack.getArchive("map_index");
+            int amountRegions = mapIndex.length/7;
+            int[][] rCount = new int[256][];
+            int[][] cCount = new int[amountRegions][];
+            int cCountOffset = 1;
+            for(int i = 0; i < mapIndex.length; i += 7) {
+                int oldHash = ((mapIndex[i] & 0xFF) << 8) | (mapIndex[i + 1] & 0xFF);
+                int floorId = ((mapIndex[i + 2] & 0xFF) << 8) | (mapIndex[i + 3] & 0xFF);
+                int hash = oldHash >> 8;
+                if(rCount[hash] == null)
+                    rCount[hash] = new int[257];
+                int countOffset = rCount[hash][256]++;
+                rCount[hash][countOffset] = (oldHash & 0xFF);
+                DataInputStream is = new DataInputStream(new GZIPInputStream(new ByteArrayInputStream(landscapeIndex.get(floorId))));
+                long updated = 0L;
+                for(int z = 0; z < 4; z++) {
+                    for(int x = 0; x < 64; x++) {
+                        for(int y = 0; y < 64; y++) {
+                            for(;;) {
+                                int opcode = is.read();
+                                if(opcode == 0)
+                                    break;
+                                if(opcode == 1) {
+                                    is.read();
+                                    break;
+                                }
+                                if(opcode <= 49 || opcode > 81) {
+                                    long bitValue = 1L << (long) ((x >> 3) + (8 * (y >> 3)));
+                                    if((bitValue & updated) == 0) {
+                                        if(cCount[cCountOffset - 1] == null) {
+                                            cCount[cCountOffset - 1] = new int[65];
+                                            rCount[hash][countOffset] |= cCountOffset << 8;
+                                        }
+                                        int chunkHash = ((x >> 3) << 3) | (y >> 3);
+                                        cCount[cCountOffset - 1][cCount[cCountOffset - 1][64]++] = chunkHash;
+                                        updated |= bitValue;
+                                    }
+                                    if(opcode <= 49)
+                                        is.read();
+                                }                                
+                            }
+                        }
+                    }
+                }
+                is.close();
+                if(updated != 0L)
+                    cCountOffset++;
+            }
+            for(int x = 0; x < rCount.length; x++) {
+                if(rCount[x] != null) {
+                    os.write(1);
+                    os.write(x);
+                    os.write(rCount[x][256] & 0xFF);                     
+                    for(int i = 0; i < rCount[x][256]; i++) {
+                        os.write(rCount[x][i] & 0xFF);
+                        if((rCount[x][i] & ~0xFF) != 0) {
+                            os.write(1);
+                            int[] chunks = cCount[(rCount[x][i] >> 8) - 1];
+                            os.write(chunks[64]);                               
+                            for(int k = 0; k < chunks[64]; k++) {
+                                os.write(chunks[k]);
+                            }
+                        } else
+                            os.write(0);                            
+                    }
+                }
+            }
+            os.writeByte(0);
+        } catch(Exception ex) {
+            reportError("Exception thrown while dumping the region files", ex);
+            throw new RuntimeException();
+        }
+    }
+    
+    /**
+     * Dumps all the object varbit archives and their values.
+     * @param serverProperties The server properties to get all the information
+     *                         from for this dump.
+     */
+    private static void unpackObjectVarbit(Properties serverProperties) {
+        ArchivePackage configPack = null;
+        try {
+            FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
+            configPack = new ArchivePackage(index.get(Integer.parseInt(serverProperties.getProperty("C-ID"))));
+            index.destroy();              
+        } catch(Exception ex) {
+            reportError("Exception thrown while initializing the config pack", ex);
+            throw new RuntimeException();
+        }
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(serverProperties.getProperty("OUTDIR") + "varbit.txt"));
+            ByteBuffer buffer = new ByteBuffer(configPack.getArchive("varbit.dat"));
+            int amountVarbitArchives = buffer.getUword();
+            for(int i = 0; i < amountVarbitArchives; i++) {
+                writer.append("Varbit Id: " + i + "\n");
+                while(true) {
+                    int opcode = buffer.getUbyte();
+                    if(opcode == 0)
+                        break;
+                    if(opcode == 1) {
+                        int configId = buffer.getUword();
+                        int shift = buffer.getUbyte();
+                        int bits = buffer.getUbyte();
+                        writer.append("\tConfig Id: " + configId + "\n\tShift: " + shift + "\n\tBits: " + bits + "\n\tmsbs: ");
+                        for(int j = 32; j > 0; j--) {
+                            if(j > shift && j <= shift + bits)
+                                writer.append("1");
+                            else
+                                writer.append("0");
+                            if(j == 17)
+                                writer.append("\n\tlsbs: ");
+                        }
+                        writer.append("\n\tRange: 0..." + ((1 << bits) - 1));
+                    }
+                }
+                writer.append("\n\n");
+            }
+        } catch(Exception ex) {
+            reportError("Exception thrown while dumping the varbit files", ex);
+            throw new RuntimeException();
+        }
+    }
+    
+    /**
      * The starting point for this application.
      * @param args The command line arguments.
      */
@@ -623,388 +1064,12 @@ public final class Main implements Runnable {
             reportError("Exception thrown while loading the server properties", ex);
             throw new RuntimeException();
         }
-        if(args[0].equals("wdump")) {
-            ArchivePackage widgetPack = null;
-            try {
-                FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
-                widgetPack = new ArchivePackage(index.get(Integer.parseInt(serverProperties.getProperty("W-ID"))));
-                index.destroy();              
-            } catch(Exception ex) {
-                reportError("Exception thrown while loading the files for the widget dump", ex);
-                throw new RuntimeException();
-            }
-            ByteBuffer buffer = new ByteBuffer(widgetPack.getArchive("data"));                 
-            int amountWidgets = buffer.getUword();
-            int[][] scriptInstructions = new int[amountWidgets][];
-            int[][] scriptConditions = new int[amountWidgets][];
-            int[][][] scriptOpcodes = new int[amountWidgets][][];
-            while(buffer.offset < buffer.payload.length) {
-                int widgetId = buffer.getUword();
-                if(widgetId == 65535) {
-                    buffer.getUword();
-                    widgetId = buffer.getUword();
-                }
-                int type = buffer.getUbyte();
-                int fieldType = buffer.getUbyte();
-                buffer.getUword();
-                buffer.getUword();
-                buffer.getUword();
-                buffer.getUbyte();
-                if(buffer.getUbyte() != 0)
-                    buffer.getUbyte();
-                int amountScriptInstructions = buffer.getUbyte();
-                if(amountScriptInstructions > 0) {
-                    scriptInstructions[widgetId] = new int[amountScriptInstructions];
-                    scriptConditions[widgetId] = new int[amountScriptInstructions];
-                    for(int i = 0; i < amountScriptInstructions; i++) {
-                        scriptInstructions[widgetId][i] = buffer.getUbyte();
-                        scriptConditions[widgetId][i] = buffer.getUword();
-                    }
-                }
-                int amountScripts = buffer.getUbyte();
-                if(amountScripts > 0) {
-                    scriptOpcodes[widgetId] = new int[amountScripts][];
-                    for(int i = 0; i < amountScripts; i++) {
-                        int size = buffer.getUword();
-                        scriptOpcodes[widgetId][i] = new int[size];
-                        for(int j = 0; j < size; j++) {
-                            scriptOpcodes[widgetId][i][j] = buffer.getUword();
-                        }
-                    }
-                }
-                if(type == 0) {
-                    buffer.getUword();
-                    buffer.getUbyte();
-                    int amountchildren = buffer.getUword();
-                    for(int i = 0; i < amountchildren; i++) {
-                        buffer.getUword();
-                        buffer.getUword();
-                        buffer.getUword();
-                    }
-                }
-                if(type == 1) {
-                    buffer.getUword();
-                    buffer.getUbyte();
-                }
-                if(type == 2) {
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    for(int i = 0; i < 20; i++) {
-                        int op = buffer.getUbyte();
-                        if(op == 1) {
-                            buffer.getUword();
-                            buffer.getUword();
-                            buffer.getString();
-                        }
-                    }
-                    for(int i = 0; i < 5; i++) {
-                        buffer.getString();
-                    }
-
-                }
-                if(type == 3)
-                    buffer.getUbyte();
-                if(type == 4 || type == 1) {
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                }
-                if(type == 4) {
-                    buffer.getString();
-                    buffer.getString();
-                }
-                if(type == 1 || type == 3 || type == 4)
-                    buffer.getDword();
-                if(type == 3 || type == 4) {
-                    buffer.getDword();
-                    buffer.getDword();
-                    buffer.getDword();
-                }
-                if(type == 5) {
-                    buffer.getString();
-                    buffer.getString();
-                }
-                if(type == 6) {
-                    int modelId = buffer.getUbyte();
-                    if(modelId != 0) {
-                        buffer.getUbyte();
-                    }
-                    modelId = buffer.getUbyte();
-                    if(modelId != 0) {
-                        buffer.getUbyte();
-                    }
-                    modelId = buffer.getUbyte();
-                    if(modelId != 0)
-                        buffer.getUbyte();
-                    modelId = buffer.getUbyte();
-                    if(modelId != 0)
-                        buffer.getUbyte();
-                    buffer.getUword();
-                    buffer.getUword();
-                    buffer.getUword();
-                }
-                if(type == 7){
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getDword();
-                    buffer.getUword();
-                    buffer.getUword();
-                    buffer.getUbyte();
-                    for(int k4 = 0; k4 < 5; k4++) {
-                        buffer.getString();
-                    }
-                }
-                if(fieldType == 2 || type == 2)
-                {
-                    buffer.getString();
-                    buffer.getString();
-                    buffer.getUword();
-                }
-                if(type == 8)
-                    buffer.getString();
-                if(fieldType == 1 || fieldType == 4 || fieldType == 5 || fieldType == 6) {
-                    buffer.getString();
-                }
-            }
-            try {               
-                BufferedWriter writer = new BufferedWriter(new FileWriter(serverProperties.getProperty("OUTDIR") + "wscripts.txt"));
-                for(int widgetId = 0; widgetId < scriptInstructions.length; widgetId++) {
-                    if(scriptInstructions[widgetId] != null) {
-                        writer.append("Widget " + widgetId + ", Scripts: " + scriptInstructions[widgetId].length + "\n\n");
-                        for(int scriptId = 0; scriptId < scriptInstructions[widgetId].length; scriptId++) {
-                            if(scriptOpcodes[widgetId] != null &&  scriptOpcodes[widgetId].length > scriptId && scriptOpcodes[widgetId][scriptId] != null) {                               
-                                int[] opcodes = scriptOpcodes[widgetId][scriptId];
-                                String script = "";
-                                String op = "";
-                                char logicOp = '+';
-                                char lastLogicOp = '+';
-                                boolean bool = false;
-                                int offset = 0;
-                                logic:
-                                for(; offset < opcodes.length;) {
-                                    int opcode = opcodes[offset++];
-                                    bool = false;
-                                    switch(opcode) {
-
-                                        case 0:
-                                            break logic;
-
-                                        case 1:
-                                            op = "getDynamicLevel(Id => " + opcodes[offset++] + ")";
-                                            break;
-
-                                        case 2:
-                                            op = "getStaticLevel(Id => " + opcodes[offset++] + ")";
-                                            break;
-
-                                        case 3:
-                                            op = "getExperience(Id => " + opcodes[offset++] + ")";
-                                            break;
-
-                                        case 4:
-                                            op = "getItemAmount(WidgetId => " + opcodes[offset++] + ", ItemId => " + opcodes[offset++] + ")";
-                                            break;
-
-                                        case 5:
-                                            op = "getConfigValue(Id => " + opcodes[offset++] + ")";
-                                            break;
-
-                                        case 6:
-                                            op = "getXpForNextLevel(Id => " + opcodes[offset++] + ")";
-                                            break;
-
-                                        case 7:
-                                            op = "unknown(Id => " + opcodes[offset++] + ")";
-                                            break;
-
-                                        case 8:
-                                            op = "getCombatLevel()";
-                                            break;
-
-                                        case 9:
-                                            op = "getSkillTotal()";
-                                            break;
-
-                                        case 10:
-                                            op = "hasAmountItem(Id => " + opcodes[offset++] + ", Amount => " + opcodes[offset++] + ")";
-                                            break;
-
-                                        case 11:
-                                            op = "getUnusedValue0()";
-                                            break;
-
-                                        case 12:
-                                            op = "getUnusedValue1()";
-                                            break;
-
-                                        case 13:
-                                            op = "isConfigBitToggled(Id => " + opcodes[offset++] + ", Bit => " + opcodes[offset++] + ")";
-                                            break;
-
-                                        case 14:
-                                            op = "getConfigValue(VarbitId => " + opcodes[offset++] + ")";
-                                            break;
-
-                                        case 15:
-                                            logicOp = '-';
-                                            bool = true;
-                                            break;
-
-                                        case 16:
-                                            logicOp = '\\';
-                                            bool = true;
-                                            break;
-
-                                        case 17:
-                                            logicOp = '*';
-                                            bool = true;
-                                            break;
-
-                                        case 18:
-                                            op = "getX()";
-                                            break;
-
-                                        case 19:
-                                            op = "getY()";
-                                            break;
-
-                                        case 20:
-                                            op = "" + opcodes[offset++];
-                                            break;
-
-                                        default:
-                                            op = "null";
-                                            break;
-                                    }
-                                    if(!bool) {
-                                        script = (!script.equals("") && lastLogicOp != logicOp ? "(" : "") + script;
-                                        script += (!script.equals("") ? " " + logicOp : "") + (script.length() > 40 ? "\n\t\t   " : "") + op + (offset != opcodes.length - 1 && lastLogicOp != logicOp ? ") " : "");
-                                        if(logicOp != '\\')
-                                            lastLogicOp = logicOp;
-                                        logicOp = '+';
-                                    }
-                                }
-                                String scriptInstruction = "!=";
-                                if(scriptInstructions[widgetId] != null) {
-                                    switch(scriptInstructions[widgetId][scriptId]) {
-
-                                        case 2:
-                                            scriptInstruction = ">=";
-                                            break;
-
-                                        case 3:
-                                            scriptInstruction = "<=";
-                                            break;
-
-                                        case 4:
-                                            scriptInstruction = "==";
-                                            break;
-                                    }
-                                    int scriptCondition = scriptConditions[widgetId][scriptId];                           
-                                    writer.append("\t\tif(" + script + " " + scriptInstruction + " " + scriptCondition + ")\n\t\t\treturn false\n");
-                                }
-                            }
-                            writer.append("\n");
-                        }
-                    }
-                }
-                writer.close(); 
-            } catch(Exception ex) {
-                ex.printStackTrace();
-                reportError("Exception thrown while dumping the widget script file", ex);
-                throw new RuntimeException();
-            }
+        if(args[0].equals("vdump")) {
+            unpackObjectVarbit(serverProperties);
+        } else if(args[0].equals("wdump")) {
+            unpackWidgetScripts(serverProperties);
         } else if(args[0].equals("setup")) {
-            FileIndex landscapeIndex = null;
-            ArchivePackage versionPack = null;
-            try {
-                landscapeIndex = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("L-INDEX"), "r"));
-                FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
-                versionPack = new ArchivePackage(index.get(Integer.parseInt(serverProperties.getProperty("V-ID"))));
-                index.destroy();              
-            } catch(Exception ex) {
-                reportError("Exception thrown while loading the files for setup", ex);
-                throw new RuntimeException();
-            }
-            try {
-                DataOutputStream os = new DataOutputStream(new FileOutputStream(serverProperties.getProperty("OUTDIR") + serverProperties.getProperty("RFILE")));
-                byte[] mapIndex = versionPack.getArchive("map_index");
-                int amountRegions = mapIndex.length/7;
-                int[][] rCount = new int[256][];
-                int[][] cCount = new int[amountRegions][];
-                int cCountOffset = 1;
-                for(int i = 0; i < mapIndex.length; i += 7) {
-                    int oldHash = ((mapIndex[i] & 0xFF) << 8) | (mapIndex[i + 1] & 0xFF);
-                    int floorId = ((mapIndex[i + 2] & 0xFF) << 8) | (mapIndex[i + 3] & 0xFF);
-                    int hash = oldHash >> 8;
-                    if(rCount[hash] == null)
-                        rCount[hash] = new int[257];
-                    int countOffset = rCount[hash][256]++;
-                    rCount[hash][countOffset] = (oldHash & 0xFF);
-                    DataInputStream is = new DataInputStream(new GZIPInputStream(new ByteArrayInputStream(landscapeIndex.get(floorId))));
-                    long updated = 0L;
-                    for(int z = 0; z < 4; z++) {
-                        for(int x = 0; x < 64; x++) {
-                            for(int y = 0; y < 64; y++) {
-                                for(;;) {
-                                    int opcode = is.read();
-                                    if(opcode == 0)
-                                        break;
-                                    if(opcode == 1) {
-                                        is.read();
-                                        break;
-                                    }
-                                    if(opcode <= 49 || opcode > 81) {
-                                        long bitValue = 1L << (long) ((x >> 3) + (8 * (y >> 3)));
-                                        if((bitValue & updated) == 0) {
-                                            if(cCount[cCountOffset - 1] == null) {
-                                                cCount[cCountOffset - 1] = new int[65];
-                                                rCount[hash][countOffset] |= cCountOffset << 8;
-                                            }
-                                            int chunkHash = ((x >> 3) << 3) | (y >> 3);
-                                            cCount[cCountOffset - 1][cCount[cCountOffset - 1][64]++] = chunkHash;
-                                            updated |= bitValue;
-                                        }
-                                        if(opcode <= 49)
-                                            is.read();
-                                    }                                
-                                }
-                            }
-                        }
-                    }
-                    is.close();
-                    if(updated != 0L)
-                        cCountOffset++;
-                }
-                for(int x = 0; x < rCount.length; x++) {
-                    if(rCount[x] != null) {
-                        os.write(1);
-                        os.write(x);
-                        os.write(rCount[x][256] & 0xFF);                     
-                        for(int i = 0; i < rCount[x][256]; i++) {
-                            os.write(rCount[x][i] & 0xFF);
-                            if((rCount[x][i] & ~0xFF) != 0) {
-                                os.write(1);
-                                int[] chunks = cCount[(rCount[x][i] >> 8) - 1];
-                                os.write(chunks[64]);                               
-                                for(int k = 0; k < chunks[64]; k++) {
-                                    os.write(chunks[k]);
-                                }
-                            } else
-                                os.write(0);                            
-                        }
-                    }
-                }
-                os.writeByte(0);
-            } catch(Exception ex) {
-                reportError("Exception thrown while dumping the region files", ex);
-                throw new RuntimeException();
-            }
+            executeServerSetup(serverProperties);
         } else if(args[0].equals("server")) {
             int portOff = -1;
             try {
