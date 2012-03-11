@@ -1007,7 +1007,7 @@ public final class Main implements Runnable {
      * @param serverProperties The server properties to get all the information
      *                         from for this dump.
      */
-    private static void unpackObjectVarbit(Properties serverProperties) {
+    private static void dumpObjectVarbit(Properties serverProperties) {
         ArchivePackage configPack = null;
         try {
             FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
@@ -1031,7 +1031,7 @@ public final class Main implements Runnable {
                         int configId = buffer.getUword();
                         int shift = buffer.getUbyte();
                         int bits = buffer.getUbyte();
-                        writer.append("\tConfig Id: " + configId + "\n\tShift: " + shift + "\n\tBits: " + bits + "\n\tmsbs: ");
+                        writer.append("\tConfig Id: " + configId + "\n\tShift: " + shift + "\n\tMsb: " + bits + "\n\tmsbs: ");
                         for(int j = 32; j > 0; j--) {
                             if(j > shift && j <= shift + bits)
                                 writer.append("1");
@@ -1045,8 +1045,159 @@ public final class Main implements Runnable {
                 }
                 writer.append("\n\n");
             }
+            writer.close();
         } catch(Exception ex) {
             reportError("Exception thrown while dumping the varbit files", ex);
+            throw new RuntimeException();
+        }
+        try {
+            ByteBuffer buffer = new ByteBuffer(configPack.getArchive("loc.dat"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(serverProperties.getProperty("OUTDIR") + "objvarbit.txt"));
+            int objectId = 0;
+            while(buffer.offset < buffer.payload.length) {
+                String name = null;
+                while(true) {
+                    int opcode = buffer.getUbyte();
+                    if(opcode == 0)
+                        break;
+                    if(opcode == 1)
+                        buffer.offset += buffer.getUbyte() * 3;
+                    if(opcode == 2)
+                        name = buffer.getString();
+                    if(opcode == 3)
+                        buffer.getString();
+                    if(opcode == 5)
+                        buffer.offset += buffer.getUbyte() * 2;
+                    if(opcode == 14)
+                        buffer.getUbyte();
+                    if(opcode == 15)
+                        buffer.getUbyte();
+                    if(opcode == 19)
+                        buffer.getUbyte();
+                    if(opcode == 24)
+                        buffer.getUword();
+                    if(opcode == 28)
+                        buffer.getUbyte();
+                    if(opcode == 29)
+                        buffer.getByte();
+                    if(opcode == 39)
+                        buffer.getByte();
+                    if(opcode >= 30 && opcode < 39)
+                        buffer.getString();
+                    if(opcode == 40)
+                        buffer.offset += buffer.getUbyte() * 4;
+                    if(opcode == 60)
+                        buffer.getUword();
+                    if(opcode == 65)
+                        buffer.getUword();
+                    if(opcode == 66)
+                        buffer.getUword();
+                    if(opcode == 67)
+                        buffer.getUword();
+                    if(opcode == 68)
+                        buffer.getUword();
+                    if(opcode == 69)
+                        buffer.getUbyte();
+                    if(opcode == 70)
+                        buffer.getUword();
+                    if(opcode == 71)
+                        buffer.getUword();
+                    if(opcode == 72)
+                        buffer.getUword();
+                    if(opcode == 75)
+                        buffer.getUbyte();
+                    if(opcode == 77) {
+                        writer.append("Object Id: " + objectId + (name != null ? ", " + name : ""));
+                        writer.append("\n\tVarbit Id: " + buffer.getUword());
+                        writer.append("\n\tConfig Id: " + buffer.getUword());
+                        int amountObjects = buffer.getUbyte();
+                        writer.append("\n\tAmount Objects: " + amountObjects);
+                        for(int i = 0; i <= amountObjects; i++) {
+                            writer.append("\n\t\t" + i + " => " + buffer.getUword());
+                        }
+                        writer.append("\n\n");
+                    }
+                }
+                objectId++;
+            }           
+        } catch(Exception ex) {
+            reportError("Exception thrown while dumping the object files", ex);
+            throw new RuntimeException();
+        }
+    }
+       
+    private static void dumpObjects(Properties serverProperties) {
+        ArchivePackage configPack = null;
+        try {
+            FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
+            configPack = new ArchivePackage(index.get(Integer.parseInt(serverProperties.getProperty("C-ID"))));
+            index.destroy();              
+        } catch(Exception ex) {
+            reportError("Exception thrown while initializing the config pack", ex);
+            throw new RuntimeException();
+        }
+        try {
+            ByteBuffer buffer = new ByteBuffer(configPack.getArchive("loc.dat"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(serverProperties.getProperty("OUTDIR") + "objs.txt"));
+            int objectId = 0;
+            while(buffer.offset < buffer.payload.length) {
+                while(true) {
+                    int opcode = buffer.getUbyte();
+                    if(opcode == 0)
+                        break;
+                    if(opcode == 1)
+                        buffer.offset += buffer.getUbyte() * 3;
+                    if(opcode == 2)
+                        writer.append("Object Id: " + objectId + ", " + buffer.getString() + "\n");
+                    if(opcode == 3)
+                        writer.append("\tExamine: " + buffer.getString() + "\n");
+                    if(opcode == 5)
+                        buffer.offset += buffer.getUbyte() * 2;
+                    if(opcode == 14)
+                        buffer.getUbyte();
+                    if(opcode == 15)
+                        buffer.getUbyte();
+                    if(opcode == 19)
+                        buffer.getUbyte();
+                    if(opcode == 24)
+                        buffer.getUword();
+                    if(opcode == 28)
+                        buffer.getUbyte();
+                    if(opcode == 29)
+                        buffer.getByte();
+                    if(opcode == 39)
+                        buffer.getByte();
+                    if(opcode >= 30 && opcode < 39)
+                        buffer.getString();
+                    if(opcode == 40)
+                        buffer.offset += buffer.getUbyte() * 4;
+                    if(opcode == 60)
+                        buffer.getUword();
+                    if(opcode == 65)
+                        buffer.getUword();
+                    if(opcode == 66)
+                        buffer.getUword();
+                    if(opcode == 67)
+                        buffer.getUword();
+                    if(opcode == 68)
+                        buffer.getUword();
+                    if(opcode == 69)
+                        buffer.getUbyte();
+                    if(opcode == 70)
+                        buffer.getUword();
+                    if(opcode == 71)
+                        buffer.getUword();
+                    if(opcode == 72)
+                        buffer.getUword();
+                    if(opcode == 75)
+                        buffer.getUbyte();
+                    if(opcode == 77)
+                        buffer.offset += 4 + (buffer.getUbyte() * 2);
+                }
+                objectId++;
+            }           
+        } catch(Exception ex) {
+            reportError("Exception thrown while dumping the object files", ex);
             throw new RuntimeException();
         }
     }
@@ -1064,8 +1215,10 @@ public final class Main implements Runnable {
             reportError("Exception thrown while loading the server properties", ex);
             throw new RuntimeException();
         }
-        if(args[0].equals("vdump")) {
-            unpackObjectVarbit(serverProperties);
+        if(args[0].equals("odump")) {
+            dumpObjects(serverProperties);
+        } else if(args[0].equals("vdump")) {
+            dumpObjectVarbit(serverProperties);
         } else if(args[0].equals("wdump")) {
             unpackWidgetScripts(serverProperties);
         } else if(args[0].equals("setup")) {

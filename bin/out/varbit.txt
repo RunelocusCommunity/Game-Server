@@ -1,7 +1,7 @@
 Varbit Id: 0
 	Config Id: 318
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -9,7 +9,7 @@ Varbit Id: 0
 Varbit Id: 1
 	Config Id: 318
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -17,7 +17,7 @@ Varbit Id: 1
 Varbit Id: 2
 	Config Id: 318
 	Shift: 2
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000001100
 	Range: 0...3
@@ -25,7 +25,7 @@ Varbit Id: 2
 Varbit Id: 3
 	Config Id: 318
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -33,7 +33,7 @@ Varbit Id: 3
 Varbit Id: 4
 	Config Id: 318
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -41,7 +41,7 @@ Varbit Id: 4
 Varbit Id: 5
 	Config Id: 318
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -49,7 +49,7 @@ Varbit Id: 5
 Varbit Id: 6
 	Config Id: 336
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -57,7 +57,7 @@ Varbit Id: 6
 Varbit Id: 7
 	Config Id: 336
 	Shift: 1
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000001110
 	Range: 0...7
@@ -65,7 +65,7 @@ Varbit Id: 7
 Varbit Id: 8
 	Config Id: 336
 	Shift: 4
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000011111110000
 	Range: 0...127
@@ -73,7 +73,7 @@ Varbit Id: 8
 Varbit Id: 9
 	Config Id: 336
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -81,7 +81,7 @@ Varbit Id: 9
 Varbit Id: 10
 	Config Id: 340
 	Shift: 9
-	Bits: 13
+	Msb: 13
 	msbs: 0000000000111111
 	lsbs: 1111111000000000
 	Range: 0...8191
@@ -89,7 +89,7 @@ Varbit Id: 10
 Varbit Id: 11
 	Config Id: 340
 	Shift: 14
-	Bits: 27
+	Msb: 27
 	msbs: 1111111111111111
 	lsbs: 1100000000000000
 	Range: 0...134217727
@@ -97,7 +97,7 @@ Varbit Id: 11
 Varbit Id: 12
 	Config Id: 350
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -105,7 +105,7 @@ Varbit Id: 12
 Varbit Id: 13
 	Config Id: 350
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -113,7 +113,7 @@ Varbit Id: 13
 Varbit Id: 14
 	Config Id: 350
 	Shift: 2
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000001100
 	Range: 0...3
@@ -121,7 +121,7 @@ Varbit Id: 14
 Varbit Id: 15
 	Config Id: 350
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -129,7 +129,7 @@ Varbit Id: 15
 Varbit Id: 16
 	Config Id: 350
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -137,7 +137,7 @@ Varbit Id: 16
 Varbit Id: 17
 	Config Id: 350
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -145,7 +145,7 @@ Varbit Id: 17
 Varbit Id: 18
 	Config Id: 350
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -153,7 +153,7 @@ Varbit Id: 18
 Varbit Id: 19
 	Config Id: 350
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -161,7 +161,7 @@ Varbit Id: 19
 Varbit Id: 20
 	Config Id: 350
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -169,7 +169,7 @@ Varbit Id: 20
 Varbit Id: 21
 	Config Id: 350
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -177,7 +177,7 @@ Varbit Id: 21
 Varbit Id: 22
 	Config Id: 350
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -185,7 +185,7 @@ Varbit Id: 22
 Varbit Id: 23
 	Config Id: 350
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -193,7 +193,7 @@ Varbit Id: 23
 Varbit Id: 24
 	Config Id: 350
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -201,7 +201,7 @@ Varbit Id: 24
 Varbit Id: 25
 	Config Id: 350
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -209,7 +209,7 @@ Varbit Id: 25
 Varbit Id: 26
 	Config Id: 350
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -217,7 +217,7 @@ Varbit Id: 26
 Varbit Id: 27
 	Config Id: 350
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -225,7 +225,7 @@ Varbit Id: 27
 Varbit Id: 28
 	Config Id: 350
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -233,7 +233,7 @@ Varbit Id: 28
 Varbit Id: 29
 	Config Id: 350
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -241,7 +241,7 @@ Varbit Id: 29
 Varbit Id: 30
 	Config Id: 350
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -249,7 +249,7 @@ Varbit Id: 30
 Varbit Id: 31
 	Config Id: 350
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -257,7 +257,7 @@ Varbit Id: 31
 Varbit Id: 32
 	Config Id: 350
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -265,7 +265,7 @@ Varbit Id: 32
 Varbit Id: 33
 	Config Id: 350
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -273,7 +273,7 @@ Varbit Id: 33
 Varbit Id: 34
 	Config Id: 351
 	Shift: 0
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000000000
 	lsbs: 0000001111111111
 	Range: 0...1023
@@ -281,7 +281,7 @@ Varbit Id: 34
 Varbit Id: 35
 	Config Id: 351
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -289,7 +289,7 @@ Varbit Id: 35
 Varbit Id: 36
 	Config Id: 351
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -297,7 +297,7 @@ Varbit Id: 36
 Varbit Id: 37
 	Config Id: 351
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -305,7 +305,7 @@ Varbit Id: 37
 Varbit Id: 38
 	Config Id: 351
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -313,7 +313,7 @@ Varbit Id: 38
 Varbit Id: 39
 	Config Id: 351
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -321,7 +321,7 @@ Varbit Id: 39
 Varbit Id: 40
 	Config Id: 351
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -329,7 +329,7 @@ Varbit Id: 40
 Varbit Id: 41
 	Config Id: 351
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -337,7 +337,7 @@ Varbit Id: 41
 Varbit Id: 42
 	Config Id: 351
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -345,7 +345,7 @@ Varbit Id: 42
 Varbit Id: 43
 	Config Id: 351
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -353,7 +353,7 @@ Varbit Id: 43
 Varbit Id: 44
 	Config Id: 351
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -361,7 +361,7 @@ Varbit Id: 44
 Varbit Id: 45
 	Config Id: 351
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -369,7 +369,7 @@ Varbit Id: 45
 Varbit Id: 46
 	Config Id: 351
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -377,7 +377,7 @@ Varbit Id: 46
 Varbit Id: 47
 	Config Id: 351
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -385,7 +385,7 @@ Varbit Id: 47
 Varbit Id: 48
 	Config Id: 351
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -393,7 +393,7 @@ Varbit Id: 48
 Varbit Id: 49
 	Config Id: 355
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -401,7 +401,7 @@ Varbit Id: 49
 Varbit Id: 50
 	Config Id: 355
 	Shift: 2
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000001111100
 	Range: 0...31
@@ -409,7 +409,7 @@ Varbit Id: 50
 Varbit Id: 51
 	Config Id: 355
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -417,7 +417,7 @@ Varbit Id: 51
 Varbit Id: 52
 	Config Id: 355
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -425,7 +425,7 @@ Varbit Id: 52
 Varbit Id: 53
 	Config Id: 355
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -433,7 +433,7 @@ Varbit Id: 53
 Varbit Id: 54
 	Config Id: 355
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -441,7 +441,7 @@ Varbit Id: 54
 Varbit Id: 55
 	Config Id: 355
 	Shift: 10
-	Bits: 16
+	Msb: 16
 	msbs: 0000001111111111
 	lsbs: 1111110000000000
 	Range: 0...65535
@@ -449,7 +449,7 @@ Varbit Id: 55
 Varbit Id: 56
 	Config Id: 355
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -457,7 +457,7 @@ Varbit Id: 56
 Varbit Id: 57
 	Config Id: 355
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -465,7 +465,7 @@ Varbit Id: 57
 Varbit Id: 58
 	Config Id: 355
 	Shift: 19
-	Bits: 25
+	Msb: 25
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -473,7 +473,7 @@ Varbit Id: 58
 Varbit Id: 59
 	Config Id: 355
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -481,7 +481,7 @@ Varbit Id: 59
 Varbit Id: 60
 	Config Id: 355
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -489,7 +489,7 @@ Varbit Id: 60
 Varbit Id: 61
 	Config Id: 355
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -497,7 +497,7 @@ Varbit Id: 61
 Varbit Id: 62
 	Config Id: 355
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -505,7 +505,7 @@ Varbit Id: 62
 Varbit Id: 63
 	Config Id: 355
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -513,7 +513,7 @@ Varbit Id: 63
 Varbit Id: 64
 	Config Id: 356
 	Shift: 0
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000000011111
 	Range: 0...31
@@ -521,7 +521,7 @@ Varbit Id: 64
 Varbit Id: 65
 	Config Id: 356
 	Shift: 6
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 0011111111000000
 	Range: 0...255
@@ -529,7 +529,7 @@ Varbit Id: 65
 Varbit Id: 66
 	Config Id: 356
 	Shift: 9
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000001111
 	lsbs: 1111111000000000
 	Range: 0...2047
@@ -537,7 +537,7 @@ Varbit Id: 66
 Varbit Id: 67
 	Config Id: 356
 	Shift: 12
-	Bits: 14
+	Msb: 14
 	msbs: 0000001111111111
 	lsbs: 1111000000000000
 	Range: 0...16383
@@ -545,7 +545,7 @@ Varbit Id: 67
 Varbit Id: 68
 	Config Id: 356
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -553,7 +553,7 @@ Varbit Id: 68
 Varbit Id: 69
 	Config Id: 357
 	Shift: 0
-	Bits: 15
+	Msb: 15
 	msbs: 0000000000000000
 	lsbs: 0111111111111111
 	Range: 0...32767
@@ -561,7 +561,7 @@ Varbit Id: 69
 Varbit Id: 70
 	Config Id: 357
 	Shift: 16
-	Bits: 31
+	Msb: 31
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -569,7 +569,7 @@ Varbit Id: 70
 Varbit Id: 71
 	Config Id: 361
 	Shift: 0
-	Bits: 17
+	Msb: 17
 	msbs: 0000000000000001
 	lsbs: 1111111111111111
 	Range: 0...131071
@@ -577,7 +577,7 @@ Varbit Id: 71
 Varbit Id: 72
 	Config Id: 361
 	Shift: 18
-	Bits: 24
+	Msb: 24
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -585,7 +585,7 @@ Varbit Id: 72
 Varbit Id: 73
 	Config Id: 361
 	Shift: 25
-	Bits: 31
+	Msb: 31
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -593,7 +593,7 @@ Varbit Id: 73
 Varbit Id: 74
 	Config Id: 362
 	Shift: 0
-	Bits: 26
+	Msb: 26
 	msbs: 0000001111111111
 	lsbs: 1111111111111111
 	Range: 0...67108863
@@ -601,7 +601,7 @@ Varbit Id: 74
 Varbit Id: 75
 	Config Id: 362
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -609,7 +609,7 @@ Varbit Id: 75
 Varbit Id: 76
 	Config Id: 362
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -617,7 +617,7 @@ Varbit Id: 76
 Varbit Id: 77
 	Config Id: 362
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -625,7 +625,7 @@ Varbit Id: 77
 Varbit Id: 78
 	Config Id: 362
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -633,7 +633,7 @@ Varbit Id: 78
 Varbit Id: 79
 	Config Id: 363
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -641,7 +641,7 @@ Varbit Id: 79
 Varbit Id: 80
 	Config Id: 363
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -649,7 +649,7 @@ Varbit Id: 80
 Varbit Id: 81
 	Config Id: 363
 	Shift: 0
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000000111
 	Range: 0...7
@@ -657,7 +657,7 @@ Varbit Id: 81
 Varbit Id: 82
 	Config Id: 363
 	Shift: 4
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000011111110000
 	Range: 0...127
@@ -665,7 +665,7 @@ Varbit Id: 82
 Varbit Id: 83
 	Config Id: 363
 	Shift: 8
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000000111
 	lsbs: 1111111100000000
 	Range: 0...2047
@@ -673,7 +673,7 @@ Varbit Id: 83
 Varbit Id: 84
 	Config Id: 363
 	Shift: 12
-	Bits: 15
+	Msb: 15
 	msbs: 0000011111111111
 	lsbs: 1111000000000000
 	Range: 0...32767
@@ -681,7 +681,7 @@ Varbit Id: 84
 Varbit Id: 85
 	Config Id: 363
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -689,7 +689,7 @@ Varbit Id: 85
 Varbit Id: 86
 	Config Id: 363
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -697,7 +697,7 @@ Varbit Id: 86
 Varbit Id: 87
 	Config Id: 363
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -705,7 +705,7 @@ Varbit Id: 87
 Varbit Id: 88
 	Config Id: 363
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -713,7 +713,7 @@ Varbit Id: 88
 Varbit Id: 89
 	Config Id: 363
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -721,7 +721,7 @@ Varbit Id: 89
 Varbit Id: 90
 	Config Id: 363
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -729,7 +729,7 @@ Varbit Id: 90
 Varbit Id: 91
 	Config Id: 363
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -737,7 +737,7 @@ Varbit Id: 91
 Varbit Id: 92
 	Config Id: 363
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -745,7 +745,7 @@ Varbit Id: 92
 Varbit Id: 93
 	Config Id: 363
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -753,7 +753,7 @@ Varbit Id: 93
 Varbit Id: 94
 	Config Id: 363
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -761,7 +761,7 @@ Varbit Id: 94
 Varbit Id: 95
 	Config Id: 363
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -769,7 +769,7 @@ Varbit Id: 95
 Varbit Id: 96
 	Config Id: 363
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -777,7 +777,7 @@ Varbit Id: 96
 Varbit Id: 97
 	Config Id: 363
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -785,7 +785,7 @@ Varbit Id: 97
 Varbit Id: 98
 	Config Id: 363
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -793,7 +793,7 @@ Varbit Id: 98
 Varbit Id: 99
 	Config Id: 371
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -801,7 +801,7 @@ Varbit Id: 99
 Varbit Id: 100
 	Config Id: 371
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -809,7 +809,7 @@ Varbit Id: 100
 Varbit Id: 101
 	Config Id: 371
 	Shift: 2
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000001100
 	Range: 0...3
@@ -817,7 +817,7 @@ Varbit Id: 101
 Varbit Id: 102
 	Config Id: 371
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -825,7 +825,7 @@ Varbit Id: 102
 Varbit Id: 103
 	Config Id: 371
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -833,7 +833,7 @@ Varbit Id: 103
 Varbit Id: 104
 	Config Id: 371
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -841,7 +841,7 @@ Varbit Id: 104
 Varbit Id: 105
 	Config Id: 371
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -849,7 +849,7 @@ Varbit Id: 105
 Varbit Id: 106
 	Config Id: 371
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -857,7 +857,7 @@ Varbit Id: 106
 Varbit Id: 107
 	Config Id: 371
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -865,7 +865,7 @@ Varbit Id: 107
 Varbit Id: 108
 	Config Id: 371
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -873,7 +873,7 @@ Varbit Id: 108
 Varbit Id: 109
 	Config Id: 371
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -881,7 +881,7 @@ Varbit Id: 109
 Varbit Id: 110
 	Config Id: 371
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -889,7 +889,7 @@ Varbit Id: 110
 Varbit Id: 111
 	Config Id: 371
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -897,7 +897,7 @@ Varbit Id: 111
 Varbit Id: 112
 	Config Id: 371
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -905,7 +905,7 @@ Varbit Id: 112
 Varbit Id: 113
 	Config Id: 371
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -913,7 +913,7 @@ Varbit Id: 113
 Varbit Id: 114
 	Config Id: 371
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -921,7 +921,7 @@ Varbit Id: 114
 Varbit Id: 115
 	Config Id: 371
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -929,7 +929,7 @@ Varbit Id: 115
 Varbit Id: 116
 	Config Id: 371
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -937,7 +937,7 @@ Varbit Id: 116
 Varbit Id: 117
 	Config Id: 373
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -945,7 +945,7 @@ Varbit Id: 117
 Varbit Id: 118
 	Config Id: 373
 	Shift: 2
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000000111100
 	Range: 0...15
@@ -953,7 +953,7 @@ Varbit Id: 118
 Varbit Id: 119
 	Config Id: 373
 	Shift: 5
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 0001111111100000
 	Range: 0...255
@@ -961,7 +961,7 @@ Varbit Id: 119
 Varbit Id: 120
 	Config Id: 373
 	Shift: 9
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000000111
 	lsbs: 1111111000000000
 	Range: 0...1023
@@ -969,7 +969,7 @@ Varbit Id: 120
 Varbit Id: 121
 	Config Id: 372
 	Shift: 0
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000000111
 	Range: 0...7
@@ -977,7 +977,7 @@ Varbit Id: 121
 Varbit Id: 122
 	Config Id: 372
 	Shift: 4
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000001111110000
 	Range: 0...63
@@ -985,7 +985,7 @@ Varbit Id: 122
 Varbit Id: 123
 	Config Id: 372
 	Shift: 7
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000000001
 	lsbs: 1111111110000000
 	Range: 0...1023
@@ -993,7 +993,7 @@ Varbit Id: 123
 Varbit Id: 124
 	Config Id: 372
 	Shift: 11
-	Bits: 12
+	Msb: 12
 	msbs: 0000000001111111
 	lsbs: 1111100000000000
 	Range: 0...4095
@@ -1001,7 +1001,7 @@ Varbit Id: 124
 Varbit Id: 125
 	Config Id: 372
 	Shift: 13
-	Bits: 15
+	Msb: 15
 	msbs: 0000111111111111
 	lsbs: 1110000000000000
 	Range: 0...32767
@@ -1009,7 +1009,7 @@ Varbit Id: 125
 Varbit Id: 126
 	Config Id: 372
 	Shift: 16
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -1017,7 +1017,7 @@ Varbit Id: 126
 Varbit Id: 127
 	Config Id: 372
 	Shift: 20
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -1025,7 +1025,7 @@ Varbit Id: 127
 Varbit Id: 128
 	Config Id: 372
 	Shift: 24
-	Bits: 25
+	Msb: 25
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -1033,7 +1033,7 @@ Varbit Id: 128
 Varbit Id: 129
 	Config Id: 372
 	Shift: 26
-	Bits: 27
+	Msb: 27
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -1041,7 +1041,7 @@ Varbit Id: 129
 Varbit Id: 130
 	Config Id: 374
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -1049,7 +1049,7 @@ Varbit Id: 130
 Varbit Id: 131
 	Config Id: 374
 	Shift: 2
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000000
 	lsbs: 0000011111111100
 	Range: 0...511
@@ -1057,7 +1057,7 @@ Varbit Id: 131
 Varbit Id: 132
 	Config Id: 374
 	Shift: 10
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000011111
 	lsbs: 1111110000000000
 	Range: 0...2047
@@ -1065,7 +1065,7 @@ Varbit Id: 132
 Varbit Id: 133
 	Config Id: 374
 	Shift: 12
-	Bits: 16
+	Msb: 16
 	msbs: 0000111111111111
 	lsbs: 1111000000000000
 	Range: 0...65535
@@ -1073,7 +1073,7 @@ Varbit Id: 133
 Varbit Id: 134
 	Config Id: 374
 	Shift: 17
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -1081,7 +1081,7 @@ Varbit Id: 134
 Varbit Id: 135
 	Config Id: 362
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -1089,7 +1089,7 @@ Varbit Id: 135
 Varbit Id: 136
 	Config Id: 378
 	Shift: 0
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000000000111111
 	Range: 0...63
@@ -1097,7 +1097,7 @@ Varbit Id: 136
 Varbit Id: 137
 	Config Id: 378
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -1105,7 +1105,7 @@ Varbit Id: 137
 Varbit Id: 138
 	Config Id: 378
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -1113,7 +1113,7 @@ Varbit Id: 138
 Varbit Id: 139
 	Config Id: 378
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -1121,7 +1121,7 @@ Varbit Id: 139
 Varbit Id: 140
 	Config Id: 378
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -1129,7 +1129,7 @@ Varbit Id: 140
 Varbit Id: 141
 	Config Id: 378
 	Shift: 11
-	Bits: 15
+	Msb: 15
 	msbs: 0000001111111111
 	lsbs: 1111100000000000
 	Range: 0...32767
@@ -1137,7 +1137,7 @@ Varbit Id: 141
 Varbit Id: 142
 	Config Id: 378
 	Shift: 16
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -1145,7 +1145,7 @@ Varbit Id: 142
 Varbit Id: 143
 	Config Id: 378
 	Shift: 21
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -1153,7 +1153,7 @@ Varbit Id: 143
 Varbit Id: 144
 	Config Id: 378
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -1161,7 +1161,7 @@ Varbit Id: 144
 Varbit Id: 145
 	Config Id: 378
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -1169,7 +1169,7 @@ Varbit Id: 145
 Varbit Id: 146
 	Config Id: 377
 	Shift: 0
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000000000111111
 	Range: 0...63
@@ -1177,7 +1177,7 @@ Varbit Id: 146
 Varbit Id: 147
 	Config Id: 377
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -1185,7 +1185,7 @@ Varbit Id: 147
 Varbit Id: 148
 	Config Id: 377
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -1193,7 +1193,7 @@ Varbit Id: 148
 Varbit Id: 149
 	Config Id: 377
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -1201,7 +1201,7 @@ Varbit Id: 149
 Varbit Id: 150
 	Config Id: 377
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -1209,7 +1209,7 @@ Varbit Id: 150
 Varbit Id: 151
 	Config Id: 377
 	Shift: 11
-	Bits: 15
+	Msb: 15
 	msbs: 0000001111111111
 	lsbs: 1111100000000000
 	Range: 0...32767
@@ -1217,7 +1217,7 @@ Varbit Id: 151
 Varbit Id: 152
 	Config Id: 377
 	Shift: 16
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -1225,7 +1225,7 @@ Varbit Id: 152
 Varbit Id: 153
 	Config Id: 377
 	Shift: 21
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -1233,7 +1233,7 @@ Varbit Id: 153
 Varbit Id: 154
 	Config Id: 377
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -1241,7 +1241,7 @@ Varbit Id: 154
 Varbit Id: 155
 	Config Id: 377
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -1249,7 +1249,7 @@ Varbit Id: 155
 Varbit Id: 156
 	Config Id: 379
 	Shift: 0
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000000001111
 	Range: 0...15
@@ -1257,7 +1257,7 @@ Varbit Id: 156
 Varbit Id: 157
 	Config Id: 379
 	Shift: 5
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000000
 	lsbs: 0011111111100000
 	Range: 0...511
@@ -1265,7 +1265,7 @@ Varbit Id: 157
 Varbit Id: 158
 	Config Id: 174
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -1273,7 +1273,7 @@ Varbit Id: 158
 Varbit Id: 159
 	Config Id: 174
 	Shift: 2
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000001100
 	Range: 0...3
@@ -1281,7 +1281,7 @@ Varbit Id: 159
 Varbit Id: 160
 	Config Id: 174
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -1289,7 +1289,7 @@ Varbit Id: 160
 Varbit Id: 161
 	Config Id: 174
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -1297,7 +1297,7 @@ Varbit Id: 161
 Varbit Id: 162
 	Config Id: 174
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -1305,7 +1305,7 @@ Varbit Id: 162
 Varbit Id: 163
 	Config Id: 174
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -1313,7 +1313,7 @@ Varbit Id: 163
 Varbit Id: 164
 	Config Id: 174
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -1321,7 +1321,7 @@ Varbit Id: 164
 Varbit Id: 165
 	Config Id: 174
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -1329,7 +1329,7 @@ Varbit Id: 165
 Varbit Id: 166
 	Config Id: 174
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -1337,7 +1337,7 @@ Varbit Id: 166
 Varbit Id: 167
 	Config Id: 174
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -1345,7 +1345,7 @@ Varbit Id: 167
 Varbit Id: 168
 	Config Id: 174
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -1353,7 +1353,7 @@ Varbit Id: 168
 Varbit Id: 169
 	Config Id: 174
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -1361,7 +1361,7 @@ Varbit Id: 169
 Varbit Id: 170
 	Config Id: 174
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -1369,7 +1369,7 @@ Varbit Id: 170
 Varbit Id: 171
 	Config Id: 379
 	Shift: 10
-	Bits: 20
+	Msb: 20
 	msbs: 0011111111111111
 	lsbs: 1111110000000000
 	Range: 0...1048575
@@ -1377,7 +1377,7 @@ Varbit Id: 171
 Varbit Id: 172
 	Config Id: 379
 	Shift: 21
-	Bits: 31
+	Msb: 31
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -1385,7 +1385,7 @@ Varbit Id: 172
 Varbit Id: 173
 	Config Id: 388
 	Shift: 6
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0001111111000000
 	Range: 0...127
@@ -1393,7 +1393,7 @@ Varbit Id: 173
 Varbit Id: 174
 	Config Id: 388
 	Shift: 8
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000001
 	lsbs: 1111111100000000
 	Range: 0...511
@@ -1401,7 +1401,7 @@ Varbit Id: 174
 Varbit Id: 175
 	Config Id: 388
 	Shift: 16
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -1409,7 +1409,7 @@ Varbit Id: 175
 Varbit Id: 176
 	Config Id: 388
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -1417,7 +1417,7 @@ Varbit Id: 176
 Varbit Id: 177
 	Config Id: 388
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -1425,7 +1425,7 @@ Varbit Id: 177
 Varbit Id: 178
 	Config Id: 388
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -1433,7 +1433,7 @@ Varbit Id: 178
 Varbit Id: 179
 	Config Id: 396
 	Shift: 7
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000000011
 	lsbs: 1111111110000000
 	Range: 0...2047
@@ -1441,7 +1441,7 @@ Varbit Id: 179
 Varbit Id: 180
 	Config Id: 396
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -1449,7 +1449,7 @@ Varbit Id: 180
 Varbit Id: 181
 	Config Id: 396
 	Shift: 13
-	Bits: 16
+	Msb: 16
 	msbs: 0001111111111111
 	lsbs: 1110000000000000
 	Range: 0...65535
@@ -1457,7 +1457,7 @@ Varbit Id: 181
 Varbit Id: 182
 	Config Id: 396
 	Shift: 0
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000000011
 	Range: 0...3
@@ -1465,7 +1465,7 @@ Varbit Id: 182
 Varbit Id: 183
 	Config Id: 396
 	Shift: 3
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000000111111000
 	Range: 0...63
@@ -1473,7 +1473,7 @@ Varbit Id: 183
 Varbit Id: 184
 	Config Id: 396
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -1481,7 +1481,7 @@ Varbit Id: 184
 Varbit Id: 185
 	Config Id: 400
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -1489,7 +1489,7 @@ Varbit Id: 185
 Varbit Id: 186
 	Config Id: 400
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -1497,7 +1497,7 @@ Varbit Id: 186
 Varbit Id: 187
 	Config Id: 400
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -1505,7 +1505,7 @@ Varbit Id: 187
 Varbit Id: 188
 	Config Id: 400
 	Shift: 2
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000001100
 	Range: 0...3
@@ -1513,7 +1513,7 @@ Varbit Id: 188
 Varbit Id: 189
 	Config Id: 400
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -1521,7 +1521,7 @@ Varbit Id: 189
 Varbit Id: 190
 	Config Id: 400
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -1529,7 +1529,7 @@ Varbit Id: 190
 Varbit Id: 191
 	Config Id: 400
 	Shift: 5
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000111111100000
 	Range: 0...127
@@ -1537,7 +1537,7 @@ Varbit Id: 191
 Varbit Id: 192
 	Config Id: 400
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -1545,7 +1545,7 @@ Varbit Id: 192
 Varbit Id: 193
 	Config Id: 400
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -1553,7 +1553,7 @@ Varbit Id: 193
 Varbit Id: 194
 	Config Id: 400
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -1561,7 +1561,7 @@ Varbit Id: 194
 Varbit Id: 195
 	Config Id: 400
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -1569,7 +1569,7 @@ Varbit Id: 195
 Varbit Id: 196
 	Config Id: 400
 	Shift: 12
-	Bits: 16
+	Msb: 16
 	msbs: 0000111111111111
 	lsbs: 1111000000000000
 	Range: 0...65535
@@ -1577,7 +1577,7 @@ Varbit Id: 196
 Varbit Id: 197
 	Config Id: 400
 	Shift: 17
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -1585,7 +1585,7 @@ Varbit Id: 197
 Varbit Id: 198
 	Config Id: 400
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -1593,7 +1593,7 @@ Varbit Id: 198
 Varbit Id: 199
 	Config Id: 400
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -1601,7 +1601,7 @@ Varbit Id: 199
 Varbit Id: 200
 	Config Id: 400
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -1609,7 +1609,7 @@ Varbit Id: 200
 Varbit Id: 201
 	Config Id: 340
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -1617,7 +1617,7 @@ Varbit Id: 201
 Varbit Id: 202
 	Config Id: 142
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -1625,7 +1625,7 @@ Varbit Id: 202
 Varbit Id: 203
 	Config Id: 400
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -1633,7 +1633,7 @@ Varbit Id: 203
 Varbit Id: 204
 	Config Id: 408
 	Shift: 0
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000000011111
 	Range: 0...31
@@ -1641,7 +1641,7 @@ Varbit Id: 204
 Varbit Id: 205
 	Config Id: 408
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -1649,7 +1649,7 @@ Varbit Id: 205
 Varbit Id: 206
 	Config Id: 408
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -1657,7 +1657,7 @@ Varbit Id: 206
 Varbit Id: 207
 	Config Id: 408
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -1665,7 +1665,7 @@ Varbit Id: 207
 Varbit Id: 208
 	Config Id: 408
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -1673,7 +1673,7 @@ Varbit Id: 208
 Varbit Id: 209
 	Config Id: 408
 	Shift: 10
-	Bits: 14
+	Msb: 14
 	msbs: 0000000011111111
 	lsbs: 1111110000000000
 	Range: 0...16383
@@ -1681,7 +1681,7 @@ Varbit Id: 209
 Varbit Id: 210
 	Config Id: 408
 	Shift: 15
-	Bits: 16
+	Msb: 16
 	msbs: 0111111111111111
 	lsbs: 1000000000000000
 	Range: 0...65535
@@ -1689,7 +1689,7 @@ Varbit Id: 210
 Varbit Id: 211
 	Config Id: 408
 	Shift: 17
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -1697,7 +1697,7 @@ Varbit Id: 211
 Varbit Id: 212
 	Config Id: 408
 	Shift: 19
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -1705,7 +1705,7 @@ Varbit Id: 212
 Varbit Id: 213
 	Config Id: 408
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -1713,7 +1713,7 @@ Varbit Id: 213
 Varbit Id: 214
 	Config Id: 408
 	Shift: 24
-	Bits: 25
+	Msb: 25
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -1721,7 +1721,7 @@ Varbit Id: 214
 Varbit Id: 215
 	Config Id: 408
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -1729,7 +1729,7 @@ Varbit Id: 215
 Varbit Id: 216
 	Config Id: 408
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -1737,7 +1737,7 @@ Varbit Id: 216
 Varbit Id: 217
 	Config Id: 408
 	Shift: 28
-	Bits: 31
+	Msb: 31
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -1745,7 +1745,7 @@ Varbit Id: 217
 Varbit Id: 218
 	Config Id: 409
 	Shift: 10
-	Bits: 12
+	Msb: 12
 	msbs: 0000000000111111
 	lsbs: 1111110000000000
 	Range: 0...4095
@@ -1753,7 +1753,7 @@ Varbit Id: 218
 Varbit Id: 219
 	Config Id: 409
 	Shift: 13
-	Bits: 15
+	Msb: 15
 	msbs: 0000111111111111
 	lsbs: 1110000000000000
 	Range: 0...32767
@@ -1761,7 +1761,7 @@ Varbit Id: 219
 Varbit Id: 220
 	Config Id: 409
 	Shift: 16
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -1769,7 +1769,7 @@ Varbit Id: 220
 Varbit Id: 221
 	Config Id: 409
 	Shift: 19
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -1777,7 +1777,7 @@ Varbit Id: 221
 Varbit Id: 222
 	Config Id: 409
 	Shift: 22
-	Bits: 24
+	Msb: 24
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -1785,7 +1785,7 @@ Varbit Id: 222
 Varbit Id: 223
 	Config Id: 409
 	Shift: 25
-	Bits: 27
+	Msb: 27
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -1793,7 +1793,7 @@ Varbit Id: 223
 Varbit Id: 224
 	Config Id: 412
 	Shift: 0
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000000
 	lsbs: 0000000111111111
 	Range: 0...511
@@ -1801,7 +1801,7 @@ Varbit Id: 224
 Varbit Id: 225
 	Config Id: 412
 	Shift: 10
-	Bits: 13
+	Msb: 13
 	msbs: 0000000001111111
 	lsbs: 1111110000000000
 	Range: 0...8191
@@ -1809,7 +1809,7 @@ Varbit Id: 225
 Varbit Id: 226
 	Config Id: 412
 	Shift: 14
-	Bits: 17
+	Msb: 17
 	msbs: 0111111111111111
 	lsbs: 1100000000000000
 	Range: 0...131071
@@ -1817,7 +1817,7 @@ Varbit Id: 226
 Varbit Id: 227
 	Config Id: 412
 	Shift: 18
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -1825,7 +1825,7 @@ Varbit Id: 227
 Varbit Id: 228
 	Config Id: 412
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -1833,7 +1833,7 @@ Varbit Id: 228
 Varbit Id: 229
 	Config Id: 412
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -1841,7 +1841,7 @@ Varbit Id: 229
 Varbit Id: 230
 	Config Id: 413
 	Shift: 0
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000000011111
 	Range: 0...31
@@ -1849,7 +1849,7 @@ Varbit Id: 230
 Varbit Id: 231
 	Config Id: 413
 	Shift: 6
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000000001
 	lsbs: 1111111111000000
 	Range: 0...2047
@@ -1857,7 +1857,7 @@ Varbit Id: 231
 Varbit Id: 232
 	Config Id: 413
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -1865,7 +1865,7 @@ Varbit Id: 232
 Varbit Id: 233
 	Config Id: 413
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -1873,7 +1873,7 @@ Varbit Id: 233
 Varbit Id: 234
 	Config Id: 413
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -1881,7 +1881,7 @@ Varbit Id: 234
 Varbit Id: 235
 	Config Id: 174
 	Shift: 14
-	Bits: 15
+	Msb: 15
 	msbs: 0001111111111111
 	lsbs: 1100000000000000
 	Range: 0...32767
@@ -1889,7 +1889,7 @@ Varbit Id: 235
 Varbit Id: 236
 	Config Id: 417
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -1897,7 +1897,7 @@ Varbit Id: 236
 Varbit Id: 237
 	Config Id: 417
 	Shift: 2
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000001100
 	Range: 0...3
@@ -1905,7 +1905,7 @@ Varbit Id: 237
 Varbit Id: 238
 	Config Id: 417
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -1913,7 +1913,7 @@ Varbit Id: 238
 Varbit Id: 239
 	Config Id: 417
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -1921,7 +1921,7 @@ Varbit Id: 239
 Varbit Id: 240
 	Config Id: 417
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -1929,7 +1929,7 @@ Varbit Id: 240
 Varbit Id: 241
 	Config Id: 417
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -1937,7 +1937,7 @@ Varbit Id: 241
 Varbit Id: 242
 	Config Id: 417
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -1945,7 +1945,7 @@ Varbit Id: 242
 Varbit Id: 243
 	Config Id: 417
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -1953,7 +1953,7 @@ Varbit Id: 243
 Varbit Id: 244
 	Config Id: 417
 	Shift: 1
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 0000000111111110
 	Range: 0...255
@@ -1961,7 +1961,7 @@ Varbit Id: 244
 Varbit Id: 245
 	Config Id: 417
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -1969,7 +1969,7 @@ Varbit Id: 245
 Varbit Id: 246
 	Config Id: 417
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -1977,7 +1977,7 @@ Varbit Id: 246
 Varbit Id: 247
 	Config Id: 417
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -1985,7 +1985,7 @@ Varbit Id: 247
 Varbit Id: 248
 	Config Id: 417
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -1993,7 +1993,7 @@ Varbit Id: 248
 Varbit Id: 249
 	Config Id: 417
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -2001,7 +2001,7 @@ Varbit Id: 249
 Varbit Id: 250
 	Config Id: 417
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -2009,7 +2009,7 @@ Varbit Id: 250
 Varbit Id: 251
 	Config Id: 417
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -2017,7 +2017,7 @@ Varbit Id: 251
 Varbit Id: 252
 	Config Id: 417
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -2025,7 +2025,7 @@ Varbit Id: 252
 Varbit Id: 253
 	Config Id: 417
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -2033,7 +2033,7 @@ Varbit Id: 253
 Varbit Id: 254
 	Config Id: 417
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -2041,7 +2041,7 @@ Varbit Id: 254
 Varbit Id: 255
 	Config Id: 417
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -2049,7 +2049,7 @@ Varbit Id: 255
 Varbit Id: 256
 	Config Id: 417
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -2057,7 +2057,7 @@ Varbit Id: 256
 Varbit Id: 257
 	Config Id: 417
 	Shift: 29
-	Bits: 30
+	Msb: 30
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -2065,7 +2065,7 @@ Varbit Id: 257
 Varbit Id: 258
 	Config Id: 417
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -2073,7 +2073,7 @@ Varbit Id: 258
 Varbit Id: 259
 	Config Id: 417
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -2081,7 +2081,7 @@ Varbit Id: 259
 Varbit Id: 260
 	Config Id: 423
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -2089,7 +2089,7 @@ Varbit Id: 260
 Varbit Id: 261
 	Config Id: 423
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -2097,7 +2097,7 @@ Varbit Id: 261
 Varbit Id: 262
 	Config Id: 423
 	Shift: 9
-	Bits: 14
+	Msb: 14
 	msbs: 0000000001111111
 	lsbs: 1111111000000000
 	Range: 0...16383
@@ -2105,7 +2105,7 @@ Varbit Id: 262
 Varbit Id: 263
 	Config Id: 423
 	Shift: 15
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111111
 	lsbs: 1000000000000000
 	Range: 0...524287
@@ -2113,7 +2113,7 @@ Varbit Id: 263
 Varbit Id: 264
 	Config Id: 423
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -2121,7 +2121,7 @@ Varbit Id: 264
 Varbit Id: 265
 	Config Id: 423
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -2129,7 +2129,7 @@ Varbit Id: 265
 Varbit Id: 266
 	Config Id: 423
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -2137,7 +2137,7 @@ Varbit Id: 266
 Varbit Id: 267
 	Config Id: 423
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -2145,7 +2145,7 @@ Varbit Id: 267
 Varbit Id: 268
 	Config Id: 423
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -2153,7 +2153,7 @@ Varbit Id: 268
 Varbit Id: 269
 	Config Id: 423
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -2161,7 +2161,7 @@ Varbit Id: 269
 Varbit Id: 270
 	Config Id: 423
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -2169,7 +2169,7 @@ Varbit Id: 270
 Varbit Id: 271
 	Config Id: 423
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -2177,7 +2177,7 @@ Varbit Id: 271
 Varbit Id: 272
 	Config Id: 423
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -2185,7 +2185,7 @@ Varbit Id: 272
 Varbit Id: 273
 	Config Id: 423
 	Shift: 29
-	Bits: 30
+	Msb: 30
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -2193,7 +2193,7 @@ Varbit Id: 273
 Varbit Id: 274
 	Config Id: 423
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -2201,7 +2201,7 @@ Varbit Id: 274
 Varbit Id: 275
 	Config Id: 108
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -2209,7 +2209,7 @@ Varbit Id: 275
 Varbit Id: 276
 	Config Id: 108
 	Shift: 1
-	Bits: 31
+	Msb: 31
 	msbs: 1111111111111111
 	lsbs: 1111111111111110
 	Range: 0...2147483647
@@ -2217,7 +2217,7 @@ Varbit Id: 276
 Varbit Id: 277
 	Config Id: 425
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -2225,7 +2225,7 @@ Varbit Id: 277
 Varbit Id: 278
 	Config Id: 425
 	Shift: 1
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000000110
 	Range: 0...3
@@ -2233,7 +2233,7 @@ Varbit Id: 278
 Varbit Id: 279
 	Config Id: 425
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -2241,7 +2241,7 @@ Varbit Id: 279
 Varbit Id: 280
 	Config Id: 425
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -2249,7 +2249,7 @@ Varbit Id: 280
 Varbit Id: 281
 	Config Id: 425
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -2257,7 +2257,7 @@ Varbit Id: 281
 Varbit Id: 282
 	Config Id: 425
 	Shift: 6
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 0011111111000000
 	Range: 0...255
@@ -2265,7 +2265,7 @@ Varbit Id: 282
 Varbit Id: 283
 	Config Id: 425
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -2273,7 +2273,7 @@ Varbit Id: 283
 Varbit Id: 284
 	Config Id: 425
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -2281,7 +2281,7 @@ Varbit Id: 284
 Varbit Id: 285
 	Config Id: 425
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -2289,7 +2289,7 @@ Varbit Id: 285
 Varbit Id: 286
 	Config Id: 117
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -2297,7 +2297,7 @@ Varbit Id: 286
 Varbit Id: 287
 	Config Id: 117
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -2305,7 +2305,7 @@ Varbit Id: 287
 Varbit Id: 288
 	Config Id: 117
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -2313,7 +2313,7 @@ Varbit Id: 288
 Varbit Id: 289
 	Config Id: 117
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -2321,7 +2321,7 @@ Varbit Id: 289
 Varbit Id: 290
 	Config Id: 117
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -2329,7 +2329,7 @@ Varbit Id: 290
 Varbit Id: 291
 	Config Id: 117
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -2337,7 +2337,7 @@ Varbit Id: 291
 Varbit Id: 292
 	Config Id: 117
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -2345,7 +2345,7 @@ Varbit Id: 292
 Varbit Id: 293
 	Config Id: 117
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -2353,7 +2353,7 @@ Varbit Id: 293
 Varbit Id: 294
 	Config Id: 117
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -2361,7 +2361,7 @@ Varbit Id: 294
 Varbit Id: 295
 	Config Id: 117
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -2369,7 +2369,7 @@ Varbit Id: 295
 Varbit Id: 296
 	Config Id: 117
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -2377,7 +2377,7 @@ Varbit Id: 296
 Varbit Id: 297
 	Config Id: 429
 	Shift: 2
-	Bits: 31
+	Msb: 31
 	msbs: 1111111111111111
 	lsbs: 1111111111111100
 	Range: 0...2147483647
@@ -2385,7 +2385,7 @@ Varbit Id: 297
 Varbit Id: 298
 	Config Id: 429
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -2393,7 +2393,7 @@ Varbit Id: 298
 Varbit Id: 299
 	Config Id: 433
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -2401,7 +2401,7 @@ Varbit Id: 299
 Varbit Id: 300
 	Config Id: 433
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -2409,7 +2409,7 @@ Varbit Id: 300
 Varbit Id: 301
 	Config Id: 433
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -2417,7 +2417,7 @@ Varbit Id: 301
 Varbit Id: 302
 	Config Id: 433
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -2425,7 +2425,7 @@ Varbit Id: 302
 Varbit Id: 303
 	Config Id: 433
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -2433,7 +2433,7 @@ Varbit Id: 303
 Varbit Id: 304
 	Config Id: 433
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -2441,7 +2441,7 @@ Varbit Id: 304
 Varbit Id: 305
 	Config Id: 433
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -2449,7 +2449,7 @@ Varbit Id: 305
 Varbit Id: 306
 	Config Id: 433
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -2457,7 +2457,7 @@ Varbit Id: 306
 Varbit Id: 307
 	Config Id: 433
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -2465,7 +2465,7 @@ Varbit Id: 307
 Varbit Id: 308
 	Config Id: 433
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -2473,7 +2473,7 @@ Varbit Id: 308
 Varbit Id: 309
 	Config Id: 433
 	Shift: 17
-	Bits: 26
+	Msb: 26
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -2481,7 +2481,7 @@ Varbit Id: 309
 Varbit Id: 310
 	Config Id: 433
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -2489,7 +2489,7 @@ Varbit Id: 310
 Varbit Id: 311
 	Config Id: 433
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -2497,7 +2497,7 @@ Varbit Id: 311
 Varbit Id: 312
 	Config Id: 433
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -2505,7 +2505,7 @@ Varbit Id: 312
 Varbit Id: 313
 	Config Id: 433
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -2513,7 +2513,7 @@ Varbit Id: 313
 Varbit Id: 314
 	Config Id: 433
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -2521,7 +2521,7 @@ Varbit Id: 314
 Varbit Id: 315
 	Config Id: 436
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -2529,7 +2529,7 @@ Varbit Id: 315
 Varbit Id: 316
 	Config Id: 436
 	Shift: 2
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000011100
 	Range: 0...7
@@ -2537,7 +2537,7 @@ Varbit Id: 316
 Varbit Id: 317
 	Config Id: 436
 	Shift: 4
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000001111110000
 	Range: 0...63
@@ -2545,7 +2545,7 @@ Varbit Id: 317
 Varbit Id: 318
 	Config Id: 436
 	Shift: 7
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 0111111110000000
 	Range: 0...255
@@ -2553,7 +2553,7 @@ Varbit Id: 318
 Varbit Id: 319
 	Config Id: 436
 	Shift: 9
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000000111
 	lsbs: 1111111000000000
 	Range: 0...1023
@@ -2561,7 +2561,7 @@ Varbit Id: 319
 Varbit Id: 320
 	Config Id: 436
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -2569,7 +2569,7 @@ Varbit Id: 320
 Varbit Id: 321
 	Config Id: 436
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -2577,7 +2577,7 @@ Varbit Id: 321
 Varbit Id: 322
 	Config Id: 436
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -2585,7 +2585,7 @@ Varbit Id: 322
 Varbit Id: 323
 	Config Id: 436
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -2593,7 +2593,7 @@ Varbit Id: 323
 Varbit Id: 324
 	Config Id: 436
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -2601,7 +2601,7 @@ Varbit Id: 324
 Varbit Id: 325
 	Config Id: 436
 	Shift: 17
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -2609,7 +2609,7 @@ Varbit Id: 325
 Varbit Id: 326
 	Config Id: 436
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -2617,7 +2617,7 @@ Varbit Id: 326
 Varbit Id: 327
 	Config Id: 436
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -2625,7 +2625,7 @@ Varbit Id: 327
 Varbit Id: 328
 	Config Id: 436
 	Shift: 23
-	Bits: 24
+	Msb: 24
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -2633,7 +2633,7 @@ Varbit Id: 328
 Varbit Id: 329
 	Config Id: 436
 	Shift: 25
-	Bits: 26
+	Msb: 26
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -2641,7 +2641,7 @@ Varbit Id: 329
 Varbit Id: 330
 	Config Id: 436
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -2649,7 +2649,7 @@ Varbit Id: 330
 Varbit Id: 331
 	Config Id: 436
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -2657,7 +2657,7 @@ Varbit Id: 331
 Varbit Id: 332
 	Config Id: 436
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -2665,7 +2665,7 @@ Varbit Id: 332
 Varbit Id: 333
 	Config Id: 436
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -2673,7 +2673,7 @@ Varbit Id: 333
 Varbit Id: 334
 	Config Id: 435
 	Shift: 0
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000000011111
 	Range: 0...31
@@ -2681,7 +2681,7 @@ Varbit Id: 334
 Varbit Id: 335
 	Config Id: 435
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -2689,7 +2689,7 @@ Varbit Id: 335
 Varbit Id: 336
 	Config Id: 435
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -2697,7 +2697,7 @@ Varbit Id: 336
 Varbit Id: 337
 	Config Id: 435
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -2705,7 +2705,7 @@ Varbit Id: 337
 Varbit Id: 338
 	Config Id: 435
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -2713,7 +2713,7 @@ Varbit Id: 338
 Varbit Id: 339
 	Config Id: 435
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -2721,7 +2721,7 @@ Varbit Id: 339
 Varbit Id: 340
 	Config Id: 435
 	Shift: 11
-	Bits: 12
+	Msb: 12
 	msbs: 0000000001111111
 	lsbs: 1111100000000000
 	Range: 0...4095
@@ -2729,7 +2729,7 @@ Varbit Id: 340
 Varbit Id: 341
 	Config Id: 435
 	Shift: 13
-	Bits: 14
+	Msb: 14
 	msbs: 0000011111111111
 	lsbs: 1110000000000000
 	Range: 0...16383
@@ -2737,7 +2737,7 @@ Varbit Id: 341
 Varbit Id: 342
 	Config Id: 435
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -2745,7 +2745,7 @@ Varbit Id: 342
 Varbit Id: 343
 	Config Id: 435
 	Shift: 16
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -2753,7 +2753,7 @@ Varbit Id: 343
 Varbit Id: 344
 	Config Id: 435
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -2761,7 +2761,7 @@ Varbit Id: 344
 Varbit Id: 345
 	Config Id: 435
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -2769,7 +2769,7 @@ Varbit Id: 345
 Varbit Id: 346
 	Config Id: 437
 	Shift: 0
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000000001111
 	Range: 0...15
@@ -2777,7 +2777,7 @@ Varbit Id: 346
 Varbit Id: 347
 	Config Id: 437
 	Shift: 5
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000011111100000
 	Range: 0...63
@@ -2785,7 +2785,7 @@ Varbit Id: 347
 Varbit Id: 348
 	Config Id: 437
 	Shift: 7
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000000
 	lsbs: 1111111110000000
 	Range: 0...511
@@ -2793,7 +2793,7 @@ Varbit Id: 348
 Varbit Id: 349
 	Config Id: 437
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -2801,7 +2801,7 @@ Varbit Id: 349
 Varbit Id: 350
 	Config Id: 437
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -2809,7 +2809,7 @@ Varbit Id: 350
 Varbit Id: 351
 	Config Id: 437
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -2817,7 +2817,7 @@ Varbit Id: 351
 Varbit Id: 352
 	Config Id: 437
 	Shift: 13
-	Bits: 14
+	Msb: 14
 	msbs: 0000011111111111
 	lsbs: 1110000000000000
 	Range: 0...16383
@@ -2825,7 +2825,7 @@ Varbit Id: 352
 Varbit Id: 353
 	Config Id: 437
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -2833,7 +2833,7 @@ Varbit Id: 353
 Varbit Id: 354
 	Config Id: 437
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -2841,7 +2841,7 @@ Varbit Id: 354
 Varbit Id: 355
 	Config Id: 437
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -2849,7 +2849,7 @@ Varbit Id: 355
 Varbit Id: 356
 	Config Id: 437
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -2857,7 +2857,7 @@ Varbit Id: 356
 Varbit Id: 357
 	Config Id: 439
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -2865,7 +2865,7 @@ Varbit Id: 357
 Varbit Id: 358
 	Config Id: 440
 	Shift: 0
-	Bits: 14
+	Msb: 14
 	msbs: 0000000000000000
 	lsbs: 0011111111111111
 	Range: 0...16383
@@ -2873,7 +2873,7 @@ Varbit Id: 358
 Varbit Id: 359
 	Config Id: 441
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -2881,7 +2881,7 @@ Varbit Id: 359
 Varbit Id: 360
 	Config Id: 441
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -2889,7 +2889,7 @@ Varbit Id: 360
 Varbit Id: 361
 	Config Id: 441
 	Shift: 2
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000001100
 	Range: 0...3
@@ -2897,7 +2897,7 @@ Varbit Id: 361
 Varbit Id: 362
 	Config Id: 441
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -2905,7 +2905,7 @@ Varbit Id: 362
 Varbit Id: 363
 	Config Id: 441
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -2913,7 +2913,7 @@ Varbit Id: 363
 Varbit Id: 364
 	Config Id: 441
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -2921,7 +2921,7 @@ Varbit Id: 364
 Varbit Id: 365
 	Config Id: 441
 	Shift: 6
-	Bits: 17
+	Msb: 17
 	msbs: 0000000001111111
 	lsbs: 1111111111000000
 	Range: 0...131071
@@ -2929,7 +2929,7 @@ Varbit Id: 365
 Varbit Id: 366
 	Config Id: 441
 	Shift: 18
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -2937,7 +2937,7 @@ Varbit Id: 366
 Varbit Id: 367
 	Config Id: 441
 	Shift: 24
-	Bits: 29
+	Msb: 29
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -2945,7 +2945,7 @@ Varbit Id: 367
 Varbit Id: 368
 	Config Id: 441
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -2953,7 +2953,7 @@ Varbit Id: 368
 Varbit Id: 369
 	Config Id: 441
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -2961,7 +2961,7 @@ Varbit Id: 369
 Varbit Id: 370
 	Config Id: 442
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -2969,7 +2969,7 @@ Varbit Id: 370
 Varbit Id: 371
 	Config Id: 442
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -2977,7 +2977,7 @@ Varbit Id: 371
 Varbit Id: 372
 	Config Id: 442
 	Shift: 2
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000001100
 	Range: 0...3
@@ -2985,7 +2985,7 @@ Varbit Id: 372
 Varbit Id: 373
 	Config Id: 442
 	Shift: 3
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000000111111000
 	Range: 0...63
@@ -2993,7 +2993,7 @@ Varbit Id: 373
 Varbit Id: 374
 	Config Id: 442
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -3001,7 +3001,7 @@ Varbit Id: 374
 Varbit Id: 375
 	Config Id: 442
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -3009,7 +3009,7 @@ Varbit Id: 375
 Varbit Id: 376
 	Config Id: 442
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -3017,7 +3017,7 @@ Varbit Id: 376
 Varbit Id: 377
 	Config Id: 442
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -3025,7 +3025,7 @@ Varbit Id: 377
 Varbit Id: 378
 	Config Id: 442
 	Shift: 11
-	Bits: 15
+	Msb: 15
 	msbs: 0000001111111111
 	lsbs: 1111100000000000
 	Range: 0...32767
@@ -3033,7 +3033,7 @@ Varbit Id: 378
 Varbit Id: 379
 	Config Id: 442
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -3041,7 +3041,7 @@ Varbit Id: 379
 Varbit Id: 380
 	Config Id: 442
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -3049,7 +3049,7 @@ Varbit Id: 380
 Varbit Id: 381
 	Config Id: 442
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -3057,7 +3057,7 @@ Varbit Id: 381
 Varbit Id: 382
 	Config Id: 442
 	Shift: 19
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -3065,7 +3065,7 @@ Varbit Id: 382
 Varbit Id: 383
 	Config Id: 442
 	Shift: 24
-	Bits: 28
+	Msb: 28
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -3073,7 +3073,7 @@ Varbit Id: 383
 Varbit Id: 384
 	Config Id: 442
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -3081,7 +3081,7 @@ Varbit Id: 384
 Varbit Id: 385
 	Config Id: 442
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -3089,7 +3089,7 @@ Varbit Id: 385
 Varbit Id: 386
 	Config Id: 442
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -3097,7 +3097,7 @@ Varbit Id: 386
 Varbit Id: 387
 	Config Id: 440
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -3105,7 +3105,7 @@ Varbit Id: 387
 Varbit Id: 388
 	Config Id: 440
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -3113,7 +3113,7 @@ Varbit Id: 388
 Varbit Id: 389
 	Config Id: 440
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -3121,7 +3121,7 @@ Varbit Id: 389
 Varbit Id: 390
 	Config Id: 440
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -3129,7 +3129,7 @@ Varbit Id: 390
 Varbit Id: 391
 	Config Id: 440
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -3137,7 +3137,7 @@ Varbit Id: 391
 Varbit Id: 392
 	Config Id: 440
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -3145,7 +3145,7 @@ Varbit Id: 392
 Varbit Id: 393
 	Config Id: 440
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -3153,7 +3153,7 @@ Varbit Id: 393
 Varbit Id: 394
 	Config Id: 440
 	Shift: 22
-	Bits: 31
+	Msb: 31
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -3161,7 +3161,7 @@ Varbit Id: 394
 Varbit Id: 395
 	Config Id: 443
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -3169,7 +3169,7 @@ Varbit Id: 395
 Varbit Id: 396
 	Config Id: 388
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -3177,7 +3177,7 @@ Varbit Id: 396
 Varbit Id: 397
 	Config Id: 443
 	Shift: 0
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000000011
 	Range: 0...3
@@ -3185,7 +3185,7 @@ Varbit Id: 397
 Varbit Id: 398
 	Config Id: 443
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -3193,7 +3193,7 @@ Varbit Id: 398
 Varbit Id: 399
 	Config Id: 443
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -3201,7 +3201,7 @@ Varbit Id: 399
 Varbit Id: 400
 	Config Id: 443
 	Shift: 5
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000111111100000
 	Range: 0...127
@@ -3209,7 +3209,7 @@ Varbit Id: 400
 Varbit Id: 401
 	Config Id: 443
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -3217,7 +3217,7 @@ Varbit Id: 401
 Varbit Id: 402
 	Config Id: 443
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -3225,7 +3225,7 @@ Varbit Id: 402
 Varbit Id: 403
 	Config Id: 443
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -3233,7 +3233,7 @@ Varbit Id: 403
 Varbit Id: 404
 	Config Id: 443
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -3241,7 +3241,7 @@ Varbit Id: 404
 Varbit Id: 405
 	Config Id: 443
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -3249,7 +3249,7 @@ Varbit Id: 405
 Varbit Id: 406
 	Config Id: 443
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -3257,7 +3257,7 @@ Varbit Id: 406
 Varbit Id: 407
 	Config Id: 443
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -3265,7 +3265,7 @@ Varbit Id: 407
 Varbit Id: 408
 	Config Id: 443
 	Shift: 14
-	Bits: 15
+	Msb: 15
 	msbs: 0001111111111111
 	lsbs: 1100000000000000
 	Range: 0...32767
@@ -3273,7 +3273,7 @@ Varbit Id: 408
 Varbit Id: 409
 	Config Id: 443
 	Shift: 16
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -3281,7 +3281,7 @@ Varbit Id: 409
 Varbit Id: 410
 	Config Id: 443
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -3289,7 +3289,7 @@ Varbit Id: 410
 Varbit Id: 411
 	Config Id: 443
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -3297,7 +3297,7 @@ Varbit Id: 411
 Varbit Id: 412
 	Config Id: 443
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -3305,7 +3305,7 @@ Varbit Id: 412
 Varbit Id: 413
 	Config Id: 443
 	Shift: 23
-	Bits: 24
+	Msb: 24
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -3313,7 +3313,7 @@ Varbit Id: 413
 Varbit Id: 414
 	Config Id: 443
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -3321,7 +3321,7 @@ Varbit Id: 414
 Varbit Id: 415
 	Config Id: 443
 	Shift: 26
-	Bits: 27
+	Msb: 27
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -3329,7 +3329,7 @@ Varbit Id: 415
 Varbit Id: 416
 	Config Id: 443
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -3337,7 +3337,7 @@ Varbit Id: 416
 Varbit Id: 417
 	Config Id: 443
 	Shift: 29
-	Bits: 31
+	Msb: 31
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -3345,7 +3345,7 @@ Varbit Id: 417
 Varbit Id: 418
 	Config Id: 445
 	Shift: 0
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000000001111
 	Range: 0...15
@@ -3353,7 +3353,7 @@ Varbit Id: 418
 Varbit Id: 419
 	Config Id: 445
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -3361,7 +3361,7 @@ Varbit Id: 419
 Varbit Id: 420
 	Config Id: 445
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -3369,7 +3369,7 @@ Varbit Id: 420
 Varbit Id: 421
 	Config Id: 445
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -3377,7 +3377,7 @@ Varbit Id: 421
 Varbit Id: 422
 	Config Id: 445
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -3385,7 +3385,7 @@ Varbit Id: 422
 Varbit Id: 423
 	Config Id: 445
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -3393,7 +3393,7 @@ Varbit Id: 423
 Varbit Id: 424
 	Config Id: 445
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -3401,7 +3401,7 @@ Varbit Id: 424
 Varbit Id: 425
 	Config Id: 445
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -3409,7 +3409,7 @@ Varbit Id: 425
 Varbit Id: 426
 	Config Id: 445
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -3417,7 +3417,7 @@ Varbit Id: 426
 Varbit Id: 427
 	Config Id: 445
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -3425,7 +3425,7 @@ Varbit Id: 427
 Varbit Id: 428
 	Config Id: 445
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -3433,7 +3433,7 @@ Varbit Id: 428
 Varbit Id: 429
 	Config Id: 445
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -3441,7 +3441,7 @@ Varbit Id: 429
 Varbit Id: 430
 	Config Id: 445
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -3449,7 +3449,7 @@ Varbit Id: 430
 Varbit Id: 431
 	Config Id: 445
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -3457,7 +3457,7 @@ Varbit Id: 431
 Varbit Id: 432
 	Config Id: 445
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -3465,7 +3465,7 @@ Varbit Id: 432
 Varbit Id: 433
 	Config Id: 445
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -3473,7 +3473,7 @@ Varbit Id: 433
 Varbit Id: 434
 	Config Id: 445
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -3481,7 +3481,7 @@ Varbit Id: 434
 Varbit Id: 435
 	Config Id: 445
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -3489,7 +3489,7 @@ Varbit Id: 435
 Varbit Id: 436
 	Config Id: 445
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -3497,7 +3497,7 @@ Varbit Id: 436
 Varbit Id: 437
 	Config Id: 445
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -3505,7 +3505,7 @@ Varbit Id: 437
 Varbit Id: 438
 	Config Id: 445
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -3513,7 +3513,7 @@ Varbit Id: 438
 Varbit Id: 439
 	Config Id: 445
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -3521,7 +3521,7 @@ Varbit Id: 439
 Varbit Id: 440
 	Config Id: 445
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -3529,7 +3529,7 @@ Varbit Id: 440
 Varbit Id: 441
 	Config Id: 445
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -3537,7 +3537,7 @@ Varbit Id: 441
 Varbit Id: 442
 	Config Id: 445
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -3545,7 +3545,7 @@ Varbit Id: 442
 Varbit Id: 443
 	Config Id: 445
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -3553,7 +3553,7 @@ Varbit Id: 443
 Varbit Id: 444
 	Config Id: 445
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -3561,7 +3561,7 @@ Varbit Id: 444
 Varbit Id: 445
 	Config Id: 445
 	Shift: 6
-	Bits: 30
+	Msb: 30
 	msbs: 1111111111111111
 	lsbs: 1111111111000000
 	Range: 0...1073741823
@@ -3569,7 +3569,7 @@ Varbit Id: 445
 Varbit Id: 446
 	Config Id: 445
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -3577,7 +3577,7 @@ Varbit Id: 446
 Varbit Id: 447
 	Config Id: 446
 	Shift: 0
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000000011
 	Range: 0...3
@@ -3585,7 +3585,7 @@ Varbit Id: 447
 Varbit Id: 448
 	Config Id: 446
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -3593,7 +3593,7 @@ Varbit Id: 448
 Varbit Id: 449
 	Config Id: 446
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -3601,7 +3601,7 @@ Varbit Id: 449
 Varbit Id: 450
 	Config Id: 446
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -3609,7 +3609,7 @@ Varbit Id: 450
 Varbit Id: 451
 	Config Id: 449
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -3617,7 +3617,7 @@ Varbit Id: 451
 Varbit Id: 452
 	Config Id: 449
 	Shift: 2
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000001111100
 	Range: 0...31
@@ -3625,7 +3625,7 @@ Varbit Id: 452
 Varbit Id: 453
 	Config Id: 449
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -3633,7 +3633,7 @@ Varbit Id: 453
 Varbit Id: 454
 	Config Id: 449
 	Shift: 7
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000000011
 	lsbs: 1111111110000000
 	Range: 0...2047
@@ -3641,7 +3641,7 @@ Varbit Id: 454
 Varbit Id: 455
 	Config Id: 449
 	Shift: 12
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111111111
 	lsbs: 1111000000000000
 	Range: 0...1048575
@@ -3649,7 +3649,7 @@ Varbit Id: 455
 Varbit Id: 456
 	Config Id: 449
 	Shift: 22
-	Bits: 31
+	Msb: 31
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -3657,7 +3657,7 @@ Varbit Id: 456
 Varbit Id: 457
 	Config Id: 453
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -3665,7 +3665,7 @@ Varbit Id: 457
 Varbit Id: 458
 	Config Id: 453
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -3673,7 +3673,7 @@ Varbit Id: 458
 Varbit Id: 459
 	Config Id: 453
 	Shift: 2
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000001100
 	Range: 0...3
@@ -3681,7 +3681,7 @@ Varbit Id: 459
 Varbit Id: 460
 	Config Id: 453
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -3689,7 +3689,7 @@ Varbit Id: 460
 Varbit Id: 461
 	Config Id: 453
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -3697,7 +3697,7 @@ Varbit Id: 461
 Varbit Id: 462
 	Config Id: 453
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -3705,7 +3705,7 @@ Varbit Id: 462
 Varbit Id: 463
 	Config Id: 453
 	Shift: 6
-	Bits: 16
+	Msb: 16
 	msbs: 0000000000111111
 	lsbs: 1111111111000000
 	Range: 0...65535
@@ -3713,7 +3713,7 @@ Varbit Id: 463
 Varbit Id: 464
 	Config Id: 453
 	Shift: 17
-	Bits: 31
+	Msb: 31
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -3721,7 +3721,7 @@ Varbit Id: 464
 Varbit Id: 465
 	Config Id: 452
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -3729,7 +3729,7 @@ Varbit Id: 465
 Varbit Id: 466
 	Config Id: 452
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -3737,7 +3737,7 @@ Varbit Id: 466
 Varbit Id: 467
 	Config Id: 452
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -3745,7 +3745,7 @@ Varbit Id: 467
 Varbit Id: 468
 	Config Id: 452
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -3753,7 +3753,7 @@ Varbit Id: 468
 Varbit Id: 469
 	Config Id: 452
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -3761,7 +3761,7 @@ Varbit Id: 469
 Varbit Id: 470
 	Config Id: 452
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -3769,7 +3769,7 @@ Varbit Id: 470
 Varbit Id: 471
 	Config Id: 452
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -3777,7 +3777,7 @@ Varbit Id: 471
 Varbit Id: 472
 	Config Id: 452
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -3785,7 +3785,7 @@ Varbit Id: 472
 Varbit Id: 473
 	Config Id: 452
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -3793,7 +3793,7 @@ Varbit Id: 473
 Varbit Id: 474
 	Config Id: 452
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -3801,7 +3801,7 @@ Varbit Id: 474
 Varbit Id: 475
 	Config Id: 452
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -3809,7 +3809,7 @@ Varbit Id: 475
 Varbit Id: 476
 	Config Id: 452
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -3817,7 +3817,7 @@ Varbit Id: 476
 Varbit Id: 477
 	Config Id: 452
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -3825,7 +3825,7 @@ Varbit Id: 477
 Varbit Id: 478
 	Config Id: 452
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -3833,7 +3833,7 @@ Varbit Id: 478
 Varbit Id: 479
 	Config Id: 452
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -3841,7 +3841,7 @@ Varbit Id: 479
 Varbit Id: 480
 	Config Id: 452
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -3849,7 +3849,7 @@ Varbit Id: 480
 Varbit Id: 481
 	Config Id: 452
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -3857,7 +3857,7 @@ Varbit Id: 481
 Varbit Id: 482
 	Config Id: 452
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -3865,7 +3865,7 @@ Varbit Id: 482
 Varbit Id: 483
 	Config Id: 452
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -3873,7 +3873,7 @@ Varbit Id: 483
 Varbit Id: 484
 	Config Id: 452
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -3881,7 +3881,7 @@ Varbit Id: 484
 Varbit Id: 485
 	Config Id: 452
 	Shift: 29
-	Bits: 31
+	Msb: 31
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -3889,7 +3889,7 @@ Varbit Id: 485
 Varbit Id: 486
 	Config Id: 449
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -3897,7 +3897,7 @@ Varbit Id: 486
 Varbit Id: 487
 	Config Id: 455
 	Shift: 0
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000000001111
 	Range: 0...15
@@ -3905,7 +3905,7 @@ Varbit Id: 487
 Varbit Id: 488
 	Config Id: 455
 	Shift: 5
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000111111100000
 	Range: 0...127
@@ -3913,7 +3913,7 @@ Varbit Id: 488
 Varbit Id: 489
 	Config Id: 455
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -3921,7 +3921,7 @@ Varbit Id: 489
 Varbit Id: 490
 	Config Id: 455
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -3929,7 +3929,7 @@ Varbit Id: 490
 Varbit Id: 491
 	Config Id: 455
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -3937,7 +3937,7 @@ Varbit Id: 491
 Varbit Id: 492
 	Config Id: 455
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -3945,7 +3945,7 @@ Varbit Id: 492
 Varbit Id: 493
 	Config Id: 455
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -3953,7 +3953,7 @@ Varbit Id: 493
 Varbit Id: 494
 	Config Id: 455
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -3961,7 +3961,7 @@ Varbit Id: 494
 Varbit Id: 495
 	Config Id: 455
 	Shift: 14
-	Bits: 15
+	Msb: 15
 	msbs: 0001111111111111
 	lsbs: 1100000000000000
 	Range: 0...32767
@@ -3969,7 +3969,7 @@ Varbit Id: 495
 Varbit Id: 496
 	Config Id: 455
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -3977,7 +3977,7 @@ Varbit Id: 496
 Varbit Id: 497
 	Config Id: 455
 	Shift: 17
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -3985,7 +3985,7 @@ Varbit Id: 497
 Varbit Id: 498
 	Config Id: 455
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -3993,7 +3993,7 @@ Varbit Id: 498
 Varbit Id: 499
 	Config Id: 455
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -4001,7 +4001,7 @@ Varbit Id: 499
 Varbit Id: 500
 	Config Id: 455
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -4009,7 +4009,7 @@ Varbit Id: 500
 Varbit Id: 501
 	Config Id: 455
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -4017,7 +4017,7 @@ Varbit Id: 501
 Varbit Id: 502
 	Config Id: 455
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -4025,7 +4025,7 @@ Varbit Id: 502
 Varbit Id: 503
 	Config Id: 455
 	Shift: 24
-	Bits: 25
+	Msb: 25
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -4033,7 +4033,7 @@ Varbit Id: 503
 Varbit Id: 504
 	Config Id: 455
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -4041,7 +4041,7 @@ Varbit Id: 504
 Varbit Id: 505
 	Config Id: 455
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -4049,7 +4049,7 @@ Varbit Id: 505
 Varbit Id: 506
 	Config Id: 455
 	Shift: 28
-	Bits: 30
+	Msb: 30
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -4057,7 +4057,7 @@ Varbit Id: 506
 Varbit Id: 507
 	Config Id: 455
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4065,7 +4065,7 @@ Varbit Id: 507
 Varbit Id: 508
 	Config Id: 457
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -4073,7 +4073,7 @@ Varbit Id: 508
 Varbit Id: 509
 	Config Id: 457
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -4081,7 +4081,7 @@ Varbit Id: 509
 Varbit Id: 510
 	Config Id: 457
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -4089,7 +4089,7 @@ Varbit Id: 510
 Varbit Id: 511
 	Config Id: 457
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4097,7 +4097,7 @@ Varbit Id: 511
 Varbit Id: 512
 	Config Id: 458
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -4105,7 +4105,7 @@ Varbit Id: 512
 Varbit Id: 513
 	Config Id: 458
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -4113,7 +4113,7 @@ Varbit Id: 513
 Varbit Id: 514
 	Config Id: 458
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -4121,7 +4121,7 @@ Varbit Id: 514
 Varbit Id: 515
 	Config Id: 458
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4129,7 +4129,7 @@ Varbit Id: 515
 Varbit Id: 516
 	Config Id: 459
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -4137,7 +4137,7 @@ Varbit Id: 516
 Varbit Id: 517
 	Config Id: 459
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -4145,7 +4145,7 @@ Varbit Id: 517
 Varbit Id: 518
 	Config Id: 459
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -4153,7 +4153,7 @@ Varbit Id: 518
 Varbit Id: 519
 	Config Id: 459
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4161,7 +4161,7 @@ Varbit Id: 519
 Varbit Id: 520
 	Config Id: 460
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -4169,7 +4169,7 @@ Varbit Id: 520
 Varbit Id: 521
 	Config Id: 460
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -4177,7 +4177,7 @@ Varbit Id: 521
 Varbit Id: 522
 	Config Id: 460
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -4185,7 +4185,7 @@ Varbit Id: 522
 Varbit Id: 523
 	Config Id: 460
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4193,7 +4193,7 @@ Varbit Id: 523
 Varbit Id: 524
 	Config Id: 461
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -4201,7 +4201,7 @@ Varbit Id: 524
 Varbit Id: 525
 	Config Id: 461
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -4209,7 +4209,7 @@ Varbit Id: 525
 Varbit Id: 526
 	Config Id: 461
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -4217,7 +4217,7 @@ Varbit Id: 526
 Varbit Id: 527
 	Config Id: 461
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4225,7 +4225,7 @@ Varbit Id: 527
 Varbit Id: 528
 	Config Id: 462
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -4233,7 +4233,7 @@ Varbit Id: 528
 Varbit Id: 529
 	Config Id: 462
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -4241,7 +4241,7 @@ Varbit Id: 529
 Varbit Id: 530
 	Config Id: 462
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -4249,7 +4249,7 @@ Varbit Id: 530
 Varbit Id: 531
 	Config Id: 462
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4257,7 +4257,7 @@ Varbit Id: 531
 Varbit Id: 532
 	Config Id: 465
 	Shift: 0
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000000000
 	lsbs: 0000001111111111
 	Range: 0...1023
@@ -4265,7 +4265,7 @@ Varbit Id: 532
 Varbit Id: 533
 	Config Id: 465
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -4273,7 +4273,7 @@ Varbit Id: 533
 Varbit Id: 534
 	Config Id: 465
 	Shift: 13
-	Bits: 14
+	Msb: 14
 	msbs: 0000011111111111
 	lsbs: 1110000000000000
 	Range: 0...16383
@@ -4281,7 +4281,7 @@ Varbit Id: 534
 Varbit Id: 535
 	Config Id: 465
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -4289,7 +4289,7 @@ Varbit Id: 535
 Varbit Id: 536
 	Config Id: 465
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -4297,7 +4297,7 @@ Varbit Id: 536
 Varbit Id: 537
 	Config Id: 465
 	Shift: 17
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -4305,7 +4305,7 @@ Varbit Id: 537
 Varbit Id: 538
 	Config Id: 465
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -4313,7 +4313,7 @@ Varbit Id: 538
 Varbit Id: 539
 	Config Id: 465
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -4321,7 +4321,7 @@ Varbit Id: 539
 Varbit Id: 540
 	Config Id: 465
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -4329,7 +4329,7 @@ Varbit Id: 540
 Varbit Id: 541
 	Config Id: 465
 	Shift: 22
-	Bits: 24
+	Msb: 24
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -4337,7 +4337,7 @@ Varbit Id: 541
 Varbit Id: 542
 	Config Id: 466
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -4345,7 +4345,7 @@ Varbit Id: 542
 Varbit Id: 543
 	Config Id: 466
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -4353,7 +4353,7 @@ Varbit Id: 543
 Varbit Id: 544
 	Config Id: 467
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -4361,7 +4361,7 @@ Varbit Id: 544
 Varbit Id: 545
 	Config Id: 467
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -4369,7 +4369,7 @@ Varbit Id: 545
 Varbit Id: 546
 	Config Id: 467
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -4377,7 +4377,7 @@ Varbit Id: 546
 Varbit Id: 547
 	Config Id: 467
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4385,7 +4385,7 @@ Varbit Id: 547
 Varbit Id: 548
 	Config Id: 468
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -4393,7 +4393,7 @@ Varbit Id: 548
 Varbit Id: 549
 	Config Id: 468
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -4401,7 +4401,7 @@ Varbit Id: 549
 Varbit Id: 550
 	Config Id: 468
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -4409,7 +4409,7 @@ Varbit Id: 550
 Varbit Id: 551
 	Config Id: 468
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -4417,7 +4417,7 @@ Varbit Id: 551
 Varbit Id: 552
 	Config Id: 468
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -4425,7 +4425,7 @@ Varbit Id: 552
 Varbit Id: 553
 	Config Id: 468
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -4433,7 +4433,7 @@ Varbit Id: 553
 Varbit Id: 554
 	Config Id: 468
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -4441,7 +4441,7 @@ Varbit Id: 554
 Varbit Id: 555
 	Config Id: 468
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -4449,7 +4449,7 @@ Varbit Id: 555
 Varbit Id: 556
 	Config Id: 468
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -4457,7 +4457,7 @@ Varbit Id: 556
 Varbit Id: 557
 	Config Id: 468
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -4465,7 +4465,7 @@ Varbit Id: 557
 Varbit Id: 558
 	Config Id: 468
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4473,7 +4473,7 @@ Varbit Id: 558
 Varbit Id: 559
 	Config Id: 470
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -4481,7 +4481,7 @@ Varbit Id: 559
 Varbit Id: 560
 	Config Id: 472
 	Shift: 0
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 0000000011111111
 	Range: 0...255
@@ -4489,7 +4489,7 @@ Varbit Id: 560
 Varbit Id: 561
 	Config Id: 472
 	Shift: 9
-	Bits: 15
+	Msb: 15
 	msbs: 0000000011111111
 	lsbs: 1111111000000000
 	Range: 0...32767
@@ -4497,7 +4497,7 @@ Varbit Id: 561
 Varbit Id: 562
 	Config Id: 472
 	Shift: 16
-	Bits: 26
+	Msb: 26
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -4505,7 +4505,7 @@ Varbit Id: 562
 Varbit Id: 563
 	Config Id: 472
 	Shift: 27
-	Bits: 30
+	Msb: 30
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -4513,7 +4513,7 @@ Varbit Id: 563
 Varbit Id: 564
 	Config Id: 472
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4521,7 +4521,7 @@ Varbit Id: 564
 Varbit Id: 565
 	Config Id: 474
 	Shift: 0
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 0000000011111111
 	Range: 0...255
@@ -4529,7 +4529,7 @@ Varbit Id: 565
 Varbit Id: 566
 	Config Id: 474
 	Shift: 9
-	Bits: 15
+	Msb: 15
 	msbs: 0000000011111111
 	lsbs: 1111111000000000
 	Range: 0...32767
@@ -4537,7 +4537,7 @@ Varbit Id: 566
 Varbit Id: 567
 	Config Id: 474
 	Shift: 16
-	Bits: 25
+	Msb: 25
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -4545,7 +4545,7 @@ Varbit Id: 567
 Varbit Id: 568
 	Config Id: 474
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -4553,7 +4553,7 @@ Varbit Id: 568
 Varbit Id: 569
 	Config Id: 474
 	Shift: 27
-	Bits: 31
+	Msb: 31
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4561,7 +4561,7 @@ Varbit Id: 569
 Varbit Id: 570
 	Config Id: 475
 	Shift: 0
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000000
 	lsbs: 0000000111111111
 	Range: 0...511
@@ -4569,7 +4569,7 @@ Varbit Id: 570
 Varbit Id: 571
 	Config Id: 482
 	Shift: 0
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000000000111111
 	Range: 0...63
@@ -4577,7 +4577,7 @@ Varbit Id: 571
 Varbit Id: 572
 	Config Id: 482
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -4585,7 +4585,7 @@ Varbit Id: 572
 Varbit Id: 573
 	Config Id: 482
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -4593,7 +4593,7 @@ Varbit Id: 573
 Varbit Id: 574
 	Config Id: 482
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -4601,7 +4601,7 @@ Varbit Id: 574
 Varbit Id: 575
 	Config Id: 482
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -4609,7 +4609,7 @@ Varbit Id: 575
 Varbit Id: 576
 	Config Id: 482
 	Shift: 11
-	Bits: 14
+	Msb: 14
 	msbs: 0000000111111111
 	lsbs: 1111100000000000
 	Range: 0...16383
@@ -4617,7 +4617,7 @@ Varbit Id: 576
 Varbit Id: 577
 	Config Id: 482
 	Shift: 15
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111111
 	lsbs: 1000000000000000
 	Range: 0...262143
@@ -4625,7 +4625,7 @@ Varbit Id: 577
 Varbit Id: 578
 	Config Id: 482
 	Shift: 19
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -4633,7 +4633,7 @@ Varbit Id: 578
 Varbit Id: 579
 	Config Id: 482
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -4641,7 +4641,7 @@ Varbit Id: 579
 Varbit Id: 580
 	Config Id: 482
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -4649,7 +4649,7 @@ Varbit Id: 580
 Varbit Id: 581
 	Config Id: 482
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -4657,7 +4657,7 @@ Varbit Id: 581
 Varbit Id: 582
 	Config Id: 482
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -4665,7 +4665,7 @@ Varbit Id: 582
 Varbit Id: 583
 	Config Id: 482
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -4673,7 +4673,7 @@ Varbit Id: 583
 Varbit Id: 584
 	Config Id: 482
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -4681,7 +4681,7 @@ Varbit Id: 584
 Varbit Id: 585
 	Config Id: 483
 	Shift: 0
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000000
 	lsbs: 0000000111111111
 	Range: 0...511
@@ -4689,7 +4689,7 @@ Varbit Id: 585
 Varbit Id: 586
 	Config Id: 483
 	Shift: 10
-	Bits: 19
+	Msb: 19
 	msbs: 0001111111111111
 	lsbs: 1111110000000000
 	Range: 0...524287
@@ -4697,7 +4697,7 @@ Varbit Id: 586
 Varbit Id: 587
 	Config Id: 483
 	Shift: 20
-	Bits: 25
+	Msb: 25
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -4705,7 +4705,7 @@ Varbit Id: 587
 Varbit Id: 588
 	Config Id: 483
 	Shift: 26
-	Bits: 31
+	Msb: 31
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -4713,7 +4713,7 @@ Varbit Id: 588
 Varbit Id: 589
 	Config Id: 174
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -4721,7 +4721,7 @@ Varbit Id: 589
 Varbit Id: 590
 	Config Id: 174
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -4729,7 +4729,7 @@ Varbit Id: 590
 Varbit Id: 591
 	Config Id: 174
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -4737,7 +4737,7 @@ Varbit Id: 591
 Varbit Id: 592
 	Config Id: 174
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -4745,7 +4745,7 @@ Varbit Id: 592
 Varbit Id: 593
 	Config Id: 174
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -4753,7 +4753,7 @@ Varbit Id: 593
 Varbit Id: 594
 	Config Id: 174
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -4761,7 +4761,7 @@ Varbit Id: 594
 Varbit Id: 595
 	Config Id: 174
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -4769,7 +4769,7 @@ Varbit Id: 595
 Varbit Id: 596
 	Config Id: 279
 	Shift: 0
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000000011111
 	Range: 0...31
@@ -4777,7 +4777,7 @@ Varbit Id: 596
 Varbit Id: 597
 	Config Id: 279
 	Shift: 6
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000000
 	lsbs: 0111111111000000
 	Range: 0...511
@@ -4785,7 +4785,7 @@ Varbit Id: 597
 Varbit Id: 598
 	Config Id: 279
 	Shift: 10
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000011111
 	lsbs: 1111110000000000
 	Range: 0...2047
@@ -4793,7 +4793,7 @@ Varbit Id: 598
 Varbit Id: 599
 	Config Id: 279
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -4801,7 +4801,7 @@ Varbit Id: 599
 Varbit Id: 600
 	Config Id: 279
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -4809,7 +4809,7 @@ Varbit Id: 600
 Varbit Id: 601
 	Config Id: 279
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -4817,7 +4817,7 @@ Varbit Id: 601
 Varbit Id: 602
 	Config Id: 279
 	Shift: 15
-	Bits: 16
+	Msb: 16
 	msbs: 0111111111111111
 	lsbs: 1000000000000000
 	Range: 0...65535
@@ -4825,7 +4825,7 @@ Varbit Id: 602
 Varbit Id: 603
 	Config Id: 486
 	Shift: 0
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000000011
 	Range: 0...3
@@ -4833,7 +4833,7 @@ Varbit Id: 603
 Varbit Id: 604
 	Config Id: 486
 	Shift: 3
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 0000011111111000
 	Range: 0...255
@@ -4841,7 +4841,7 @@ Varbit Id: 604
 Varbit Id: 605
 	Config Id: 486
 	Shift: 9
-	Bits: 17
+	Msb: 17
 	msbs: 0000001111111111
 	lsbs: 1111111000000000
 	Range: 0...131071
@@ -4849,7 +4849,7 @@ Varbit Id: 605
 Varbit Id: 606
 	Config Id: 486
 	Shift: 18
-	Bits: 29
+	Msb: 29
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -4857,7 +4857,7 @@ Varbit Id: 606
 Varbit Id: 607
 	Config Id: 491
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -4865,7 +4865,7 @@ Varbit Id: 607
 Varbit Id: 608
 	Config Id: 491
 	Shift: 1
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000010
 	Range: 0...1
@@ -4873,7 +4873,7 @@ Varbit Id: 608
 Varbit Id: 609
 	Config Id: 491
 	Shift: 2
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000001100
 	Range: 0...3
@@ -4881,7 +4881,7 @@ Varbit Id: 609
 Varbit Id: 610
 	Config Id: 491
 	Shift: 3
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000111000
 	Range: 0...7
@@ -4889,7 +4889,7 @@ Varbit Id: 610
 Varbit Id: 611
 	Config Id: 491
 	Shift: 4
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000011110000
 	Range: 0...15
@@ -4897,7 +4897,7 @@ Varbit Id: 611
 Varbit Id: 612
 	Config Id: 491
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -4905,7 +4905,7 @@ Varbit Id: 612
 Varbit Id: 613
 	Config Id: 491
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -4913,7 +4913,7 @@ Varbit Id: 613
 Varbit Id: 614
 	Config Id: 491
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -4921,7 +4921,7 @@ Varbit Id: 614
 Varbit Id: 615
 	Config Id: 491
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -4929,7 +4929,7 @@ Varbit Id: 615
 Varbit Id: 616
 	Config Id: 491
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -4937,7 +4937,7 @@ Varbit Id: 616
 Varbit Id: 617
 	Config Id: 491
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -4945,7 +4945,7 @@ Varbit Id: 617
 Varbit Id: 618
 	Config Id: 491
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -4953,7 +4953,7 @@ Varbit Id: 618
 Varbit Id: 619
 	Config Id: 491
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -4961,7 +4961,7 @@ Varbit Id: 619
 Varbit Id: 620
 	Config Id: 491
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -4969,7 +4969,7 @@ Varbit Id: 620
 Varbit Id: 621
 	Config Id: 491
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -4977,7 +4977,7 @@ Varbit Id: 621
 Varbit Id: 622
 	Config Id: 491
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -4985,7 +4985,7 @@ Varbit Id: 622
 Varbit Id: 623
 	Config Id: 491
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -4993,7 +4993,7 @@ Varbit Id: 623
 Varbit Id: 624
 	Config Id: 491
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -5001,7 +5001,7 @@ Varbit Id: 624
 Varbit Id: 625
 	Config Id: 491
 	Shift: 18
-	Bits: 29
+	Msb: 29
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -5009,7 +5009,7 @@ Varbit Id: 625
 Varbit Id: 626
 	Config Id: 491
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -5017,7 +5017,7 @@ Varbit Id: 626
 Varbit Id: 627
 	Config Id: 493
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -5025,7 +5025,7 @@ Varbit Id: 627
 Varbit Id: 628
 	Config Id: 493
 	Shift: 2
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000011100
 	Range: 0...7
@@ -5033,7 +5033,7 @@ Varbit Id: 628
 Varbit Id: 629
 	Config Id: 493
 	Shift: 4
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000111110000
 	Range: 0...31
@@ -5041,7 +5041,7 @@ Varbit Id: 629
 Varbit Id: 630
 	Config Id: 493
 	Shift: 6
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0001111111000000
 	Range: 0...127
@@ -5049,7 +5049,7 @@ Varbit Id: 630
 Varbit Id: 631
 	Config Id: 493
 	Shift: 8
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000001
 	lsbs: 1111111100000000
 	Range: 0...511
@@ -5057,7 +5057,7 @@ Varbit Id: 631
 Varbit Id: 632
 	Config Id: 493
 	Shift: 10
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000011111
 	lsbs: 1111110000000000
 	Range: 0...2047
@@ -5065,7 +5065,7 @@ Varbit Id: 632
 Varbit Id: 633
 	Config Id: 493
 	Shift: 12
-	Bits: 13
+	Msb: 13
 	msbs: 0000000111111111
 	lsbs: 1111000000000000
 	Range: 0...8191
@@ -5073,7 +5073,7 @@ Varbit Id: 633
 Varbit Id: 634
 	Config Id: 493
 	Shift: 14
-	Bits: 15
+	Msb: 15
 	msbs: 0001111111111111
 	lsbs: 1100000000000000
 	Range: 0...32767
@@ -5081,7 +5081,7 @@ Varbit Id: 634
 Varbit Id: 635
 	Config Id: 493
 	Shift: 16
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -5089,7 +5089,7 @@ Varbit Id: 635
 Varbit Id: 636
 	Config Id: 493
 	Shift: 18
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -5097,7 +5097,7 @@ Varbit Id: 636
 Varbit Id: 637
 	Config Id: 493
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -5105,7 +5105,7 @@ Varbit Id: 637
 Varbit Id: 638
 	Config Id: 493
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -5113,7 +5113,7 @@ Varbit Id: 638
 Varbit Id: 639
 	Config Id: 493
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5121,7 +5121,7 @@ Varbit Id: 639
 Varbit Id: 640
 	Config Id: 495
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -5129,7 +5129,7 @@ Varbit Id: 640
 Varbit Id: 641
 	Config Id: 495
 	Shift: 1
-	Bits: 31
+	Msb: 31
 	msbs: 1111111111111111
 	lsbs: 1111111111111110
 	Range: 0...2147483647
@@ -5137,7 +5137,7 @@ Varbit Id: 641
 Varbit Id: 642
 	Config Id: 286
 	Shift: 14
-	Bits: 27
+	Msb: 27
 	msbs: 1111111111111111
 	lsbs: 1100000000000000
 	Range: 0...134217727
@@ -5145,7 +5145,7 @@ Varbit Id: 642
 Varbit Id: 643
 	Config Id: 286
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -5153,7 +5153,7 @@ Varbit Id: 643
 Varbit Id: 644
 	Config Id: 286
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -5161,7 +5161,7 @@ Varbit Id: 644
 Varbit Id: 645
 	Config Id: 286
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -5169,7 +5169,7 @@ Varbit Id: 645
 Varbit Id: 646
 	Config Id: 286
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -5177,7 +5177,7 @@ Varbit Id: 646
 Varbit Id: 647
 	Config Id: 286
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -5185,7 +5185,7 @@ Varbit Id: 647
 Varbit Id: 648
 	Config Id: 286
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -5193,7 +5193,7 @@ Varbit Id: 648
 Varbit Id: 649
 	Config Id: 286
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -5201,7 +5201,7 @@ Varbit Id: 649
 Varbit Id: 650
 	Config Id: 286
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -5209,7 +5209,7 @@ Varbit Id: 650
 Varbit Id: 651
 	Config Id: 286
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -5217,7 +5217,7 @@ Varbit Id: 651
 Varbit Id: 652
 	Config Id: 286
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5225,7 +5225,7 @@ Varbit Id: 652
 Varbit Id: 653
 	Config Id: 286
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -5233,7 +5233,7 @@ Varbit Id: 653
 Varbit Id: 654
 	Config Id: 286
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -5241,7 +5241,7 @@ Varbit Id: 654
 Varbit Id: 655
 	Config Id: 286
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -5249,7 +5249,7 @@ Varbit Id: 655
 Varbit Id: 656
 	Config Id: 286
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -5257,7 +5257,7 @@ Varbit Id: 656
 Varbit Id: 657
 	Config Id: 496
 	Shift: 0
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000000011
 	Range: 0...3
@@ -5265,7 +5265,7 @@ Varbit Id: 657
 Varbit Id: 658
 	Config Id: 496
 	Shift: 3
-	Bits: 14
+	Msb: 14
 	msbs: 0000000000000001
 	lsbs: 1111111111111000
 	Range: 0...16383
@@ -5273,7 +5273,7 @@ Varbit Id: 658
 Varbit Id: 659
 	Config Id: 496
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -5281,7 +5281,7 @@ Varbit Id: 659
 Varbit Id: 660
 	Config Id: 496
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -5289,7 +5289,7 @@ Varbit Id: 660
 Varbit Id: 661
 	Config Id: 496
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -5297,7 +5297,7 @@ Varbit Id: 661
 Varbit Id: 662
 	Config Id: 496
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -5305,7 +5305,7 @@ Varbit Id: 662
 Varbit Id: 663
 	Config Id: 496
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -5313,7 +5313,7 @@ Varbit Id: 663
 Varbit Id: 664
 	Config Id: 496
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -5321,7 +5321,7 @@ Varbit Id: 664
 Varbit Id: 665
 	Config Id: 496
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -5329,7 +5329,7 @@ Varbit Id: 665
 Varbit Id: 666
 	Config Id: 497
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -5337,7 +5337,7 @@ Varbit Id: 666
 Varbit Id: 667
 	Config Id: 497
 	Shift: 8
-	Bits: 22
+	Msb: 22
 	msbs: 0011111111111111
 	lsbs: 1111111100000000
 	Range: 0...4194303
@@ -5345,7 +5345,7 @@ Varbit Id: 667
 Varbit Id: 668
 	Config Id: 496
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -5353,7 +5353,7 @@ Varbit Id: 668
 Varbit Id: 669
 	Config Id: 496
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5361,7 +5361,7 @@ Varbit Id: 669
 Varbit Id: 670
 	Config Id: 496
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -5369,7 +5369,7 @@ Varbit Id: 670
 Varbit Id: 671
 	Config Id: 496
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -5377,7 +5377,7 @@ Varbit Id: 671
 Varbit Id: 672
 	Config Id: 496
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -5385,7 +5385,7 @@ Varbit Id: 672
 Varbit Id: 673
 	Config Id: 496
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -5393,7 +5393,7 @@ Varbit Id: 673
 Varbit Id: 674
 	Config Id: 496
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -5401,7 +5401,7 @@ Varbit Id: 674
 Varbit Id: 675
 	Config Id: 496
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -5409,7 +5409,7 @@ Varbit Id: 675
 Varbit Id: 676
 	Config Id: 496
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -5417,7 +5417,7 @@ Varbit Id: 676
 Varbit Id: 677
 	Config Id: 496
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5425,7 +5425,7 @@ Varbit Id: 677
 Varbit Id: 678
 	Config Id: 497
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5433,7 +5433,7 @@ Varbit Id: 678
 Varbit Id: 679
 	Config Id: 497
 	Shift: 24
-	Bits: 27
+	Msb: 27
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -5441,7 +5441,7 @@ Varbit Id: 679
 Varbit Id: 680
 	Config Id: 498
 	Shift: 0
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000000011
 	Range: 0...3
@@ -5449,7 +5449,7 @@ Varbit Id: 680
 Varbit Id: 681
 	Config Id: 498
 	Shift: 3
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000000111111000
 	Range: 0...63
@@ -5457,7 +5457,7 @@ Varbit Id: 681
 Varbit Id: 682
 	Config Id: 498
 	Shift: 7
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000000
 	lsbs: 1111111110000000
 	Range: 0...511
@@ -5465,7 +5465,7 @@ Varbit Id: 682
 Varbit Id: 683
 	Config Id: 498
 	Shift: 10
-	Bits: 13
+	Msb: 13
 	msbs: 0000000001111111
 	lsbs: 1111110000000000
 	Range: 0...8191
@@ -5473,7 +5473,7 @@ Varbit Id: 683
 Varbit Id: 684
 	Config Id: 498
 	Shift: 14
-	Bits: 16
+	Msb: 16
 	msbs: 0011111111111111
 	lsbs: 1100000000000000
 	Range: 0...65535
@@ -5481,7 +5481,7 @@ Varbit Id: 684
 Varbit Id: 685
 	Config Id: 498
 	Shift: 17
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -5489,7 +5489,7 @@ Varbit Id: 685
 Varbit Id: 686
 	Config Id: 497
 	Shift: 28
-	Bits: 31
+	Msb: 31
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5497,7 +5497,7 @@ Varbit Id: 686
 Varbit Id: 687
 	Config Id: 498
 	Shift: 21
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -5505,7 +5505,7 @@ Varbit Id: 687
 Varbit Id: 688
 	Config Id: 498
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -5513,7 +5513,7 @@ Varbit Id: 688
 Varbit Id: 689
 	Config Id: 498
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5521,7 +5521,7 @@ Varbit Id: 689
 Varbit Id: 690
 	Config Id: 498
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -5529,7 +5529,7 @@ Varbit Id: 690
 Varbit Id: 691
 	Config Id: 498
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -5537,7 +5537,7 @@ Varbit Id: 691
 Varbit Id: 692
 	Config Id: 498
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -5545,7 +5545,7 @@ Varbit Id: 692
 Varbit Id: 693
 	Config Id: 79
 	Shift: 0
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000000011
 	Range: 0...3
@@ -5553,7 +5553,7 @@ Varbit Id: 693
 Varbit Id: 694
 	Config Id: 79
 	Shift: 3
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000011111000
 	Range: 0...31
@@ -5561,7 +5561,7 @@ Varbit Id: 694
 Varbit Id: 695
 	Config Id: 79
 	Shift: 6
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 0011111111000000
 	Range: 0...255
@@ -5569,7 +5569,7 @@ Varbit Id: 695
 Varbit Id: 696
 	Config Id: 79
 	Shift: 9
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000001111
 	lsbs: 1111111000000000
 	Range: 0...2047
@@ -5577,7 +5577,7 @@ Varbit Id: 696
 Varbit Id: 697
 	Config Id: 79
 	Shift: 12
-	Bits: 14
+	Msb: 14
 	msbs: 0000001111111111
 	lsbs: 1111000000000000
 	Range: 0...16383
@@ -5585,7 +5585,7 @@ Varbit Id: 697
 Varbit Id: 698
 	Config Id: 79
 	Shift: 15
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111111
 	lsbs: 1000000000000000
 	Range: 0...131071
@@ -5593,7 +5593,7 @@ Varbit Id: 698
 Varbit Id: 699
 	Config Id: 79
 	Shift: 18
-	Bits: 31
+	Msb: 31
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5601,7 +5601,7 @@ Varbit Id: 699
 Varbit Id: 700
 	Config Id: 502
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -5609,7 +5609,7 @@ Varbit Id: 700
 Varbit Id: 701
 	Config Id: 502
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -5617,7 +5617,7 @@ Varbit Id: 701
 Varbit Id: 702
 	Config Id: 502
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5625,7 +5625,7 @@ Varbit Id: 702
 Varbit Id: 703
 	Config Id: 502
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5633,7 +5633,7 @@ Varbit Id: 703
 Varbit Id: 704
 	Config Id: 503
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -5641,7 +5641,7 @@ Varbit Id: 704
 Varbit Id: 705
 	Config Id: 503
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -5649,7 +5649,7 @@ Varbit Id: 705
 Varbit Id: 706
 	Config Id: 503
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5657,7 +5657,7 @@ Varbit Id: 706
 Varbit Id: 707
 	Config Id: 503
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5665,7 +5665,7 @@ Varbit Id: 707
 Varbit Id: 708
 	Config Id: 504
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -5673,7 +5673,7 @@ Varbit Id: 708
 Varbit Id: 709
 	Config Id: 504
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -5681,7 +5681,7 @@ Varbit Id: 709
 Varbit Id: 710
 	Config Id: 504
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5689,7 +5689,7 @@ Varbit Id: 710
 Varbit Id: 711
 	Config Id: 504
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5697,7 +5697,7 @@ Varbit Id: 711
 Varbit Id: 712
 	Config Id: 505
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -5705,7 +5705,7 @@ Varbit Id: 712
 Varbit Id: 713
 	Config Id: 505
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -5713,7 +5713,7 @@ Varbit Id: 713
 Varbit Id: 714
 	Config Id: 505
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5721,7 +5721,7 @@ Varbit Id: 714
 Varbit Id: 715
 	Config Id: 505
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5729,7 +5729,7 @@ Varbit Id: 715
 Varbit Id: 716
 	Config Id: 506
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -5737,7 +5737,7 @@ Varbit Id: 716
 Varbit Id: 717
 	Config Id: 506
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -5745,7 +5745,7 @@ Varbit Id: 717
 Varbit Id: 718
 	Config Id: 506
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5753,7 +5753,7 @@ Varbit Id: 718
 Varbit Id: 719
 	Config Id: 506
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5761,7 +5761,7 @@ Varbit Id: 719
 Varbit Id: 720
 	Config Id: 507
 	Shift: 0
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000000011111
 	Range: 0...31
@@ -5769,7 +5769,7 @@ Varbit Id: 720
 Varbit Id: 721
 	Config Id: 514
 	Shift: 6
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0001111111000000
 	Range: 0...127
@@ -5777,7 +5777,7 @@ Varbit Id: 721
 Varbit Id: 722
 	Config Id: 507
 	Shift: 8
-	Bits: 13
+	Msb: 13
 	msbs: 0000000000011111
 	lsbs: 1111111100000000
 	Range: 0...8191
@@ -5785,7 +5785,7 @@ Varbit Id: 722
 Varbit Id: 723
 	Config Id: 514
 	Shift: 14
-	Bits: 15
+	Msb: 15
 	msbs: 0001111111111111
 	lsbs: 1100000000000000
 	Range: 0...32767
@@ -5793,7 +5793,7 @@ Varbit Id: 723
 Varbit Id: 724
 	Config Id: 507
 	Shift: 16
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -5801,7 +5801,7 @@ Varbit Id: 724
 Varbit Id: 725
 	Config Id: 514
 	Shift: 22
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5809,7 +5809,7 @@ Varbit Id: 725
 Varbit Id: 726
 	Config Id: 507
 	Shift: 24
-	Bits: 29
+	Msb: 29
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -5817,7 +5817,7 @@ Varbit Id: 726
 Varbit Id: 727
 	Config Id: 507
 	Shift: 30
-	Bits: 31
+	Msb: 31
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5825,7 +5825,7 @@ Varbit Id: 727
 Varbit Id: 728
 	Config Id: 508
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -5833,7 +5833,7 @@ Varbit Id: 728
 Varbit Id: 729
 	Config Id: 508
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -5841,7 +5841,7 @@ Varbit Id: 729
 Varbit Id: 730
 	Config Id: 508
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5849,7 +5849,7 @@ Varbit Id: 730
 Varbit Id: 731
 	Config Id: 508
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5857,7 +5857,7 @@ Varbit Id: 731
 Varbit Id: 732
 	Config Id: 509
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -5865,7 +5865,7 @@ Varbit Id: 732
 Varbit Id: 733
 	Config Id: 509
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -5873,7 +5873,7 @@ Varbit Id: 733
 Varbit Id: 734
 	Config Id: 509
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5881,7 +5881,7 @@ Varbit Id: 734
 Varbit Id: 735
 	Config Id: 509
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5889,7 +5889,7 @@ Varbit Id: 735
 Varbit Id: 736
 	Config Id: 510
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -5897,7 +5897,7 @@ Varbit Id: 736
 Varbit Id: 737
 	Config Id: 510
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -5905,7 +5905,7 @@ Varbit Id: 737
 Varbit Id: 738
 	Config Id: 510
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5913,7 +5913,7 @@ Varbit Id: 738
 Varbit Id: 739
 	Config Id: 510
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5921,7 +5921,7 @@ Varbit Id: 739
 Varbit Id: 740
 	Config Id: 511
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -5929,7 +5929,7 @@ Varbit Id: 740
 Varbit Id: 741
 	Config Id: 511
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -5937,7 +5937,7 @@ Varbit Id: 741
 Varbit Id: 742
 	Config Id: 511
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -5945,7 +5945,7 @@ Varbit Id: 742
 Varbit Id: 743
 	Config Id: 511
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -5953,7 +5953,7 @@ Varbit Id: 743
 Varbit Id: 744
 	Config Id: 512
 	Shift: 0
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000000011111
 	Range: 0...31
@@ -5961,7 +5961,7 @@ Varbit Id: 744
 Varbit Id: 745
 	Config Id: 512
 	Shift: 6
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0001111111000000
 	Range: 0...127
@@ -5969,7 +5969,7 @@ Varbit Id: 745
 Varbit Id: 746
 	Config Id: 512
 	Shift: 8
-	Bits: 13
+	Msb: 13
 	msbs: 0000000000011111
 	lsbs: 1111111100000000
 	Range: 0...8191
@@ -5977,7 +5977,7 @@ Varbit Id: 746
 Varbit Id: 747
 	Config Id: 512
 	Shift: 14
-	Bits: 15
+	Msb: 15
 	msbs: 0001111111111111
 	lsbs: 1100000000000000
 	Range: 0...32767
@@ -5985,7 +5985,7 @@ Varbit Id: 747
 Varbit Id: 748
 	Config Id: 512
 	Shift: 16
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -5993,7 +5993,7 @@ Varbit Id: 748
 Varbit Id: 749
 	Config Id: 512
 	Shift: 22
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -6001,7 +6001,7 @@ Varbit Id: 749
 Varbit Id: 750
 	Config Id: 512
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -6009,7 +6009,7 @@ Varbit Id: 750
 Varbit Id: 751
 	Config Id: 513
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -6017,7 +6017,7 @@ Varbit Id: 751
 Varbit Id: 752
 	Config Id: 513
 	Shift: 2
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000011100
 	Range: 0...7
@@ -6025,7 +6025,7 @@ Varbit Id: 752
 Varbit Id: 753
 	Config Id: 513
 	Shift: 4
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000111110000
 	Range: 0...31
@@ -6033,7 +6033,7 @@ Varbit Id: 753
 Varbit Id: 754
 	Config Id: 513
 	Shift: 6
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0001111111000000
 	Range: 0...127
@@ -6041,7 +6041,7 @@ Varbit Id: 754
 Varbit Id: 755
 	Config Id: 513
 	Shift: 8
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000001
 	lsbs: 1111111100000000
 	Range: 0...511
@@ -6049,7 +6049,7 @@ Varbit Id: 755
 Varbit Id: 756
 	Config Id: 513
 	Shift: 10
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000011111
 	lsbs: 1111110000000000
 	Range: 0...2047
@@ -6057,7 +6057,7 @@ Varbit Id: 756
 Varbit Id: 757
 	Config Id: 513
 	Shift: 12
-	Bits: 13
+	Msb: 13
 	msbs: 0000000111111111
 	lsbs: 1111000000000000
 	Range: 0...8191
@@ -6065,7 +6065,7 @@ Varbit Id: 757
 Varbit Id: 758
 	Config Id: 513
 	Shift: 14
-	Bits: 15
+	Msb: 15
 	msbs: 0001111111111111
 	lsbs: 1100000000000000
 	Range: 0...32767
@@ -6073,7 +6073,7 @@ Varbit Id: 758
 Varbit Id: 759
 	Config Id: 513
 	Shift: 16
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -6081,7 +6081,7 @@ Varbit Id: 759
 Varbit Id: 760
 	Config Id: 513
 	Shift: 18
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -6089,7 +6089,7 @@ Varbit Id: 760
 Varbit Id: 761
 	Config Id: 513
 	Shift: 20
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -6097,7 +6097,7 @@ Varbit Id: 761
 Varbit Id: 762
 	Config Id: 513
 	Shift: 22
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -6105,7 +6105,7 @@ Varbit Id: 762
 Varbit Id: 763
 	Config Id: 513
 	Shift: 24
-	Bits: 25
+	Msb: 25
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -6113,7 +6113,7 @@ Varbit Id: 763
 Varbit Id: 764
 	Config Id: 513
 	Shift: 26
-	Bits: 27
+	Msb: 27
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -6121,7 +6121,7 @@ Varbit Id: 764
 Varbit Id: 765
 	Config Id: 513
 	Shift: 28
-	Bits: 29
+	Msb: 29
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -6129,7 +6129,7 @@ Varbit Id: 765
 Varbit Id: 766
 	Config Id: 513
 	Shift: 30
-	Bits: 31
+	Msb: 31
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -6137,7 +6137,7 @@ Varbit Id: 766
 Varbit Id: 767
 	Config Id: 514
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -6145,7 +6145,7 @@ Varbit Id: 767
 Varbit Id: 768
 	Config Id: 514
 	Shift: 2
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000011100
 	Range: 0...7
@@ -6153,7 +6153,7 @@ Varbit Id: 768
 Varbit Id: 769
 	Config Id: 514
 	Shift: 4
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000111110000
 	Range: 0...31
@@ -6161,7 +6161,7 @@ Varbit Id: 769
 Varbit Id: 770
 	Config Id: 514
 	Shift: 6
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0001111111000000
 	Range: 0...127
@@ -6169,7 +6169,7 @@ Varbit Id: 770
 Varbit Id: 771
 	Config Id: 514
 	Shift: 8
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000001
 	lsbs: 1111111100000000
 	Range: 0...511
@@ -6177,7 +6177,7 @@ Varbit Id: 771
 Varbit Id: 772
 	Config Id: 514
 	Shift: 10
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000011111
 	lsbs: 1111110000000000
 	Range: 0...2047
@@ -6185,7 +6185,7 @@ Varbit Id: 772
 Varbit Id: 773
 	Config Id: 514
 	Shift: 12
-	Bits: 13
+	Msb: 13
 	msbs: 0000000111111111
 	lsbs: 1111000000000000
 	Range: 0...8191
@@ -6193,7 +6193,7 @@ Varbit Id: 773
 Varbit Id: 774
 	Config Id: 514
 	Shift: 14
-	Bits: 15
+	Msb: 15
 	msbs: 0001111111111111
 	lsbs: 1100000000000000
 	Range: 0...32767
@@ -6201,7 +6201,7 @@ Varbit Id: 774
 Varbit Id: 775
 	Config Id: 514
 	Shift: 16
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -6209,7 +6209,7 @@ Varbit Id: 775
 Varbit Id: 776
 	Config Id: 514
 	Shift: 18
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -6217,7 +6217,7 @@ Varbit Id: 776
 Varbit Id: 777
 	Config Id: 514
 	Shift: 20
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -6225,7 +6225,7 @@ Varbit Id: 777
 Varbit Id: 778
 	Config Id: 514
 	Shift: 22
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -6233,7 +6233,7 @@ Varbit Id: 778
 Varbit Id: 779
 	Config Id: 514
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -6241,7 +6241,7 @@ Varbit Id: 779
 Varbit Id: 780
 	Config Id: 515
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -6249,7 +6249,7 @@ Varbit Id: 780
 Varbit Id: 781
 	Config Id: 515
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -6257,7 +6257,7 @@ Varbit Id: 781
 Varbit Id: 782
 	Config Id: 515
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -6265,7 +6265,7 @@ Varbit Id: 782
 Varbit Id: 783
 	Config Id: 515
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -6273,7 +6273,7 @@ Varbit Id: 783
 Varbit Id: 784
 	Config Id: 516
 	Shift: 0
-	Bits: 23
+	Msb: 23
 	msbs: 0000000001111111
 	lsbs: 1111111111111111
 	Range: 0...8388607
@@ -6281,7 +6281,7 @@ Varbit Id: 784
 Varbit Id: 785
 	Config Id: 516
 	Shift: 24
-	Bits: 25
+	Msb: 25
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -6289,7 +6289,7 @@ Varbit Id: 785
 Varbit Id: 786
 	Config Id: 516
 	Shift: 26
-	Bits: 27
+	Msb: 27
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -6297,7 +6297,7 @@ Varbit Id: 786
 Varbit Id: 787
 	Config Id: 516
 	Shift: 28
-	Bits: 29
+	Msb: 29
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -6305,7 +6305,7 @@ Varbit Id: 787
 Varbit Id: 788
 	Config Id: 516
 	Shift: 30
-	Bits: 31
+	Msb: 31
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -6313,7 +6313,7 @@ Varbit Id: 788
 Varbit Id: 789
 	Config Id: 501
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -6321,7 +6321,7 @@ Varbit Id: 789
 Varbit Id: 790
 	Config Id: 501
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -6329,7 +6329,7 @@ Varbit Id: 790
 Varbit Id: 791
 	Config Id: 501
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -6337,7 +6337,7 @@ Varbit Id: 791
 Varbit Id: 792
 	Config Id: 501
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -6345,7 +6345,7 @@ Varbit Id: 792
 Varbit Id: 793
 	Config Id: 501
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -6353,7 +6353,7 @@ Varbit Id: 793
 Varbit Id: 794
 	Config Id: 501
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -6361,7 +6361,7 @@ Varbit Id: 794
 Varbit Id: 795
 	Config Id: 501
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -6369,7 +6369,7 @@ Varbit Id: 795
 Varbit Id: 796
 	Config Id: 501
 	Shift: 30
-	Bits: 31
+	Msb: 31
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -6377,7 +6377,7 @@ Varbit Id: 796
 Varbit Id: 797
 	Config Id: 518
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -6385,7 +6385,7 @@ Varbit Id: 797
 Varbit Id: 798
 	Config Id: 518
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -6393,7 +6393,7 @@ Varbit Id: 798
 Varbit Id: 799
 	Config Id: 518
 	Shift: 8
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000000111
 	lsbs: 1111111100000000
 	Range: 0...2047
@@ -6401,7 +6401,7 @@ Varbit Id: 799
 Varbit Id: 800
 	Config Id: 518
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -6409,7 +6409,7 @@ Varbit Id: 800
 Varbit Id: 801
 	Config Id: 518
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -6417,7 +6417,7 @@ Varbit Id: 801
 Varbit Id: 802
 	Config Id: 518
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -6425,7 +6425,7 @@ Varbit Id: 802
 Varbit Id: 803
 	Config Id: 518
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -6433,7 +6433,7 @@ Varbit Id: 803
 Varbit Id: 804
 	Config Id: 518
 	Shift: 16
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -6441,7 +6441,7 @@ Varbit Id: 804
 Varbit Id: 805
 	Config Id: 518
 	Shift: 19
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -6449,7 +6449,7 @@ Varbit Id: 805
 Varbit Id: 806
 	Config Id: 518
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -6457,7 +6457,7 @@ Varbit Id: 806
 Varbit Id: 807
 	Config Id: 518
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -6465,7 +6465,7 @@ Varbit Id: 807
 Varbit Id: 808
 	Config Id: 518
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -6473,7 +6473,7 @@ Varbit Id: 808
 Varbit Id: 809
 	Config Id: 518
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -6481,7 +6481,7 @@ Varbit Id: 809
 Varbit Id: 810
 	Config Id: 518
 	Shift: 26
-	Bits: 28
+	Msb: 28
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -6489,7 +6489,7 @@ Varbit Id: 810
 Varbit Id: 811
 	Config Id: 520
 	Shift: 0
-	Bits: 0
+	Msb: 0
 	msbs: 0000000000000000
 	lsbs: 0000000000000000
 	Range: 0...0
@@ -6497,7 +6497,7 @@ Varbit Id: 811
 Varbit Id: 812
 	Config Id: 520
 	Shift: 11
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000111111
 	lsbs: 1111100000000000
 	Range: 0...2047
@@ -6505,7 +6505,7 @@ Varbit Id: 812
 Varbit Id: 813
 	Config Id: 520
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -6513,7 +6513,7 @@ Varbit Id: 813
 Varbit Id: 814
 	Config Id: 520
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -6521,7 +6521,7 @@ Varbit Id: 814
 Varbit Id: 815
 	Config Id: 520
 	Shift: 1
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000000011110
 	Range: 0...15
@@ -6529,7 +6529,7 @@ Varbit Id: 815
 Varbit Id: 816
 	Config Id: 520
 	Shift: 5
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000001111100000
 	Range: 0...31
@@ -6537,7 +6537,7 @@ Varbit Id: 816
 Varbit Id: 817
 	Config Id: 520
 	Shift: 6
-	Bits: 6
+	Msb: 6
 	msbs: 0000000000000000
 	lsbs: 0000111111000000
 	Range: 0...63
@@ -6545,7 +6545,7 @@ Varbit Id: 817
 Varbit Id: 818
 	Config Id: 520
 	Shift: 7
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0011111110000000
 	Range: 0...127
@@ -6553,7 +6553,7 @@ Varbit Id: 818
 Varbit Id: 819
 	Config Id: 520
 	Shift: 8
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 1111111100000000
 	Range: 0...255
@@ -6561,7 +6561,7 @@ Varbit Id: 819
 Varbit Id: 820
 	Config Id: 520
 	Shift: 9
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000011
 	lsbs: 1111111000000000
 	Range: 0...511
@@ -6569,7 +6569,7 @@ Varbit Id: 820
 Varbit Id: 821
 	Config Id: 520
 	Shift: 10
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000001111
 	lsbs: 1111110000000000
 	Range: 0...1023
@@ -6577,7 +6577,7 @@ Varbit Id: 821
 Varbit Id: 822
 	Config Id: 521
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -6585,7 +6585,7 @@ Varbit Id: 822
 Varbit Id: 823
 	Config Id: 521
 	Shift: 8
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000000111
 	lsbs: 1111111100000000
 	Range: 0...2047
@@ -6593,7 +6593,7 @@ Varbit Id: 823
 Varbit Id: 824
 	Config Id: 521
 	Shift: 12
-	Bits: 12
+	Msb: 12
 	msbs: 0000000011111111
 	lsbs: 1111000000000000
 	Range: 0...4095
@@ -6601,7 +6601,7 @@ Varbit Id: 824
 Varbit Id: 825
 	Config Id: 521
 	Shift: 13
-	Bits: 13
+	Msb: 13
 	msbs: 0000001111111111
 	lsbs: 1110000000000000
 	Range: 0...8191
@@ -6609,7 +6609,7 @@ Varbit Id: 825
 Varbit Id: 826
 	Config Id: 521
 	Shift: 14
-	Bits: 14
+	Msb: 14
 	msbs: 0000111111111111
 	lsbs: 1100000000000000
 	Range: 0...16383
@@ -6617,7 +6617,7 @@ Varbit Id: 826
 Varbit Id: 827
 	Config Id: 521
 	Shift: 15
-	Bits: 15
+	Msb: 15
 	msbs: 0011111111111111
 	lsbs: 1000000000000000
 	Range: 0...32767
@@ -6625,7 +6625,7 @@ Varbit Id: 827
 Varbit Id: 828
 	Config Id: 521
 	Shift: 16
-	Bits: 16
+	Msb: 16
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...65535
@@ -6633,7 +6633,7 @@ Varbit Id: 828
 Varbit Id: 829
 	Config Id: 521
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -6641,7 +6641,7 @@ Varbit Id: 829
 Varbit Id: 830
 	Config Id: 521
 	Shift: 18
-	Bits: 18
+	Msb: 18
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...262143
@@ -6649,7 +6649,7 @@ Varbit Id: 830
 Varbit Id: 831
 	Config Id: 521
 	Shift: 19
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111000
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -6657,7 +6657,7 @@ Varbit Id: 831
 Varbit Id: 832
 	Config Id: 521
 	Shift: 20
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -6665,7 +6665,7 @@ Varbit Id: 832
 Varbit Id: 833
 	Config Id: 521
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -6673,7 +6673,7 @@ Varbit Id: 833
 Varbit Id: 834
 	Config Id: 521
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -6681,7 +6681,7 @@ Varbit Id: 834
 Varbit Id: 835
 	Config Id: 521
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -6689,7 +6689,7 @@ Varbit Id: 835
 Varbit Id: 836
 	Config Id: 521
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -6697,7 +6697,7 @@ Varbit Id: 836
 Varbit Id: 837
 	Config Id: 521
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -6705,7 +6705,7 @@ Varbit Id: 837
 Varbit Id: 838
 	Config Id: 521
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -6713,7 +6713,7 @@ Varbit Id: 838
 Varbit Id: 839
 	Config Id: 521
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -6721,7 +6721,7 @@ Varbit Id: 839
 Varbit Id: 840
 	Config Id: 521
 	Shift: 30
-	Bits: 30
+	Msb: 30
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...1073741823
@@ -6729,7 +6729,7 @@ Varbit Id: 840
 Varbit Id: 841
 	Config Id: 521
 	Shift: 31
-	Bits: 31
+	Msb: 31
 	msbs: 1000000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -6737,7 +6737,7 @@ Varbit Id: 841
 Varbit Id: 842
 	Config Id: 524
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -6745,7 +6745,7 @@ Varbit Id: 842
 Varbit Id: 843
 	Config Id: 524
 	Shift: 2
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000011100
 	Range: 0...7
@@ -6753,7 +6753,7 @@ Varbit Id: 843
 Varbit Id: 844
 	Config Id: 524
 	Shift: 4
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000111110000
 	Range: 0...31
@@ -6761,7 +6761,7 @@ Varbit Id: 844
 Varbit Id: 845
 	Config Id: 524
 	Shift: 6
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0001111111000000
 	Range: 0...127
@@ -6769,7 +6769,7 @@ Varbit Id: 845
 Varbit Id: 846
 	Config Id: 524
 	Shift: 8
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000001
 	lsbs: 1111111100000000
 	Range: 0...511
@@ -6777,7 +6777,7 @@ Varbit Id: 846
 Varbit Id: 847
 	Config Id: 524
 	Shift: 10
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000011111
 	lsbs: 1111110000000000
 	Range: 0...2047
@@ -6785,7 +6785,7 @@ Varbit Id: 847
 Varbit Id: 848
 	Config Id: 524
 	Shift: 12
-	Bits: 13
+	Msb: 13
 	msbs: 0000000111111111
 	lsbs: 1111000000000000
 	Range: 0...8191
@@ -6793,7 +6793,7 @@ Varbit Id: 848
 Varbit Id: 849
 	Config Id: 524
 	Shift: 14
-	Bits: 15
+	Msb: 15
 	msbs: 0001111111111111
 	lsbs: 1100000000000000
 	Range: 0...32767
@@ -6801,7 +6801,7 @@ Varbit Id: 849
 Varbit Id: 850
 	Config Id: 524
 	Shift: 16
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -6809,7 +6809,7 @@ Varbit Id: 850
 Varbit Id: 851
 	Config Id: 524
 	Shift: 18
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...524287
@@ -6817,7 +6817,7 @@ Varbit Id: 851
 Varbit Id: 852
 	Config Id: 524
 	Shift: 20
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...2097151
@@ -6825,7 +6825,7 @@ Varbit Id: 852
 Varbit Id: 853
 	Config Id: 524
 	Shift: 22
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -6833,7 +6833,7 @@ Varbit Id: 853
 Varbit Id: 854
 	Config Id: 524
 	Shift: 24
-	Bits: 25
+	Msb: 25
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -6841,7 +6841,7 @@ Varbit Id: 854
 Varbit Id: 855
 	Config Id: 524
 	Shift: 26
-	Bits: 27
+	Msb: 27
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -6849,7 +6849,7 @@ Varbit Id: 855
 Varbit Id: 856
 	Config Id: 524
 	Shift: 28
-	Bits: 29
+	Msb: 29
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -6857,7 +6857,7 @@ Varbit Id: 856
 Varbit Id: 857
 	Config Id: 524
 	Shift: 30
-	Bits: 31
+	Msb: 31
 	msbs: 1100000000000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -6865,7 +6865,7 @@ Varbit Id: 857
 Varbit Id: 858
 	Config Id: 525
 	Shift: 0
-	Bits: 1
+	Msb: 1
 	msbs: 0000000000000000
 	lsbs: 0000000000000001
 	Range: 0...1
@@ -6873,7 +6873,7 @@ Varbit Id: 858
 Varbit Id: 859
 	Config Id: 525
 	Shift: 2
-	Bits: 3
+	Msb: 3
 	msbs: 0000000000000000
 	lsbs: 0000000000011100
 	Range: 0...7
@@ -6881,7 +6881,7 @@ Varbit Id: 859
 Varbit Id: 860
 	Config Id: 525
 	Shift: 4
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000111110000
 	Range: 0...31
@@ -6889,7 +6889,7 @@ Varbit Id: 860
 Varbit Id: 861
 	Config Id: 525
 	Shift: 6
-	Bits: 13
+	Msb: 13
 	msbs: 0000000000000111
 	lsbs: 1111111111000000
 	Range: 0...8191
@@ -6897,7 +6897,7 @@ Varbit Id: 861
 Varbit Id: 862
 	Config Id: 525
 	Shift: 14
-	Bits: 21
+	Msb: 21
 	msbs: 1111111111111111
 	lsbs: 1100000000000000
 	Range: 0...2097151
@@ -6905,7 +6905,7 @@ Varbit Id: 862
 Varbit Id: 863
 	Config Id: 525
 	Shift: 22
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111000000
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -6913,7 +6913,7 @@ Varbit Id: 863
 Varbit Id: 864
 	Config Id: 525
 	Shift: 23
-	Bits: 23
+	Msb: 23
 	msbs: 1111111110000000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -6921,7 +6921,7 @@ Varbit Id: 864
 Varbit Id: 865
 	Config Id: 525
 	Shift: 24
-	Bits: 24
+	Msb: 24
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...16777215
@@ -6929,7 +6929,7 @@ Varbit Id: 865
 Varbit Id: 866
 	Config Id: 525
 	Shift: 25
-	Bits: 25
+	Msb: 25
 	msbs: 1111111000000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -6937,7 +6937,7 @@ Varbit Id: 866
 Varbit Id: 867
 	Config Id: 525
 	Shift: 26
-	Bits: 26
+	Msb: 26
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...67108863
@@ -6945,7 +6945,7 @@ Varbit Id: 867
 Varbit Id: 868
 	Config Id: 525
 	Shift: 27
-	Bits: 27
+	Msb: 27
 	msbs: 1111100000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -6953,7 +6953,7 @@ Varbit Id: 868
 Varbit Id: 869
 	Config Id: 525
 	Shift: 28
-	Bits: 28
+	Msb: 28
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...268435455
@@ -6961,7 +6961,7 @@ Varbit Id: 869
 Varbit Id: 870
 	Config Id: 525
 	Shift: 29
-	Bits: 29
+	Msb: 29
 	msbs: 1110000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -6969,7 +6969,7 @@ Varbit Id: 870
 Varbit Id: 871
 	Config Id: 529
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -6977,7 +6977,7 @@ Varbit Id: 871
 Varbit Id: 872
 	Config Id: 530
 	Shift: 0
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000000011111
 	Range: 0...31
@@ -6985,7 +6985,7 @@ Varbit Id: 872
 Varbit Id: 873
 	Config Id: 530
 	Shift: 6
-	Bits: 10
+	Msb: 10
 	msbs: 0000000000000000
 	lsbs: 1111111111000000
 	Range: 0...1023
@@ -6993,7 +6993,7 @@ Varbit Id: 873
 Varbit Id: 874
 	Config Id: 531
 	Shift: 0
-	Bits: 4
+	Msb: 4
 	msbs: 0000000000000000
 	lsbs: 0000000000001111
 	Range: 0...15
@@ -7001,7 +7001,7 @@ Varbit Id: 874
 Varbit Id: 875
 	Config Id: 531
 	Shift: 5
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000000
 	lsbs: 0011111111100000
 	Range: 0...511
@@ -7009,7 +7009,7 @@ Varbit Id: 875
 Varbit Id: 876
 	Config Id: 531
 	Shift: 10
-	Bits: 14
+	Msb: 14
 	msbs: 0000000011111111
 	lsbs: 1111110000000000
 	Range: 0...16383
@@ -7017,7 +7017,7 @@ Varbit Id: 876
 Varbit Id: 877
 	Config Id: 531
 	Shift: 15
-	Bits: 19
+	Msb: 19
 	msbs: 1111111111111111
 	lsbs: 1000000000000000
 	Range: 0...524287
@@ -7025,7 +7025,7 @@ Varbit Id: 877
 Varbit Id: 878
 	Config Id: 79
 	Shift: 0
-	Bits: 7
+	Msb: 7
 	msbs: 0000000000000000
 	lsbs: 0000000001111111
 	Range: 0...127
@@ -7033,7 +7033,7 @@ Varbit Id: 878
 Varbit Id: 879
 	Config Id: 79
 	Shift: 8
-	Bits: 15
+	Msb: 15
 	msbs: 0000000001111111
 	lsbs: 1111111100000000
 	Range: 0...32767
@@ -7041,7 +7041,7 @@ Varbit Id: 879
 Varbit Id: 880
 	Config Id: 79
 	Shift: 16
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111111111
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -7049,7 +7049,7 @@ Varbit Id: 880
 Varbit Id: 881
 	Config Id: 79
 	Shift: 24
-	Bits: 31
+	Msb: 31
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...2147483647
@@ -7057,7 +7057,7 @@ Varbit Id: 881
 Varbit Id: 882
 	Config Id: 530
 	Shift: 11
-	Bits: 16
+	Msb: 16
 	msbs: 0000011111111111
 	lsbs: 1111100000000000
 	Range: 0...65535
@@ -7065,7 +7065,7 @@ Varbit Id: 882
 Varbit Id: 883
 	Config Id: 530
 	Shift: 17
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111110
 	lsbs: 0000000000000000
 	Range: 0...131071
@@ -7073,7 +7073,7 @@ Varbit Id: 883
 Varbit Id: 884
 	Config Id: 530
 	Shift: 18
-	Bits: 22
+	Msb: 22
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
 	Range: 0...4194303
@@ -7081,7 +7081,7 @@ Varbit Id: 884
 Varbit Id: 885
 	Config Id: 533
 	Shift: 0
-	Bits: 9
+	Msb: 9
 	msbs: 0000000000000000
 	lsbs: 0000000111111111
 	Range: 0...511
@@ -7089,7 +7089,7 @@ Varbit Id: 885
 Varbit Id: 886
 	Config Id: 533
 	Shift: 10
-	Bits: 19
+	Msb: 19
 	msbs: 0001111111111111
 	lsbs: 1111110000000000
 	Range: 0...524287
@@ -7097,7 +7097,7 @@ Varbit Id: 886
 Varbit Id: 887
 	Config Id: 533
 	Shift: 20
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111110000
 	lsbs: 0000000000000000
 	Range: 0...1048575
@@ -7105,7 +7105,7 @@ Varbit Id: 887
 Varbit Id: 888
 	Config Id: 533
 	Shift: 21
-	Bits: 23
+	Msb: 23
 	msbs: 1111111111100000
 	lsbs: 0000000000000000
 	Range: 0...8388607
@@ -7113,7 +7113,7 @@ Varbit Id: 888
 Varbit Id: 889
 	Config Id: 533
 	Shift: 24
-	Bits: 25
+	Msb: 25
 	msbs: 1111111100000000
 	lsbs: 0000000000000000
 	Range: 0...33554431
@@ -7121,7 +7121,7 @@ Varbit Id: 889
 Varbit Id: 890
 	Config Id: 533
 	Shift: 26
-	Bits: 27
+	Msb: 27
 	msbs: 1111110000000000
 	lsbs: 0000000000000000
 	Range: 0...134217727
@@ -7129,7 +7129,7 @@ Varbit Id: 890
 Varbit Id: 891
 	Config Id: 533
 	Shift: 28
-	Bits: 29
+	Msb: 29
 	msbs: 1111000000000000
 	lsbs: 0000000000000000
 	Range: 0...536870911
@@ -7137,7 +7137,7 @@ Varbit Id: 891
 Varbit Id: 892
 	Config Id: 534
 	Shift: 0
-	Bits: 2
+	Msb: 2
 	msbs: 0000000000000000
 	lsbs: 0000000000000011
 	Range: 0...3
@@ -7145,7 +7145,7 @@ Varbit Id: 892
 Varbit Id: 893
 	Config Id: 534
 	Shift: 3
-	Bits: 5
+	Msb: 5
 	msbs: 0000000000000000
 	lsbs: 0000000011111000
 	Range: 0...31
@@ -7153,7 +7153,7 @@ Varbit Id: 893
 Varbit Id: 894
 	Config Id: 534
 	Shift: 6
-	Bits: 8
+	Msb: 8
 	msbs: 0000000000000000
 	lsbs: 0011111111000000
 	Range: 0...255
@@ -7161,7 +7161,7 @@ Varbit Id: 894
 Varbit Id: 895
 	Config Id: 534
 	Shift: 9
-	Bits: 11
+	Msb: 11
 	msbs: 0000000000001111
 	lsbs: 1111111000000000
 	Range: 0...2047
@@ -7169,7 +7169,7 @@ Varbit Id: 895
 Varbit Id: 896
 	Config Id: 534
 	Shift: 12
-	Bits: 14
+	Msb: 14
 	msbs: 0000001111111111
 	lsbs: 1111000000000000
 	Range: 0...16383
@@ -7177,7 +7177,7 @@ Varbit Id: 896
 Varbit Id: 897
 	Config Id: 534
 	Shift: 15
-	Bits: 17
+	Msb: 17
 	msbs: 1111111111111111
 	lsbs: 1000000000000000
 	Range: 0...131071
@@ -7185,7 +7185,944 @@ Varbit Id: 897
 Varbit Id: 898
 	Config Id: 534
 	Shift: 18
-	Bits: 20
+	Msb: 20
 	msbs: 1111111111111100
 	lsbs: 0000000000000000
-	Range: 0...10
+	Range: 0...1048575
+
+Varbit Id: 899
+	Config Id: 534
+	Shift: 21
+	Msb: 23
+	msbs: 1111111111100000
+	lsbs: 0000000000000000
+	Range: 0...8388607
+
+Varbit Id: 900
+	Config Id: 534
+	Shift: 24
+	Msb: 26
+	msbs: 1111111100000000
+	lsbs: 0000000000000000
+	Range: 0...67108863
+
+Varbit Id: 901
+	Config Id: 534
+	Shift: 27
+	Msb: 29
+	msbs: 1111100000000000
+	lsbs: 0000000000000000
+	Range: 0...536870911
+
+Varbit Id: 902
+	Config Id: 534
+	Shift: 0
+	Msb: 29
+	msbs: 0001111111111111
+	lsbs: 1111111111111111
+	Range: 0...536870911
+
+Varbit Id: 903
+	Config Id: 534
+	Shift: 30
+	Msb: 30
+	msbs: 1100000000000000
+	lsbs: 0000000000000000
+	Range: 0...1073741823
+
+Varbit Id: 904
+	Config Id: 534
+	Shift: 31
+	Msb: 31
+	msbs: 1000000000000000
+	lsbs: 0000000000000000
+	Range: 0...2147483647
+
+Varbit Id: 905
+	Config Id: 535
+	Shift: 0
+	Msb: 0
+	msbs: 0000000000000000
+	lsbs: 0000000000000000
+	Range: 0...0
+
+Varbit Id: 906
+	Config Id: 535
+	Shift: 1
+	Msb: 1
+	msbs: 0000000000000000
+	lsbs: 0000000000000010
+	Range: 0...1
+
+Varbit Id: 907
+	Config Id: 535
+	Shift: 2
+	Msb: 11
+	msbs: 0000000000000000
+	lsbs: 0001111111111100
+	Range: 0...2047
+
+Varbit Id: 908
+	Config Id: 535
+	Shift: 12
+	Msb: 14
+	msbs: 0000001111111111
+	lsbs: 1111000000000000
+	Range: 0...16383
+
+Varbit Id: 909
+	Config Id: 535
+	Shift: 15
+	Msb: 15
+	msbs: 0011111111111111
+	lsbs: 1000000000000000
+	Range: 0...32767
+
+Varbit Id: 910
+	Config Id: 540
+	Shift: 0
+	Msb: 1
+	msbs: 0000000000000000
+	lsbs: 0000000000000001
+	Range: 0...1
+
+Varbit Id: 911
+	Config Id: 540
+	Shift: 2
+	Msb: 4
+	msbs: 0000000000000000
+	lsbs: 0000000000111100
+	Range: 0...15
+
+Varbit Id: 912
+	Config Id: 540
+	Shift: 5
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0000111111100000
+	Range: 0...127
+
+Varbit Id: 913
+	Config Id: 540
+	Shift: 8
+	Msb: 10
+	msbs: 0000000000000011
+	lsbs: 1111111100000000
+	Range: 0...1023
+
+Varbit Id: 914
+	Config Id: 540
+	Shift: 11
+	Msb: 11
+	msbs: 0000000000111111
+	lsbs: 1111100000000000
+	Range: 0...2047
+
+Varbit Id: 915
+	Config Id: 540
+	Shift: 12
+	Msb: 12
+	msbs: 0000000011111111
+	lsbs: 1111000000000000
+	Range: 0...4095
+
+Varbit Id: 916
+	Config Id: 540
+	Shift: 13
+	Msb: 14
+	msbs: 0000011111111111
+	lsbs: 1110000000000000
+	Range: 0...16383
+
+Varbit Id: 917
+	Config Id: 540
+	Shift: 15
+	Msb: 15
+	msbs: 0011111111111111
+	lsbs: 1000000000000000
+	Range: 0...32767
+
+Varbit Id: 918
+	Config Id: 540
+	Shift: 16
+	Msb: 16
+	msbs: 1111111111111111
+	lsbs: 0000000000000000
+	Range: 0...65535
+
+Varbit Id: 919
+	Config Id: 540
+	Shift: 17
+	Msb: 17
+	msbs: 1111111111111110
+	lsbs: 0000000000000000
+	Range: 0...131071
+
+Varbit Id: 920
+	Config Id: 540
+	Shift: 18
+	Msb: 18
+	msbs: 1111111111111100
+	lsbs: 0000000000000000
+	Range: 0...262143
+
+Varbit Id: 921
+	Config Id: 540
+	Shift: 19
+	Msb: 19
+	msbs: 1111111111111000
+	lsbs: 0000000000000000
+	Range: 0...524287
+
+Varbit Id: 922
+	Config Id: 540
+	Shift: 20
+	Msb: 23
+	msbs: 1111111111110000
+	lsbs: 0000000000000000
+	Range: 0...8388607
+
+Varbit Id: 923
+	Config Id: 541
+	Shift: 0
+	Msb: 0
+	msbs: 0000000000000000
+	lsbs: 0000000000000000
+	Range: 0...0
+
+Varbit Id: 924
+	Config Id: 541
+	Shift: 1
+	Msb: 9
+	msbs: 0000000000000000
+	lsbs: 0000001111111110
+	Range: 0...511
+
+Varbit Id: 925
+	Config Id: 541
+	Shift: 1
+	Msb: 1
+	msbs: 0000000000000000
+	lsbs: 0000000000000010
+	Range: 0...1
+
+Varbit Id: 926
+	Config Id: 541
+	Shift: 2
+	Msb: 2
+	msbs: 0000000000000000
+	lsbs: 0000000000001100
+	Range: 0...3
+
+Varbit Id: 927
+	Config Id: 541
+	Shift: 3
+	Msb: 3
+	msbs: 0000000000000000
+	lsbs: 0000000000111000
+	Range: 0...7
+
+Varbit Id: 928
+	Config Id: 541
+	Shift: 4
+	Msb: 4
+	msbs: 0000000000000000
+	lsbs: 0000000011110000
+	Range: 0...15
+
+Varbit Id: 929
+	Config Id: 541
+	Shift: 5
+	Msb: 5
+	msbs: 0000000000000000
+	lsbs: 0000001111100000
+	Range: 0...31
+
+Varbit Id: 930
+	Config Id: 541
+	Shift: 6
+	Msb: 6
+	msbs: 0000000000000000
+	lsbs: 0000111111000000
+	Range: 0...63
+
+Varbit Id: 931
+	Config Id: 541
+	Shift: 7
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0011111110000000
+	Range: 0...127
+
+Varbit Id: 932
+	Config Id: 541
+	Shift: 8
+	Msb: 8
+	msbs: 0000000000000000
+	lsbs: 1111111100000000
+	Range: 0...255
+
+Varbit Id: 933
+	Config Id: 541
+	Shift: 9
+	Msb: 9
+	msbs: 0000000000000011
+	lsbs: 1111111000000000
+	Range: 0...511
+
+Varbit Id: 934
+	Config Id: 541
+	Shift: 10
+	Msb: 15
+	msbs: 0000000111111111
+	lsbs: 1111110000000000
+	Range: 0...32767
+
+Varbit Id: 935
+	Config Id: 542
+	Shift: 0
+	Msb: 0
+	msbs: 0000000000000000
+	lsbs: 0000000000000000
+	Range: 0...0
+
+Varbit Id: 936
+	Config Id: 543
+	Shift: 8
+	Msb: 9
+	msbs: 0000000000000001
+	lsbs: 1111111100000000
+	Range: 0...511
+
+Varbit Id: 937
+	Config Id: 543
+	Shift: 0
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0000000001111111
+	Range: 0...127
+
+Varbit Id: 938
+	Config Id: 543
+	Shift: 10
+	Msb: 10
+	msbs: 0000000000001111
+	lsbs: 1111110000000000
+	Range: 0...1023
+
+Varbit Id: 939
+	Config Id: 543
+	Shift: 11
+	Msb: 11
+	msbs: 0000000000111111
+	lsbs: 1111100000000000
+	Range: 0...2047
+
+Varbit Id: 940
+	Config Id: 543
+	Shift: 12
+	Msb: 29
+	msbs: 1111111111111111
+	lsbs: 1111000000000000
+	Range: 0...536870911
+
+Varbit Id: 941
+	Config Id: 545
+	Shift: 0
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0000000001111111
+	Range: 0...127
+
+Varbit Id: 942
+	Config Id: 545
+	Shift: 8
+	Msb: 15
+	msbs: 0000000001111111
+	lsbs: 1111111100000000
+	Range: 0...32767
+
+Varbit Id: 943
+	Config Id: 545
+	Shift: 16
+	Msb: 23
+	msbs: 1111111111111111
+	lsbs: 0000000000000000
+	Range: 0...8388607
+
+Varbit Id: 944
+	Config Id: 545
+	Shift: 24
+	Msb: 31
+	msbs: 1111111100000000
+	lsbs: 0000000000000000
+	Range: 0...2147483647
+
+Varbit Id: 945
+	Config Id: 546
+	Shift: 0
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0000000001111111
+	Range: 0...127
+
+Varbit Id: 946
+	Config Id: 546
+	Shift: 8
+	Msb: 15
+	msbs: 0000000001111111
+	lsbs: 1111111100000000
+	Range: 0...32767
+
+Varbit Id: 947
+	Config Id: 546
+	Shift: 16
+	Msb: 23
+	msbs: 1111111111111111
+	lsbs: 0000000000000000
+	Range: 0...8388607
+
+Varbit Id: 948
+	Config Id: 546
+	Shift: 24
+	Msb: 31
+	msbs: 1111111100000000
+	lsbs: 0000000000000000
+	Range: 0...2147483647
+
+Varbit Id: 949
+	Config Id: 547
+	Shift: 0
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0000000001111111
+	Range: 0...127
+
+Varbit Id: 950
+	Config Id: 547
+	Shift: 8
+	Msb: 15
+	msbs: 0000000001111111
+	lsbs: 1111111100000000
+	Range: 0...32767
+
+Varbit Id: 951
+	Config Id: 547
+	Shift: 16
+	Msb: 23
+	msbs: 1111111111111111
+	lsbs: 0000000000000000
+	Range: 0...8388607
+
+Varbit Id: 952
+	Config Id: 547
+	Shift: 24
+	Msb: 31
+	msbs: 1111111100000000
+	lsbs: 0000000000000000
+	Range: 0...2147483647
+
+Varbit Id: 953
+	Config Id: 548
+	Shift: 0
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0000000001111111
+	Range: 0...127
+
+Varbit Id: 954
+	Config Id: 548
+	Shift: 8
+	Msb: 15
+	msbs: 0000000001111111
+	lsbs: 1111111100000000
+	Range: 0...32767
+
+Varbit Id: 955
+	Config Id: 548
+	Shift: 16
+	Msb: 23
+	msbs: 1111111111111111
+	lsbs: 0000000000000000
+	Range: 0...8388607
+
+Varbit Id: 956
+	Config Id: 548
+	Shift: 24
+	Msb: 31
+	msbs: 1111111100000000
+	lsbs: 0000000000000000
+	Range: 0...2147483647
+
+Varbit Id: 957
+	Config Id: 549
+	Shift: 0
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0000000001111111
+	Range: 0...127
+
+Varbit Id: 958
+	Config Id: 549
+	Shift: 8
+	Msb: 15
+	msbs: 0000000001111111
+	lsbs: 1111111100000000
+	Range: 0...32767
+
+Varbit Id: 959
+	Config Id: 549
+	Shift: 16
+	Msb: 23
+	msbs: 1111111111111111
+	lsbs: 0000000000000000
+	Range: 0...8388607
+
+Varbit Id: 960
+	Config Id: 279
+	Shift: 17
+	Msb: 20
+	msbs: 1111111111111110
+	lsbs: 0000000000000000
+	Range: 0...1048575
+
+Varbit Id: 961
+	Config Id: 553
+	Shift: 0
+	Msb: 5
+	msbs: 0000000000000000
+	lsbs: 0000000000011111
+	Range: 0...31
+
+Varbit Id: 962
+	Config Id: 553
+	Shift: 6
+	Msb: 6
+	msbs: 0000000000000000
+	lsbs: 0000111111000000
+	Range: 0...63
+
+Varbit Id: 963
+	Config Id: 553
+	Shift: 7
+	Msb: 8
+	msbs: 0000000000000000
+	lsbs: 0111111110000000
+	Range: 0...255
+
+Varbit Id: 964
+	Config Id: 553
+	Shift: 9
+	Msb: 10
+	msbs: 0000000000000111
+	lsbs: 1111111000000000
+	Range: 0...1023
+
+Varbit Id: 965
+	Config Id: 553
+	Shift: 11
+	Msb: 12
+	msbs: 0000000001111111
+	lsbs: 1111100000000000
+	Range: 0...4095
+
+Varbit Id: 966
+	Config Id: 553
+	Shift: 13
+	Msb: 13
+	msbs: 0000001111111111
+	lsbs: 1110000000000000
+	Range: 0...8191
+
+Varbit Id: 967
+	Config Id: 553
+	Shift: 14
+	Msb: 16
+	msbs: 0011111111111111
+	lsbs: 1100000000000000
+	Range: 0...65535
+
+Varbit Id: 968
+	Config Id: 553
+	Shift: 17
+	Msb: 18
+	msbs: 1111111111111110
+	lsbs: 0000000000000000
+	Range: 0...262143
+
+Varbit Id: 969
+	Config Id: 553
+	Shift: 19
+	Msb: 19
+	msbs: 1111111111111000
+	lsbs: 0000000000000000
+	Range: 0...524287
+
+Varbit Id: 970
+	Config Id: 553
+	Shift: 20
+	Msb: 20
+	msbs: 1111111111110000
+	lsbs: 0000000000000000
+	Range: 0...1048575
+
+Varbit Id: 971
+	Config Id: 553
+	Shift: 21
+	Msb: 22
+	msbs: 1111111111100000
+	lsbs: 0000000000000000
+	Range: 0...4194303
+
+Varbit Id: 972
+	Config Id: 553
+	Shift: 23
+	Msb: 23
+	msbs: 1111111110000000
+	lsbs: 0000000000000000
+	Range: 0...8388607
+
+Varbit Id: 973
+	Config Id: 553
+	Shift: 24
+	Msb: 24
+	msbs: 1111111100000000
+	lsbs: 0000000000000000
+	Range: 0...16777215
+
+Varbit Id: 974
+	Config Id: 553
+	Shift: 25
+	Msb: 25
+	msbs: 1111111000000000
+	lsbs: 0000000000000000
+	Range: 0...33554431
+
+Varbit Id: 975
+	Config Id: 553
+	Shift: 26
+	Msb: 26
+	msbs: 1111110000000000
+	lsbs: 0000000000000000
+	Range: 0...67108863
+
+Varbit Id: 976
+	Config Id: 553
+	Shift: 27
+	Msb: 28
+	msbs: 1111100000000000
+	lsbs: 0000000000000000
+	Range: 0...268435455
+
+Varbit Id: 977
+	Config Id: 553
+	Shift: 29
+	Msb: 30
+	msbs: 1110000000000000
+	lsbs: 0000000000000000
+	Range: 0...1073741823
+
+Varbit Id: 978
+	Config Id: 553
+	Shift: 31
+	Msb: 31
+	msbs: 1000000000000000
+	lsbs: 0000000000000000
+	Range: 0...2147483647
+
+Varbit Id: 979
+	Config Id: 554
+	Shift: 0
+	Msb: 2
+	msbs: 0000000000000000
+	lsbs: 0000000000000011
+	Range: 0...3
+
+Varbit Id: 980
+	Config Id: 554
+	Shift: 3
+	Msb: 5
+	msbs: 0000000000000000
+	lsbs: 0000000011111000
+	Range: 0...31
+
+Varbit Id: 981
+	Config Id: 554
+	Shift: 6
+	Msb: 8
+	msbs: 0000000000000000
+	lsbs: 0011111111000000
+	Range: 0...255
+
+Varbit Id: 982
+	Config Id: 554
+	Shift: 9
+	Msb: 11
+	msbs: 0000000000001111
+	lsbs: 1111111000000000
+	Range: 0...2047
+
+Varbit Id: 983
+	Config Id: 554
+	Shift: 12
+	Msb: 14
+	msbs: 0000001111111111
+	lsbs: 1111000000000000
+	Range: 0...16383
+
+Varbit Id: 984
+	Config Id: 554
+	Shift: 15
+	Msb: 17
+	msbs: 1111111111111111
+	lsbs: 1000000000000000
+	Range: 0...131071
+
+Varbit Id: 985
+	Config Id: 554
+	Shift: 18
+	Msb: 21
+	msbs: 1111111111111100
+	lsbs: 0000000000000000
+	Range: 0...2097151
+
+Varbit Id: 986
+	Config Id: 554
+	Shift: 22
+	Msb: 24
+	msbs: 1111111111000000
+	lsbs: 0000000000000000
+	Range: 0...16777215
+
+Varbit Id: 987
+	Config Id: 554
+	Shift: 25
+	Msb: 27
+	msbs: 1111111000000000
+	lsbs: 0000000000000000
+	Range: 0...134217727
+
+Varbit Id: 988
+	Config Id: 554
+	Shift: 28
+	Msb: 30
+	msbs: 1111000000000000
+	lsbs: 0000000000000000
+	Range: 0...1073741823
+
+Varbit Id: 989
+	Config Id: 555
+	Shift: 0
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0000000001111111
+	Range: 0...127
+
+Varbit Id: 990
+	Config Id: 555
+	Shift: 8
+	Msb: 10
+	msbs: 0000000000000011
+	lsbs: 1111111100000000
+	Range: 0...1023
+
+Varbit Id: 991
+	Config Id: 555
+	Shift: 11
+	Msb: 12
+	msbs: 0000000001111111
+	lsbs: 1111100000000000
+	Range: 0...4095
+
+Varbit Id: 992
+	Config Id: 555
+	Shift: 13
+	Msb: 14
+	msbs: 0000011111111111
+	lsbs: 1110000000000000
+	Range: 0...16383
+
+Varbit Id: 993
+	Config Id: 555
+	Shift: 15
+	Msb: 16
+	msbs: 0111111111111111
+	lsbs: 1000000000000000
+	Range: 0...65535
+
+Varbit Id: 994
+	Config Id: 561
+	Shift: 0
+	Msb: 2
+	msbs: 0000000000000000
+	lsbs: 0000000000000011
+	Range: 0...3
+
+Varbit Id: 995
+	Config Id: 561
+	Shift: 3
+	Msb: 3
+	msbs: 0000000000000000
+	lsbs: 0000000000111000
+	Range: 0...7
+
+Varbit Id: 996
+	Config Id: 561
+	Shift: 4
+	Msb: 4
+	msbs: 0000000000000000
+	lsbs: 0000000011110000
+	Range: 0...15
+
+Varbit Id: 997
+	Config Id: 562
+	Shift: 0
+	Msb: 3
+	msbs: 0000000000000000
+	lsbs: 0000000000000111
+	Range: 0...7
+
+Varbit Id: 998
+	Config Id: 562
+	Shift: 4
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0000011111110000
+	Range: 0...127
+
+Varbit Id: 999
+	Config Id: 562
+	Shift: 8
+	Msb: 11
+	msbs: 0000000000000111
+	lsbs: 1111111100000000
+	Range: 0...2047
+
+Varbit Id: 1000
+	Config Id: 562
+	Shift: 12
+	Msb: 15
+	msbs: 0000011111111111
+	lsbs: 1111000000000000
+	Range: 0...32767
+
+Varbit Id: 1001
+	Config Id: 562
+	Shift: 16
+	Msb: 19
+	msbs: 1111111111111111
+	lsbs: 0000000000000000
+	Range: 0...524287
+
+Varbit Id: 1002
+	Config Id: 562
+	Shift: 20
+	Msb: 23
+	msbs: 1111111111110000
+	lsbs: 0000000000000000
+	Range: 0...8388607
+
+Varbit Id: 1003
+	Config Id: 562
+	Shift: 24
+	Msb: 27
+	msbs: 1111111100000000
+	lsbs: 0000000000000000
+	Range: 0...134217727
+
+Varbit Id: 1004
+	Config Id: 562
+	Shift: 28
+	Msb: 31
+	msbs: 1111000000000000
+	lsbs: 0000000000000000
+	Range: 0...2147483647
+
+Varbit Id: 1005
+	Config Id: 563
+	Shift: 0
+	Msb: 3
+	msbs: 0000000000000000
+	lsbs: 0000000000000111
+	Range: 0...7
+
+Varbit Id: 1006
+	Config Id: 563
+	Shift: 4
+	Msb: 7
+	msbs: 0000000000000000
+	lsbs: 0000011111110000
+	Range: 0...127
+
+Varbit Id: 1007
+	Config Id: 563
+	Shift: 8
+	Msb: 21
+	msbs: 0001111111111111
+	lsbs: 1111111100000000
+	Range: 0...2097151
+
+Varbit Id: 1008
+	Config Id: 563
+	Shift: 22
+	Msb: 22
+	msbs: 1111111111000000
+	lsbs: 0000000000000000
+	Range: 0...4194303
+
+Varbit Id: 1009
+	Config Id: 563
+	Shift: 23
+	Msb: 25
+	msbs: 1111111110000000
+	lsbs: 0000000000000000
+	Range: 0...33554431
+
+Varbit Id: 1010
+	Config Id: 563
+	Shift: 26
+	Msb: 28
+	msbs: 1111110000000000
+	lsbs: 0000000000000000
+	Range: 0...268435455
+
+Varbit Id: 1011
+	Config Id: 563
+	Shift: 29
+	Msb: 30
+	msbs: 1110000000000000
+	lsbs: 0000000000000000
+	Range: 0...1073741823
+
+Varbit Id: 1012
+	Config Id: 536
+	Shift: 0
+	Msb: 13
+	msbs: 0000000000000000
+	lsbs: 0001111111111111
+	Range: 0...8191
+
+Varbit Id: 1013
+	Config Id: 536
+	Shift: 14
+	Msb: 27
+	msbs: 1111111111111111
+	lsbs: 1100000000000000
+	Range: 0...134217727
+
+Varbit Id: 1014
+	Config Id: 536
+	Shift: 28
+	Msb: 29
+	msbs: 1111000000000000
+	lsbs: 0000000000000000
+	Range: 0...536870911
+
+Varbit Id: 1015
+	Config Id: 536
+	Shift: 30
+	Msb: 30
+	msbs: 1100000000000000
+	lsbs: 0000000000000000
+	Range: 0...1073741823
+
