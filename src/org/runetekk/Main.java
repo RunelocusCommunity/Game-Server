@@ -438,12 +438,14 @@ public final class Main implements Runnable {
                                             client.commandStr = new String(buffer.payload, 0, size);                                      
                                             break;
                                             
-                                        /* Game click walk */
+                                        /* Walking */
+                                        case 98:
                                         case 164:
+                                        case 248:
                                             int firstX = buffer.getUwordLe128();
-                                            buffer.offset = buffer.payload.length - 3;
+                                            buffer.offset = buffer.payload.length - 3 - (opcode == 248 ? 14 : 0);
                                             int firstY = buffer.getUwordLe();
-                                            int amountSteps = (size - 3)/2 - 1;
+                                            int amountSteps = (size - 3 - (opcode == 248 ? 14 : 0))/2 - 1;
                                             if(amountSteps > Client.MAXIMUM_STEPS)
                                                 throw new RuntimeException();
                                             int writePosition = 0;
@@ -454,6 +456,12 @@ public final class Main implements Runnable {
                                             while(amountSteps-- > 0) {
                                                 client.stepQueue[writePosition++] = ((buffer.getByte() + firstX) << 15) | (buffer.getByte() + firstY);
                                             }                                    
+                                            break;
+                                        
+                                        /* Idle logout */
+                                        case 202:
+                                            removeClient(position);
+                                            client.destroy();
                                             break;
                                     }
                                 }
@@ -757,12 +765,12 @@ public final class Main implements Runnable {
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,        
             -3, -3, -3, -3, -3, -3, -3, -1,  0, -3,
             -3, -3, -3, -3, -3, -3,  4, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,           
+            -3, -3, -3, -3, -3, -3, -3, -3, -1, -3,           
             -3, -3, -3, -1, -3, -3, -3, -3, -3, -3,
             
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3,  0, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3,  6, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,           
             -3, -3,  0, -3, -3, -3, -3, -3, -3, -3,
             
@@ -772,12 +780,11 @@ public final class Main implements Runnable {
             -3,  4, -3, -3, -3, -3, -3, -3, -3, -3,        
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             
-             4, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+             4, -3,  0, -3, -3, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -1, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3,  4, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3,
+            -3,  4, -3, -3, -3, -3, -3, -3, -1, -3,
+            -3, -3,  6, -3, -3,
         };
         
         PRIVATE_KEY = new BigInteger("834770591012857827640080639045432158672036"

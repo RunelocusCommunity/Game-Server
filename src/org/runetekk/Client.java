@@ -322,7 +322,7 @@ public final class Client extends Mob {
                 node.removeFromList();
                 continue;
             }
-            boolean update = pClient.activeFlags != 0;
+            boolean update = pClient.activeFlags != 0 || client.appearanceUpdates[((IntegerNode) node).value];
             boolean movementUpdate = true;
             if((pClient.lastUpdates[pClient.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[pClient.lastUpdates.length - 2] || (pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]] & 3) == 3)
                 movementUpdate = false;
@@ -361,8 +361,6 @@ public final class Client extends Mob {
                     dy += 32;
                 buffer.putBits(dy, 5);
                 buffer.putBits(dx, 5);
-                System.out.println(dy);
-                System.out.println(dx);
                 node.removeFromList();
                 client.listedPlayers++;
                 client.appearanceUpdates[((IntegerNode) node).value] = true;
@@ -391,6 +389,7 @@ public final class Client extends Mob {
             Client pClient = Main.clientArray[((IntegerNode) node).value];
             ByteBuffer flagBuffer = pClient.activeFlags != 0 ? pClient.flagBuffer : null;
             if(client.appearanceUpdates[((IntegerNode) node).value] && (pClient.activeFlags & 1 << 7) == 0) {
+                System.out.println("App");
                 flagBuffer = new ByteBuffer(122);
                 Client.writeFlaggedUpdates(pClient, flagBuffer, pClient.activeFlags | 1 << 7);
                 client.appearanceUpdates[((IntegerNode) node).value] = false;
@@ -408,6 +407,7 @@ public final class Client extends Mob {
         int oldOffset = buffer.offset;
         buffer.offset = position + 1;
         buffer.putWord(oldOffset - (position + 3));
+        System.out.println(oldOffset - (position + 3));
         client.oWritePosition += oldOffset - position;
     }
     
@@ -597,7 +597,6 @@ public final class Client extends Mob {
     public Client(Socket socket) throws IOException {
         this.inputStream = socket.getInputStream();
         this.outputStream = socket.getOutputStream();
-        isRunActive = true;
         timeoutStamp = -1L;
     } 
     
