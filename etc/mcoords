@@ -1,0 +1,12 @@
+#
+#                  Music Coordinates File
+#
+#  To ignore a line, the # character must be used as the first
+#  character of the line. The format is straight forward: min x,
+#  max x, min y, max y, song id. Later included coordinates will 
+#  override other included coordinates. The maximum coordinate
+#  is inclusive. 
+#
+
+# Lumbridge Coordinates
+3200 3200 3263 3263 3
