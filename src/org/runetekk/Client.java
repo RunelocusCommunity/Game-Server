@@ -265,6 +265,20 @@ public final class Client extends Mob {
     }
     
     /**
+     * Sends a request for a song to be played by the client.
+     * @param client The client to send the music to.
+     * @param archiveId The archive id of the song to player.
+     */
+    public static void sendMusic(Client client, int archiveId) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(74 + client.outgoingCipher.getNextValue());
+        buffer.putWordLe(archiveId);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
      * Sends the update for the player.
      * @param client The client to send the player update to.
      */

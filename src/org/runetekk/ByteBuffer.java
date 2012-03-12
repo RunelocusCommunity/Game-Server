@@ -69,6 +69,15 @@ public final class ByteBuffer {
     }
     
     /**
+     * Puts a little endian word into the payload.
+     * @param value The word value.
+     */
+    void putWordLe(int value) {
+        payload[offset++] = (byte) (value & 0xFF);
+        payload[offset++] = (byte) (value >> 8);
+    }
+    
+    /**
      * Puts a word plus 128 into the payload.
      * @param value The word value.
      */

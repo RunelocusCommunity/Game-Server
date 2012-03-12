@@ -45,28 +45,32 @@ public class Entity extends ListNode {
     /**
      * Updates the region that this entity is in.
      */
-    void updateRegion() {
-        Region region = null;
+    void updateRegion() {      
+        int cHash = (((coordX >> 3) - ((coordX >> 6) << 3)) << 8) | ((coordY >> 3) - ((coordY >> 6) << 3));
         int rHash = ((coordX >> 6) << 8) | ((coordY) >> 6);
-        if(rUpdatedHash != rHash) {
+        boolean updateRegion = cHash != cUpdatedHash;
+        if(updateRegion || cHash != cUpdatedHash) {
+            removeFromList();  
+            Region region = null;       
+            Chunk chunk = null;
             if(Main.regions != null && Main.regions[coordX >> 6] != null && (region = Main.regions[coordX >> 6][coordY >> 6]) != null) {
-                Chunk chunk = null;
-                int cHash = (((coordX >> 3) - ((coordX >> 6) << 3)) << 8) | ((coordY >> 3) - ((coordY >> 6) << 3));
-                if(cUpdatedHash != cHash) {
-                    if(region.chunks != null && region.chunks[(coordX >> 3) - ((coordX >> 6) << 3)] != null &&
-                                       (chunk = region.chunks[(coordX >> 3) - ((coordX >> 6) << 3)]
-                                                             [(coordY >> 3) - ((coordY >> 6) << 3)]) != null) {
-                         removeFromList();           
-                         parentNode = chunk.activeEntities.parentNode;
-                         childNode = chunk.activeEntities;
-                         parentNode.childNode = this;
-                         childNode.parentNode = this;   
-                         rUpdatedHash = rHash;
-                         cUpdatedHash = cHash;
+                if(region.chunks != null && region.chunks[(coordX >> 3) - ((coordX >> 6) << 3)] != null &&
+                                   (chunk = region.chunks[(coordX >> 3) - ((coordX >> 6) << 3)]
+                                                     [(coordY >> 3) - ((coordY >> 6) << 3)]) != null) { 
+                    if(updateRegion && this instanceof Client && !((Client) this).isLowMemory && region.songId != -1) {
+                        Client.sendMusic((Client) this, region.songId);
                     }
+                    parentNode = chunk.activeEntities.parentNode;
+                    childNode = chunk.activeEntities;
+                    parentNode.childNode = this;
+                    childNode.parentNode = this;   
+                    rUpdatedHash = rHash;
+                    cUpdatedHash = cHash;
+                    return;
                 }
             }
-        }
+            throw new RuntimeException("eek");
+        }   
     }
     
     /**

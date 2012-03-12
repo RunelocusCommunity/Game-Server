@@ -12,4 +12,15 @@ public final class Region {
      */
     Chunk[][] chunks;
     
+    /**
+     * The song that will be played when a player enters this region.
+     */
+    int songId;
+    
+    /**
+     * Constructs a new {@link Region};
+     */
+    Region() {
+        songId = -1;
+    }
 }

@@ -495,6 +495,7 @@ public final class Main implements Runnable {
                             */
                            case 1:
                                Client.sendMessage(client, "Welcome to RuneTekk.");
+                               Client.sendMusic(client, -1);
                                client.activeFlags |= 1 << 7;
                                client.state = 2;
                                break;
@@ -617,7 +618,7 @@ public final class Main implements Runnable {
      * @param serverProperties The server properties to get the information from
      *                         to dump the interface scripts with.
      */
-    private static void unpackWidgetScripts(Properties serverProperties) {
+    private static void dumpWidgetFiles(Properties serverProperties) {
         ArchivePackage widgetPack = null;
         try {
             FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
@@ -1007,7 +1008,7 @@ public final class Main implements Runnable {
      * @param serverProperties The server properties to get all the information
      *                         from for this dump.
      */
-    private static void dumpObjectVarbit(Properties serverProperties) {
+    private static void dumpVarbitFiles(Properties serverProperties) {
         ArchivePackage configPack = null;
         try {
             FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
@@ -1126,7 +1127,7 @@ public final class Main implements Runnable {
         }
     }
        
-    private static void dumpObjects(Properties serverProperties) {
+    private static void dumpObjectFiles(Properties serverProperties) {
         ArchivePackage configPack = null;
         try {
             FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
@@ -1216,11 +1217,11 @@ public final class Main implements Runnable {
             throw new RuntimeException();
         }
         if(args[0].equals("odump")) {
-            dumpObjects(serverProperties);
+            dumpObjectFiles(serverProperties);
         } else if(args[0].equals("vdump")) {
-            dumpObjectVarbit(serverProperties);
+            dumpVarbitFiles(serverProperties);
         } else if(args[0].equals("wdump")) {
-            unpackWidgetScripts(serverProperties);
+            dumpWidgetFiles(serverProperties);
         } else if(args[0].equals("setup")) {
             executeServerSetup(serverProperties);
         } else if(args[0].equals("server")) {
