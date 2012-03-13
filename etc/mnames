@@ -3,8 +3,10 @@
 #
 #  To ignore a line, the # character must be used as the first
 #  character of the line. The format is straight forward: name
-#  and then the id of the music archive.
+#  and then the id of the music archive. There can not be spaces 
+#  in the name of a song. It must be denoted by a '_' character.
 #
 
-# Lumbridge Music, Harmony
-Harmony 3
+ScapeMain 0
+Newbie_Melody 72
+Harmony 76

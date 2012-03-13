@@ -478,6 +478,17 @@ public final class Main implements Runnable {
                                             client.lastRecievedPing = System.currentTimeMillis();
                                             client.timeoutStamp = -1L;
                                             break;
+                                            
+                                        /* Chat */
+                                        case 4:
+                                            client.chatEffects = buffer.getUbyteB() | buffer.getUbyteB() << 8;
+                                            client.chatData = new byte[size - 2];
+                                            System.arraycopy(buffer.payload, 2, client.chatData, 0, size - 2);
+                                            for(int i = 0; i < client.chatData.length; i++) {
+                                                client.chatData[i] += 128;
+                                            }
+                                            client.activeFlags |= 1 << 5;
+                                            break;
                                         
                                         /* Command */
                                         case 103:        
@@ -1241,7 +1252,7 @@ public final class Main implements Runnable {
                     int minY = Integer.parseInt(tokens[1]);
                     int maxX = Integer.parseInt(tokens[2]);
                     int maxY = Integer.parseInt(tokens[3]);
-                    int songId = Integer.parseInt(tokens[4]);
+                    int songId = Integer.parseInt(tokens[4].replaceAll("[\r]", ""));
                     if(minX > maxX) {
                         int temp = maxX;         
                         maxX = minX;
@@ -1284,12 +1295,12 @@ public final class Main implements Runnable {
                     if(line.charAt(0) == '#' || line.length() <= 1)
                         continue;
                     String[] tokens = line.split("[ ]");
-                    StringNode strNode = new StringNode(tokens[0]);
+                    StringNode strNode = new StringNode(tokens[0].replace('_', ' '));
                     strNode.parentNode = nameList.parentNode;
                     strNode.childNode = nameList;
                     strNode.parentNode.childNode = strNode;
                     strNode.childNode.parentNode = strNode;
-                    IntegerNode intNode = new IntegerNode(Integer.parseInt(tokens[1]));
+                    IntegerNode intNode = new IntegerNode(Integer.parseInt(tokens[1].replaceAll("[\r]", "")));
                     intNode.parentNode = idList.parentNode;
                     intNode.childNode = idList;
                     intNode.parentNode.childNode = intNode;

@@ -44,6 +44,14 @@ public final class ByteBuffer {
     }
     
     /**
+     * Gets an unsigned type b byte from this buffer casted to an integer.
+     * @return The unsigned byte value.
+     */
+    int getUbyteB() {
+        return (128 - payload[offset++]) & 0xFF;
+    }
+    
+    /**
      * Gets an signed byte from this buffer.
      * @return The byte value.
      */

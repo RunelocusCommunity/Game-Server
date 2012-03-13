@@ -210,6 +210,16 @@ public final class Client extends Mob {
     byte[] activeMusic;
     
     /**
+     * The chat effects hash.
+     */
+    int chatEffects;
+    
+    /**
+     * The data for chat.
+     */
+    byte[] chatData;
+    
+    /**
      * The time that the client will timeoutStamp.
      */
     long timeoutStamp;
@@ -457,6 +467,15 @@ public final class Client extends Mob {
                         
                     /* Chat text */
                     case 4:
+                        {
+                            mask |= 0x80;
+                            buffer.putWordLe(client.chatEffects);
+                            buffer.putByte(2 /* client.rights */);
+                            int size = client.chatData.length;
+                            buffer.putByteA(size);
+                            System.arraycopy(client.chatData, 0, buffer.payload, buffer.offset, size);
+                            buffer.offset += size;
+                        }
                         break;
                      
                     /* Turn to NPC */
@@ -465,14 +484,16 @@ public final class Client extends Mob {
                     
                     /* Appearance */
                     case 6:
-                        mask |= 0x10;
-                        int oldOffset = buffer.offset;
-                        buffer.putByte(0);
-                        writeAppearance(client, buffer);
-                        int size = buffer.offset - (oldOffset + 1);
-                        buffer.offset = oldOffset;
-                        buffer.putByteA(size);
-                        buffer.offset += size;
+                        {
+                            mask |= 0x10;
+                            int oldOffset = buffer.offset;
+                            buffer.putByte(0);
+                            writeAppearance(client, buffer);
+                            int size = buffer.offset - (oldOffset + 1);
+                            buffer.offset = oldOffset;
+                            buffer.putByteA(size);
+                            buffer.offset += size;
+                        }
                         break;
                         
                     /* Turn to Loc */
@@ -598,6 +619,7 @@ public final class Client extends Mob {
         activePlayers = null;
         addedPlayers = null;
         animationIds = null;
+        appearanceUpdates = null;
         appearanceStates = null;
         colorIds = null;
         flagBuffer = null;
@@ -605,6 +627,7 @@ public final class Client extends Mob {
         localId = null;
         username = null;
         password = null;
+        activeMusic = null;
     }
     
     /**

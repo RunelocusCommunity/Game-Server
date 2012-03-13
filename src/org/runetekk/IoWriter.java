@@ -19,7 +19,7 @@ public final class IoWriter implements Runnable {
     /**
      * The amount of time that one cycle will take.
      */
-    private static final long CYCLE_TIME = 6000000L;
+    private static final long CYCLE_TIME = 5000000L;
     
     /**
      * The main handler.
