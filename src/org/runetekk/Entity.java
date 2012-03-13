@@ -58,7 +58,15 @@ public class Entity extends ListNode {
                                    (chunk = region.chunks[(coordX >> 3) - ((coordX >> 6) << 3)]
                                                      [(coordY >> 3) - ((coordY >> 6) << 3)]) != null) { 
                     if(updateRegion && this instanceof Client && !((Client) this).isLowMemory && region.songId != -1) {
-                        Client.sendMusic((Client) this, region.songId);
+                        int songId = region.songId;
+                        Client client = (Client) this;
+                        Client.sendMusic(client, songId);
+                        if(Main.musicNames.length - 1 >= songId && Main.musicNames[songId] != null) {
+                            if((client.activeMusic[songId >> 3] & (1 << (songId & 7))) == 0) {
+                                Client.sendMessage(client, "@red@You have unlocked the music track: " + Main.musicNames[region.songId] + ".");
+                                client.activeMusic[songId >> 3] |= 1 << (songId & 7);
+                            }
+                        }
                     }
                     parentNode = chunk.activeEntities.parentNode;
                     childNode = chunk.activeEntities;

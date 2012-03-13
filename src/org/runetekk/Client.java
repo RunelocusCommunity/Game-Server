@@ -205,6 +205,11 @@ public final class Client extends Mob {
     String commandStr;
     
     /**
+     * The loaded music byte array.
+     */
+    byte[] activeMusic;
+    
+    /**
      * The time that the client will timeoutStamp.
      */
     long timeoutStamp;

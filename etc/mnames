@@ -1,0 +1,10 @@
+#
+#                      Music Names File
+#
+#  To ignore a line, the # character must be used as the first
+#  character of the line. The format is straight forward: name
+#  and then the id of the music archive.
+#
+
+# Lumbridge Music, Harmony
+Harmony 3

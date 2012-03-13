@@ -69,6 +69,11 @@ public final class Main implements Runnable {
     static Client[] clientArray;
     
     /**
+     * The music names array.
+     */
+    static String[] musicNames;
+    
+    /**
      * The maximum amount of players allowed to connect to this server.
      */
     static final int MAXIMUM_CLIENTS = 2048;
@@ -125,7 +130,7 @@ public final class Main implements Runnable {
         + "\n                    | | \\ \\ |_| | | | |  __/ |  __/   <|   <                    "
         + "\n                    |_|  \\_\\__,_|_| |_|\\___|_|\\___|_|\\_\\_|\\_\\             "
         + "\n----------------------------------------------------------------------------------"
-        + "\n                                Game Server 1.1.1                                 "
+        + "\n                                Game Server 1.1.3                                 "
         + "\n                                 See RuneTekk.com                                 "
         + "\n                               Created by SiniSoul                                "
         + "\n----------------------------------------------------------------------------------");
@@ -168,12 +173,36 @@ public final class Main implements Runnable {
                         int x = is.read();
                         int y = is.read();
                         int id = is.read() << 8 | is.read();
-                        System.out.println(id);
                         Region region = null;
                         if(regions == null || regions[x] == null || (region = regions[x][y]) == null)
                             continue;
                         region.songId = id;
                     }
+                    break;
+            }
+        }
+    }
+    
+    /**
+     * Loads the music configurations for the server.
+     * @param is The data input stream to load the musics for.
+     */
+    private static void loadMusics(DataInputStream is) throws IOException {
+        int maximumId = (is.read() << 8 | is.read()) + 1;
+        int opcode = 0;
+        while((opcode = is.read()) != 0) {
+            switch(opcode) {
+                
+                case 1:
+                    if(musicNames == null)
+                        musicNames = new String[maximumId];
+                    int id = is.read() << 8 | is.read();
+                    String str = "";
+                    int len = is.read();
+                    while(len-- > 0) {
+                        str += (char) is.read();
+                    }
+                    musicNames[id] = str;
                     break;
             }
         }
@@ -379,6 +408,8 @@ public final class Main implements Runnable {
                                     client.addedPlayers.childNode = client.addedPlayers;
                                     client.addedPlayers.parentNode = client.addedPlayers;
                                     client.playerIndex = new byte[(MAXIMUM_CLIENTS + 7) >> 3];
+                                    /* MUSIC STUFF */
+                                    client.activeMusic = new byte[(musicNames.length + 7) >> 3];
                                     /* APPEARANCE STUFF */
                                     client.appearanceStates = new int[12];
                                     client.appearanceStates[0] = 31 | 256;
@@ -1237,6 +1268,57 @@ public final class Main implements Runnable {
                 reportError("Exception thrown while dumping the region files", ex);
                 throw new RuntimeException();
             }
+            try {
+                ListNode nameList = new ListNode();
+                nameList.childNode = nameList;
+                nameList.parentNode = nameList;
+                ListNode idList = new ListNode();
+                idList.childNode = idList;
+                idList.parentNode = idList;
+                int maximumId = 0;
+                DataInputStream is = new DataInputStream(new FileInputStream(serverProperties.getProperty("MN-FILE")));
+                byte[] data = new byte[is.available()];
+                is.readFully(data);
+                String[] lines = new String(data).split("[\n]");
+                for(String line : lines) {
+                    if(line.charAt(0) == '#' || line.length() <= 1)
+                        continue;
+                    String[] tokens = line.split("[ ]");
+                    StringNode strNode = new StringNode(tokens[0]);
+                    strNode.parentNode = nameList.parentNode;
+                    strNode.childNode = nameList;
+                    strNode.parentNode.childNode = strNode;
+                    strNode.childNode.parentNode = strNode;
+                    IntegerNode intNode = new IntegerNode(Integer.parseInt(tokens[1]));
+                    intNode.parentNode = idList.parentNode;
+                    intNode.childNode = idList;
+                    intNode.parentNode.childNode = intNode;
+                    intNode.childNode.parentNode = intNode;
+                    if(intNode.value > maximumId)
+                        maximumId = intNode.value;
+                }
+                is.close();
+                DataOutputStream os = new DataOutputStream(new FileOutputStream(serverProperties.getProperty("OUTDIR") + serverProperties.getProperty("MFILE")));
+                os.write(maximumId >> 8);
+                os.write(maximumId);                
+                ListNode strNode = nameList, intNode = idList;
+                while((strNode = strNode.childNode) != null && (intNode = intNode.childNode) != null) {
+                    if(!(strNode instanceof StringNode) && !(intNode instanceof IntegerNode))
+                        break;
+                    os.write(1);
+                    String value = ((StringNode) strNode).value;
+                    int id = ((IntegerNode) intNode).value;    
+                    os.write(id >> 8);
+                    os.write(id);
+                    os.write(value.length());
+                    os.write(value.getBytes());
+                }
+                os.write(0);
+                os.close();
+            } catch(Exception ex) {
+                reportError("Exception thrown while dumping the music names", ex);
+                throw new RuntimeException();
+            }
         } else if(args[0].equals("server")) {
             int portOff = -1;
             try {
@@ -1251,6 +1333,14 @@ public final class Main implements Runnable {
                 is.close();
             } catch(Exception ex) {
                 reportError("Exception thrown while reading the regions file", ex);
+                throw new RuntimeException();
+            }
+            try {
+                DataInputStream is = new DataInputStream(new FileInputStream(serverProperties.getProperty("OUTDIR") + serverProperties.getProperty("MFILE")));
+                loadMusics(is);
+                is.close();
+            } catch(Exception ex) {
+                reportError("Exception thrown while reading the musics file", ex);
                 throw new RuntimeException();
             }
             serverProperties = null;
