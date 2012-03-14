@@ -653,7 +653,12 @@ public final class Main implements Runnable {
                             */
                            case 6:    
                                    if(client.hasWritten) {  
-                                       int hash = farmingPatchStates[0][0][0] & ~(1 << 31);
+                                       int type = 0;
+                                       int crop = 0;
+                                       int patch = 1;
+                                       int hash = farmingPatchStates[type][crop][0] & ~(1 << 31);
+                                       int config = farmingTypeConfigs[type][patch];
+                                       Client.sendLargeConfig(client, config, ((hash >> 8) + (int) (Math.random() * (hash & 0xFF))) << patch * 8);
                                        client.hasWritten = false;
                                        client.state = 2;
                                    }
