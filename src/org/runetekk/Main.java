@@ -74,6 +74,16 @@ public final class Main implements Runnable {
     static String[] musicNames;
     
     /**
+     * The farming type configuration ids.
+     */
+    static int[][] farmingTypeConfigs;
+    
+    /**
+     * The farming patch states.
+     */
+    static int[][][] farmingPatchStates;
+    
+    /**
      * The maximum amount of players allowed to connect to this server.
      */
     static final int MAXIMUM_CLIENTS = 2048;
@@ -203,6 +213,52 @@ public final class Main implements Runnable {
                         str += (char) is.read();
                     }
                     musicNames[id] = str;
+                    break;
+            }
+        }
+    }
+    
+    /**
+     * Loads the farming configurations for the server.
+     * @param is The data input stream to load the farming data for.
+     */
+    private static void loadFarming(DataInputStream is) throws IOException {
+        int opcode = 0;
+        while((opcode = is.read()) != 0) {
+            switch(opcode) {
+                
+                case 1:
+                    {
+                        int type = is.read();
+                        int amount = is.read();
+                        int crops = is.read();
+                        if(farmingTypeConfigs == null)
+                            farmingTypeConfigs = new int[256][];
+                        farmingTypeConfigs[type] = new int[amount];      
+                        if(farmingPatchStates == null)
+                            farmingPatchStates = new int[256][crops][];
+                    }
+                    break;
+                    
+                case 2:
+                    {
+                        int type = is.read();
+                        int patch = is.read();
+                        farmingTypeConfigs[type][patch] = is.read() << 8 | is.read();
+                    }
+                    break;
+                    
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                    {
+                        int type = is.read();
+                        int crop = is.read();
+                        if(farmingPatchStates[type][crop] == null)
+                            farmingPatchStates[type][crop] = new int[4];
+                        farmingPatchStates[type][crop][opcode - 3] = (is.read() << 8 | is.read()) | 1 << 31;
+                    }
                     break;
             }
         }
@@ -596,10 +652,11 @@ public final class Main implements Runnable {
                             * Idle state.
                             */
                            case 6:    
-                               if(client.hasWritten) {                                   
-                                   client.hasWritten = false;
-                                   client.state = 2;
-                               }
+                                   if(client.hasWritten) {  
+                                       int hash = farmingPatchStates[0][0][0] & ~(1 << 31);
+                                       client.hasWritten = false;
+                                       client.state = 2;
+                                   }
                                    break;
                        }
                    } catch(Exception ex) {
@@ -1245,7 +1302,7 @@ public final class Main implements Runnable {
                 is.readFully(data);
                 String[] lines = new String(data).split("[\n]");
                 for(String line : lines) {
-                    if(line.charAt(0) == '#' || line.length() <= 1)
+                    if(line.length() <= 1 || line.charAt(0) == '#')
                         continue;
                     String[] tokens = line.split("[ ]");
                     int minX = Integer.parseInt(tokens[0]);
@@ -1292,7 +1349,7 @@ public final class Main implements Runnable {
                 is.readFully(data);
                 String[] lines = new String(data).split("[\n]");
                 for(String line : lines) {
-                    if(line.charAt(0) == '#' || line.length() <= 1)
+                    if(line.length() <= 1 || line.charAt(0) == '#')
                         continue;
                     String[] tokens = line.split("[ ]");
                     StringNode strNode = new StringNode(tokens[0].replace('_', ' '));
@@ -1330,6 +1387,73 @@ public final class Main implements Runnable {
                 reportError("Exception thrown while dumping the music names", ex);
                 throw new RuntimeException();
             }
+            try {
+                DataOutputStream os = new DataOutputStream(new FileOutputStream(serverProperties.getProperty("OUTDIR") + serverProperties.getProperty("FFILE")));
+                DataInputStream is = new DataInputStream(new FileInputStream(serverProperties.getProperty("F-CONFIG")));
+                byte[] data = new byte[is.available()];
+                is.readFully(data);
+                String[] lines = new String(data).split("[\n]");
+                int pos = 0;
+                for(; pos < lines.length;) {
+                    String line = lines[pos++].replaceAll("[\r]", "");
+                    if(line.length() <= 1 || line.charAt(0) == '#')
+                        continue;
+                    if(line.equals("end"))
+                        break;
+                    String[] tokens = line.split("[ ]");
+                    os.write(1);
+                    os.write(Integer.parseInt(tokens[0]));
+                    os.write(Integer.parseInt(tokens[1]));
+                    os.write(Integer.parseInt(tokens[2]));
+                }
+                for(; pos < lines.length;) {
+                    String line = lines[pos++].replaceAll("[\r]", "");
+                    if(line.length() <= 1 || line.charAt(0) == '#')
+                        continue;
+                    if(line.equals("end"))
+                        break;
+                    String[] tokens = line.split("[ ]");
+                    os.write(2);
+                    int config = Integer.parseInt(tokens[2]);
+                    os.write(Integer.parseInt(tokens[0]));
+                    os.write(Integer.parseInt(tokens[1]));
+                    os.write(config >> 8);
+                    os.write(config);
+                }
+                for(; pos < lines.length;) {
+                    String line = lines[pos++].replaceAll("[\r]", "");
+                    if(line.length() <= 1 || line.charAt(0) == '#')
+                        continue;
+                    if(line.equals("end"))
+                        break;
+                    String[] tokens = line.split("[ ]");
+                    os.write(3);
+                    os.write(Integer.parseInt(tokens[0]));
+                    os.write(Integer.parseInt(tokens[1]));
+                    os.write(Integer.parseInt(tokens[2]));
+                    os.write(Integer.parseInt(tokens[3]));
+                }
+                for(; pos < lines.length; pos++) {
+                    String line = lines[pos].replaceAll("[\r]", "");
+                    if(line.length() <= 1 || line.charAt(0) == '#')
+                        continue;
+                    if(line.equals("end"))
+                        break;
+                    String[] tokens = line.split("[ ]");
+                    os.write(4);
+                    os.write(Integer.parseInt(tokens[0]));
+                    os.write(Integer.parseInt(tokens[1]));
+                    os.write(Integer.parseInt(tokens[2]));
+                    os.write(Integer.parseInt(tokens[3]));
+                }
+                os.write(0);
+                os.flush();
+                os.close();
+                is.close();
+            } catch(Exception ex) {
+                reportError("Exception thrown while dumping the farming file", ex);
+                throw new RuntimeException();
+            }
         } else if(args[0].equals("server")) {
             int portOff = -1;
             try {
@@ -1352,6 +1476,14 @@ public final class Main implements Runnable {
                 is.close();
             } catch(Exception ex) {
                 reportError("Exception thrown while reading the musics file", ex);
+                throw new RuntimeException();
+            }
+            try {
+                DataInputStream is = new DataInputStream(new FileInputStream(serverProperties.getProperty("OUTDIR") + serverProperties.getProperty("FFILE")));
+                loadFarming(is);
+                is.close();
+            } catch(Exception ex) {
+                reportError("Exception thrown while reading the farming file", ex);
                 throw new RuntimeException();
             }
             serverProperties = null;

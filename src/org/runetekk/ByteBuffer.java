@@ -122,6 +122,17 @@ public final class ByteBuffer {
     }
     
     /**
+     * Puts a dword type a into this buffer.
+     * @param value The dword value. 
+     */
+    void putDwordA(int value) {
+        payload[offset++] = (byte) (value >> 8);
+        payload[offset++] = (byte)  value;
+        payload[offset++] = (byte) (value >> 24);
+        payload[offset++] = (byte) (value >> 16);
+    }
+    
+    /**
      * Gets an unsigned dword from this buffer casted to an integer.
      * @return The unsigned dword value.
      */

@@ -294,6 +294,22 @@ public final class Client extends Mob {
     }
     
     /**
+     * Sends a large configuration value to the client.
+     * @param client The client to send the music to.
+     * @param configId The id of the configuration.
+     * @param value The value of the configuration.
+     */
+    public static void sendLargeConfig(Client client, int configId, int value) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(87 + client.outgoingCipher.getNextValue());
+        buffer.putWordLe(configId);
+        buffer.putDwordA(value);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
      * Sends the update for the player.
      * @param client The client to send the player update to.
      */

@@ -1,0 +1,42 @@
+#
+#                      Farming Patch Config File
+#
+#  To ignore a line, the # character must be used as the first
+#  character of the line. Please note that the file is parsed 
+#  in an orderly manner and any misplacement of that order
+#  will result in the file not parsing correctly. All time
+#  is in milliseconds.
+#
+
+#Type declaration, format: type, amount patches, amount
+
+#Herb Patches
+0 4 8
+end
+
+#Patch declarations, format: type, patch, config
+
+#Herb Patches
+0 0 515
+0 1 515
+0 2 515
+0 3 515
+end
+
+#Growing declarations, format: type, crop, start, amount
+
+#Herb Crop 0
+0 0 4 4 
+end
+
+#Grown declarations, format: type, crop, start, amount
+
+#Herb Crop 0
+0 0 8 3
+end
+
+#Diseased declarations, format: type, start, amount
+end
+
+#Watered declarations, format: type, start, amount
+end
