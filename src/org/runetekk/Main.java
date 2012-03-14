@@ -81,7 +81,7 @@ public final class Main implements Runnable {
     /**
      * The farming patch states.
      */
-    static int[][][] farmingPatchStates;
+    static int[][][] farmingPatchConfigs;
     
     /**
      * The maximum amount of players allowed to connect to this server.
@@ -235,8 +235,8 @@ public final class Main implements Runnable {
                         if(farmingTypeConfigs == null)
                             farmingTypeConfigs = new int[256][];
                         farmingTypeConfigs[type] = new int[amount];      
-                        if(farmingPatchStates == null)
-                            farmingPatchStates = new int[256][crops][];
+                        if(farmingPatchConfigs == null)
+                            farmingPatchConfigs = new int[256][crops][];
                     }
                     break;
                     
@@ -255,9 +255,12 @@ public final class Main implements Runnable {
                     {
                         int type = is.read();
                         int crop = is.read();
-                        if(farmingPatchStates[type][crop] == null)
-                            farmingPatchStates[type][crop] = new int[4];
-                        farmingPatchStates[type][crop][opcode - 3] = (is.read() << 8 | is.read()) | 1 << 31;
+                        if(farmingPatchConfigs[type][crop] == null)
+                            farmingPatchConfigs[type][crop] = new int[5];
+                        farmingPatchConfigs[type][crop][opcode - 3] = is.read() << 8 | is.read();
+                        if(opcode == 3) {
+                            farmingPatchConfigs[type][crop][4] = is.read() << 16 | is.read() << 8 | is.read();
+                        }
                     }
                     break;
             }
@@ -656,8 +659,10 @@ public final class Main implements Runnable {
                                        int type = 0;
                                        int crop = 0;
                                        int patch = 1;
-                                       int hash = farmingPatchStates[type][crop][0] & ~(1 << 31);
+                                       int hash = farmingPatchConfigs[type][crop][0];
                                        int config = farmingTypeConfigs[type][patch];
+                                       int time = farmingPatchConfigs[type][crop][4];
+                                       System.out.println(time);
                                        Client.sendLargeConfig(client, config, ((hash >> 8) + (int) (Math.random() * (hash & 0xFF))) << patch * 8);
                                        client.hasWritten = false;
                                        client.state = 2;
@@ -1432,11 +1437,15 @@ public final class Main implements Runnable {
                     if(line.equals("end"))
                         break;
                     String[] tokens = line.split("[ ]");
+                    int time = Integer.parseInt(tokens[4]);
                     os.write(3);
                     os.write(Integer.parseInt(tokens[0]));
                     os.write(Integer.parseInt(tokens[1]));
                     os.write(Integer.parseInt(tokens[2]));
                     os.write(Integer.parseInt(tokens[3]));
+                    os.write(time >> 16);
+                    os.write(time >> 8);
+                    os.write(time);
                 }
                 for(; pos < lines.length; pos++) {
                     String line = lines[pos].replaceAll("[\r]", "");

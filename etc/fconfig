@@ -23,10 +23,10 @@ end
 0 3 515
 end
 
-#Growing declarations, format: type, crop, start, amount
+#Growing declarations, format: type, crop, start, amount, time
 
 #Herb Crop 0
-0 0 4 4 
+0 0 4 4 5000
 end
 
 #Grown declarations, format: type, crop, start, amount
