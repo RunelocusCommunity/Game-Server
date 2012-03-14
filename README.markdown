@@ -15,3 +15,9 @@ The server was originally created by SiniSoul (Hadyn Fitzgerald) to be used as t
 ### Authors
 
 SiniSoul (Hadyn.fitzgerald@gmail.com)
+
+### Special Thanks
+
+Cart for Server information
+
+Time for Server information
