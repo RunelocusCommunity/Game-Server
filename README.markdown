@@ -18,6 +18,7 @@ SiniSoul (Hadyn.fitzgerald@gmail.com)
 
 ### Special Thanks
 
-Cart for Server information
+Cart
+Time
+Josh
 
-Time for Server information
