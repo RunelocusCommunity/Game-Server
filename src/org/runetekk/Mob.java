@@ -52,19 +52,19 @@ public class Mob extends Entity {
             boolean runToggled = false;
             if(this instanceof Client)
                 runToggled = ((Client) this).isRunActive;
-            int lastOpcode = -1;
-            for(int i = 0; i < (runToggled ? 2 : 1); i++) {
+            int x = coordX;
+            int y = coordY;
+            int i = 0;
+            for(; i < (runToggled ? 2 : 1);) {
                 if(stepQueue[stepQueue.length - 1] >= stepQueue[stepQueue.length - 2])
                     return;
                 int position = stepQueue[stepQueue.length - 1];
-                int dx = ((stepQueue[position] >> 15) & 0x7FFF) - (coordX + (i < 1 ? 0 : Client.WALK_DELTA[lastOpcode][0]));
-                int dy = (stepQueue[position] & 0x7FFF) - (coordY + (i < 1 ? 0 : Client.WALK_DELTA[lastOpcode][1]));
+                int dx = ((stepQueue[position] >> 15) & 0x7FFF) - x;
+                int dy = (stepQueue[position] & 0x7FFF) - y;
                 if(dx == 0 && dy == 0) {
-                    stepQueue[stepQueue.length - 1] = position + 1; 
-                    updateSteps();
-                    return;
+                    stepQueue[stepQueue.length - 1] = (position + 1) % Mob.MAXIMUM_STEPS; 
+                    continue;
                 }
-                /* Doesn't really matter what you use as the hypo value */
                 int writePosition = walkingQueue[walkingQueue.length - 2];
                 int opcode = -1;
                 if(dx == 0)
@@ -87,8 +87,10 @@ public class Mob extends Entity {
                 else
                     opcode = 2;
                 walkingQueue[writePosition] = opcode;
-                walkingQueue[walkingQueue.length - 2] = writePosition + 1;
-                lastOpcode = opcode;
+                walkingQueue[walkingQueue.length - 2] = (writePosition + 1) % Mob.MAXIMUM_STEPS;
+                x += Client.WALK_DELTA[opcode][0];
+                y += Client.WALK_DELTA[opcode][1];
+                i++;
             }
         }
     }
@@ -105,10 +107,12 @@ public class Mob extends Entity {
             walkingQueue[walkingQueue.length - 1] = 0;
             walkingQueue[0] = 8;
         }
+        boolean updateRegion = false;
         int readPosition = walkingQueue[walkingQueue.length - 1];
         int writeOpcode = -1;
+        int amountData = readPosition > walkingQueue[walkingQueue.length - 2] ? (MAXIMUM_STEPS - readPosition) + walkingQueue[walkingQueue.length - 2] : walkingQueue[walkingQueue.length - 2] - readPosition;
         for(int i = 0; i < (runToggled ? 2 : 1); i++) {
-            if((readPosition + 1) % MAXIMUM_STEPS > walkingQueue[walkingQueue.length - 2])
+            if(amountData-- < 1)
                 break;
             int opcode = walkingQueue[readPosition];
             readPosition = walkingQueue[walkingQueue.length - 1] = (readPosition + 1) % MAXIMUM_STEPS;
@@ -117,22 +121,16 @@ public class Mob extends Entity {
                     writeOpcode = 1 | opcode << 2;
                 else
                     writeOpcode = writeOpcode & ~3 | 2 | opcode << 5;
+                coordX += Client.WALK_DELTA[opcode][0];
+                coordY += Client.WALK_DELTA[opcode][1];
                 if(this instanceof Client) {
                     int dx = updatedChunkX - ((coordX >> 3) - 6);
                     int dy = updatedChunkY - ((coordY >> 3) - 6);
-                    if(dx > 4 || dx < -4 || dy > 4 || dy < -4) {
-                        int writePosition = lastUpdates[lastUpdates.length - 2];
-                        updatedChunkX = (coordX >> 3) - 6;
-                        updatedChunkY = (coordY >> 3) - 6;
-                        lastUpdates[writePosition] = 3 | coordZ << 2 | (coordX - (updatedChunkX << 3)) << 5 | (coordY - (updatedChunkY << 3)) << 12;
-                        lastUpdates[lastUpdates.length - 2] = (writePosition + 1) % MAXIMUM_STEPS;
-                        Client.sendCurrentChunk((Client) this);
-                        writeOpcode = -1;
+                    if(dx >= 4 || dx <= -4 || dy >= 4 || dy <= -4) {                      
+                        updateRegion = true;
                         break;
                     }                  
                 }
-                coordX += Client.WALK_DELTA[opcode][0];
-                coordY += Client.WALK_DELTA[opcode][1];
             } else if(opcode == 8 && this instanceof Client) {
                 updatedChunkX = (coordX >> 3) - 6;
                 updatedChunkY = (coordY >> 3) - 6;
@@ -146,6 +144,14 @@ public class Mob extends Entity {
             int writePosition = lastUpdates[lastUpdates.length - 2];
             lastUpdates[writePosition] = writeOpcode;
             lastUpdates[lastUpdates.length - 2] = (writePosition + 1) % MAXIMUM_STEPS;
+        }
+        if(updateRegion) {
+            int writePosition = lastUpdates[lastUpdates.length - 2];
+            updatedChunkX = (coordX >> 3) - 6;
+            updatedChunkY = (coordY >> 3) - 6;
+            lastUpdates[writePosition] = 3 | coordZ << 2 | (coordX - (updatedChunkX << 3)) << 5 | (coordY - (updatedChunkY << 3)) << 12;
+            lastUpdates[lastUpdates.length - 2] = (writePosition + 1) % MAXIMUM_STEPS;
+            Client.sendCurrentChunk((Client) this);
         }
     }
     

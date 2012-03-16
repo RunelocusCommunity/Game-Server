@@ -324,8 +324,8 @@ public final class Client extends Mob {
         boolean localMovementUpdate = true;
         if((client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > client.lastUpdates[client.lastUpdates.length - 2])
             localMovementUpdate = false;
-        buffer.putBits(localUpdate | localMovementUpdate ? 1 : 0, 1);
-        if(localUpdate | localMovementUpdate) {
+        buffer.putBits(localUpdate || localMovementUpdate ? 1 : 0, 1);
+        if(localUpdate || localMovementUpdate) {
             if(localMovementUpdate) {
                 int updateHash = client.lastUpdates[client.lastUpdates[client.lastUpdates.length - 1]];
                 buffer.putBits(updateHash & 3, 2);
@@ -360,6 +360,7 @@ public final class Client extends Mob {
             }
             boolean remove = pClient == null || dx > 15 || dx < -15 || dy > 15 || dy < -15;
             if(remove) {
+                System.out.println("REMOVING " + remove);
                 client.listedPlayers--;
                 client.playerIndex[((IntegerNode) node).value >> 3] &= ~(1 << (((IntegerNode) node).value & 7));
                 buffer.putBits(1, 1);
@@ -371,8 +372,8 @@ public final class Client extends Mob {
             boolean movementUpdate = true;
             if((pClient.lastUpdates[pClient.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[pClient.lastUpdates.length - 2] || (pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]] & 3) == 3)
                 movementUpdate = false;
-            buffer.putBits(update | movementUpdate ? 1 : 0, 1);
-            if(update | movementUpdate) {
+            buffer.putBits(update || movementUpdate ? 1 : 0, 1);
+            if(update || movementUpdate) {
                 if(movementUpdate) {
                     int updateHash = pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]];
                     buffer.putBits(updateHash & 3, 2);
@@ -393,9 +394,11 @@ public final class Client extends Mob {
             if(!(node instanceof IntegerNode))
                 break;
             Client pClient = Main.clientArray[((IntegerNode) node).value];
+            node.removeFromList();
             if(pClient != null) {
                 int dx = pClient.coordX - client.coordX;
                 int dy = pClient.coordY - client.coordY;
+                System.out.println(((IntegerNode) node).value);
                 buffer.putBits(((IntegerNode) node).value, 11);
                 buffer.putBits(1, 1);
                 /* Unsure about what else this value could be used for */
@@ -406,15 +409,13 @@ public final class Client extends Mob {
                     dy += 32;
                 buffer.putBits(dy, 5);
                 buffer.putBits(dx, 5);
-                node.removeFromList();
                 client.listedPlayers++;
                 client.appearanceUpdates[((IntegerNode) node).value] = true;
                 node.parentNode = client.activePlayers.parentNode;
                 node.childNode = client.activePlayers;
                 node.parentNode.childNode = node;
-                continue;
+                node.childNode.parentNode = node;
             }
-            node.removeFromList();
         }
         buffer.putBits(2047, 11);
         buffer.resetBitOffset();
@@ -654,6 +655,7 @@ public final class Client extends Mob {
         this.inputStream = socket.getInputStream();
         this.outputStream = socket.getOutputStream();
         timeoutStamp = -1L;
+        isRunActive = true;
     } 
     
     static {

@@ -662,7 +662,6 @@ public final class Main implements Runnable {
                                        int hash = farmingPatchConfigs[type][crop][0];
                                        int config = farmingTypeConfigs[type][patch];
                                        int time = farmingPatchConfigs[type][crop][4];
-                                       System.out.println(time);
                                        Client.sendLargeConfig(client, config, ((hash >> 8) + (int) (Math.random() * (hash & 0xFF))) << patch * 8);
                                        client.hasWritten = false;
                                        client.state = 2;
@@ -1520,7 +1519,7 @@ public final class Main implements Runnable {
             clientArray = new Client[MAXIMUM_CLIENTS];
             nextGc = System.currentTimeMillis() + GC_TIME;
             serverSocket = new ServerSocket();
-            serverSocket.setSoTimeout(5);
+            serverSocket.setSoTimeout(2);
             serverSocket.setReceiveBufferSize(Client.BUFFER_SIZE);
             serverSocket.bind(new InetSocketAddress(43594 + portOff));
             initialize();
