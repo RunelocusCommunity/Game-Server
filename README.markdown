@@ -18,9 +18,9 @@ SiniSoul (Hadyn.fitzgerald@gmail.com)
 
 ### Special Thanks
 
-*** Cart
+* Cart
 
-*** Time
+* Time
 
-*** Josh
+* Josh
 
