@@ -18,6 +18,9 @@ SiniSoul (Hadyn.fitzgerald@gmail.com)
 
 ### Special Thanks
 
-Cart for Server information
+* Cart - moral support and data collection.
 
-Time for Server information
+* Time - moral support and data collection.
+
+* Josh - moral support and data collection.
+
