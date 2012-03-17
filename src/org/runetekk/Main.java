@@ -140,7 +140,7 @@ public final class Main implements Runnable {
         + "\n                    | | \\ \\ |_| | | | |  __/ |  __/   <|   <                    "
         + "\n                    |_|  \\_\\__,_|_| |_|\\___|_|\\___|_|\\_\\_|\\_\\             "
         + "\n----------------------------------------------------------------------------------"
-        + "\n                                Game Server 1.1.3                                 "
+        + "\n                                Game Server 1.1.5                                 "
         + "\n                                 See RuneTekk.com                                 "
         + "\n                               Created by SiniSoul                                "
         + "\n----------------------------------------------------------------------------------");
@@ -469,6 +469,16 @@ public final class Main implements Runnable {
                                     client.playerIndex = new byte[(MAXIMUM_CLIENTS + 7) >> 3];
                                     /* MUSIC STUFF */
                                     client.activeMusic = new byte[(musicNames.length + 7) >> 3];
+                                    /* FARMING STUFF */
+                                    client.patchTimestamps = new long[farmingTypeConfigs.length][];
+                                    client.patchStates = new int[farmingTypeConfigs.length][];
+                                    for(int i = 0; i < farmingTypeConfigs.length; i++) {
+                                        if(farmingTypeConfigs[i] != null) {
+                                            client.patchTimestamps[i] = new long[farmingTypeConfigs[i].length];                                       
+                                            client.patchStates[i] = new int[farmingTypeConfigs[i].length];
+                                        }
+                                    }
+                                    client.patchStates[0][1] = 3;
                                     /* APPEARANCE STUFF */
                                     client.appearanceStates = new int[12];
                                     client.appearanceStates[0] = 31 | 256;
@@ -562,7 +572,7 @@ public final class Main implements Runnable {
                                             buffer.offset = buffer.payload.length - 3 - (opcode == 248 ? 14 : 0);
                                             int firstY = buffer.getUwordLe();
                                             int amountSteps = (size - 3 - (opcode == 248 ? 14 : 0))/2 - 1;
-                                            if(amountSteps > Client.MAXIMUM_STEPS)
+                                            if(amountSteps > Client.MAXIMUM_POINTS)
                                                 throw new RuntimeException();
                                             int writePosition = 0;
                                             client.stepQueue[client.walkingQueue.length - 2] = amountSteps + 1;
@@ -645,8 +655,9 @@ public final class Main implements Runnable {
                             * Reset state.
                             */
                            case 5:
-                               if((client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS <= client.lastUpdates[client.lastUpdates.length - 2])
-                                   client.lastUpdates[client.lastUpdates.length - 1] = (client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS;
+                               int amountData = client.lastUpdates[client.lastUpdates.length - 1] > client.lastUpdates[client.lastUpdates.length - 2] ? (Mob.MAXIMUM_POINTS - client.lastUpdates[client.lastUpdates.length - 2]) + client.lastUpdates[client.lastUpdates.length - 1] : client.lastUpdates[client.lastUpdates.length - 2] - client.lastUpdates[client.lastUpdates.length - 1];
+                               if(amountData > 0)
+                                   client.lastUpdates[client.lastUpdates.length - 1] = (client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_POINTS;
                                client.activeFlags = 0;
                                client.state = 6;
                                break;
@@ -655,14 +666,37 @@ public final class Main implements Runnable {
                             * Idle state.
                             */
                            case 6:    
+                                   for(int i = 0; i < client.patchStates.length; i++) {
+                                       int[] patchStates = client.patchStates[i];
+                                       long[] timeStamps = client.patchTimestamps[i];
+                                       if(timeStamps != null && patchStates != null) {
+                                           for(int j = 0; j < patchStates.length; j++) {
+                                               boolean update = false;
+                                               int state = patchStates[j] & 0xFF;
+                                               if(state <= 0) {
+                                                   if(timeStamps[j] != 0L)
+                                                       timeStamps[j] = 0L;
+                                                   continue;
+                                               } else {
+                                                   if(state <= 3) {
+                                                       if(timeStamps[j] <= 0) {
+                                                           timeStamps[j] = System.currentTimeMillis() + 30000L;
+                                                           update = true;
+                                                       }
+                                                       if(timeStamps[j] < System.currentTimeMillis()) {
+                                                           patchStates[j] = (patchStates[j] & ~255) | --state;
+                                                           timeStamps[j] = System.currentTimeMillis() + 30000L;
+                                                           update = true;
+                                                       }
+                                                   }
+                                               }
+                                               if(update) {
+                                                   Client.sendConfig(client, farmingTypeConfigs[i][j], (patchStates[j] & 0xFF) << (j * 8));
+                                               }
+                                           }
+                                       }
+                                   }
                                    if(client.hasWritten) {  
-                                       int type = 0;
-                                       int crop = 0;
-                                       int patch = 1;
-                                       int hash = farmingPatchConfigs[type][crop][0];
-                                       int config = farmingTypeConfigs[type][patch];
-                                       int time = farmingPatchConfigs[type][crop][4];
-                                       Client.sendLargeConfig(client, config, ((hash >> 8) + (int) (Math.random() * (hash & 0xFF))) << patch * 8);
                                        client.hasWritten = false;
                                        client.state = 2;
                                    }
@@ -1534,7 +1568,7 @@ public final class Main implements Runnable {
              0, -3, -3,  1, -1, -3, -3, -3, -3, -3,
             -3, -3, -3, -3,  8, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-            -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3,  4, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,          
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             

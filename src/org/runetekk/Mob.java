@@ -8,9 +8,9 @@ package org.runetekk;
 public class Mob extends Entity {
     
     /**
-     * The maximum amount of steps in a walking queue.
+     * The maximum amount of points in a walking queue.
      */
-    public final static int MAXIMUM_STEPS = 25;
+    public final static int MAXIMUM_POINTS = 30;
     
     /**
      * The step queue where points of where the player will need to move towards.
@@ -56,13 +56,16 @@ public class Mob extends Entity {
             int y = coordY;
             int i = 0;
             for(; i < (runToggled ? 2 : 1);) {
+                //System.out.println(stepQueue[stepQueue.length - 1] + " " + stepQueue[stepQueue.length - 2]);
                 if(stepQueue[stepQueue.length - 1] >= stepQueue[stepQueue.length - 2])
                     return;
                 int position = stepQueue[stepQueue.length - 1];
                 int dx = ((stepQueue[position] >> 15) & 0x7FFF) - x;
                 int dy = (stepQueue[position] & 0x7FFF) - y;
+                //System.out.println("Dx: " + dx);
+                //System.out.println("Dy: " + dy);
                 if(dx == 0 && dy == 0) {
-                    stepQueue[stepQueue.length - 1] = (position + 1) % Mob.MAXIMUM_STEPS; 
+                    stepQueue[stepQueue.length - 1] = (position + 1) % Mob.MAXIMUM_POINTS; 
                     continue;
                 }
                 int writePosition = walkingQueue[walkingQueue.length - 2];
@@ -87,7 +90,7 @@ public class Mob extends Entity {
                 else
                     opcode = 2;
                 walkingQueue[writePosition] = opcode;
-                walkingQueue[walkingQueue.length - 2] = (writePosition + 1) % Mob.MAXIMUM_STEPS;
+                walkingQueue[walkingQueue.length - 2] = (writePosition + 1) % Mob.MAXIMUM_POINTS;
                 x += Client.WALK_DELTA[opcode][0];
                 y += Client.WALK_DELTA[opcode][1];
                 i++;
@@ -110,12 +113,13 @@ public class Mob extends Entity {
         boolean updateRegion = false;
         int readPosition = walkingQueue[walkingQueue.length - 1];
         int writeOpcode = -1;
-        int amountData = readPosition > walkingQueue[walkingQueue.length - 2] ? (MAXIMUM_STEPS - readPosition) + walkingQueue[walkingQueue.length - 2] : walkingQueue[walkingQueue.length - 2] - readPosition;
+        int amountData = readPosition > walkingQueue[walkingQueue.length - 2] ? (MAXIMUM_POINTS - readPosition) + walkingQueue[walkingQueue.length - 2] : walkingQueue[walkingQueue.length - 2] - readPosition;
         for(int i = 0; i < (runToggled ? 2 : 1); i++) {
+            //System.out.println("Amount data: " + amountData);
             if(amountData-- < 1)
                 break;
             int opcode = walkingQueue[readPosition];
-            readPosition = walkingQueue[walkingQueue.length - 1] = (readPosition + 1) % MAXIMUM_STEPS;
+            readPosition = walkingQueue[walkingQueue.length - 1] = (readPosition + 1) % MAXIMUM_POINTS;
             if(opcode < 8) {
                 if(i < 1)
                     writeOpcode = 1 | opcode << 2;
@@ -128,7 +132,6 @@ public class Mob extends Entity {
                     int dy = updatedChunkY - ((coordY >> 3) - 6);
                     if(dx >= 4 || dx <= -4 || dy >= 4 || dy <= -4) {                      
                         updateRegion = true;
-                        break;
                     }                  
                 }
             } else if(opcode == 8 && this instanceof Client) {
@@ -143,14 +146,14 @@ public class Mob extends Entity {
         if(writeOpcode != -1) {
             int writePosition = lastUpdates[lastUpdates.length - 2];
             lastUpdates[writePosition] = writeOpcode;
-            lastUpdates[lastUpdates.length - 2] = (writePosition + 1) % MAXIMUM_STEPS;
+            lastUpdates[lastUpdates.length - 2] = (writePosition + 1) % MAXIMUM_POINTS;
         }
         if(updateRegion) {
             int writePosition = lastUpdates[lastUpdates.length - 2];
             updatedChunkX = (coordX >> 3) - 6;
             updatedChunkY = (coordY >> 3) - 6;
             lastUpdates[writePosition] = 3 | coordZ << 2 | (coordX - (updatedChunkX << 3)) << 5 | (coordY - (updatedChunkY << 3)) << 12;
-            lastUpdates[lastUpdates.length - 2] = (writePosition + 1) % MAXIMUM_STEPS;
+            lastUpdates[lastUpdates.length - 2] = (writePosition + 1) % MAXIMUM_POINTS;
             Client.sendCurrentChunk((Client) this);
         }
     }
@@ -159,9 +162,9 @@ public class Mob extends Entity {
      * Constructs a new {@link Mob};
      */
     Mob() {
-        walkingQueue = new int[MAXIMUM_STEPS + 2];
-        lastUpdates = new int[MAXIMUM_STEPS + 2];
-        stepQueue = new int[MAXIMUM_STEPS + 2];
+        walkingQueue = new int[MAXIMUM_POINTS + 2];
+        lastUpdates = new int[MAXIMUM_POINTS + 2];
+        stepQueue = new int[MAXIMUM_POINTS + 2];
         updatedChunkX = updatedChunkY = -1;
     }  
 }

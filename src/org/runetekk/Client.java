@@ -220,6 +220,16 @@ public final class Client extends Mob {
     byte[] chatData;
     
     /**
+     * The current farming patch states.
+     */
+    int[][] patchStates;
+    
+    /**
+     * The timestamps for when the farming patches were updated last.
+     */
+    long[][] patchTimestamps;
+    
+    /**
      * The time that the client will timeoutStamp.
      */
     long timeoutStamp;
@@ -294,18 +304,21 @@ public final class Client extends Mob {
     }
     
     /**
-     * Sends a large configuration value to the client.
+     * Sends a configuration value to the client.
      * @param client The client to send the music to.
      * @param configId The id of the configuration.
      * @param value The value of the configuration.
      */
-    public static void sendLargeConfig(Client client, int configId, int value) {
+    public static void sendConfig(Client client, int configId, int value) {
         ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
         int position = client.oWritePosition;
         buffer.offset = position;
-        buffer.putByte(87 + client.outgoingCipher.getNextValue());
+        buffer.putByte((value < 256 ? 36 : 87) + client.outgoingCipher.getNextValue());
         buffer.putWordLe(configId);
-        buffer.putDwordA(value);
+        if(value < 256)
+            buffer.putByte(value);
+        else
+            buffer.putDwordA(value);
         client.oWritePosition += buffer.offset - position;
     }
     
@@ -322,7 +335,10 @@ public final class Client extends Mob {
         buffer.initializeBitOffset();
         boolean localUpdate = client.activeFlags != 0;
         boolean localMovementUpdate = true;
-        if((client.lastUpdates[client.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > client.lastUpdates[client.lastUpdates.length - 2])
+        int amountData = client.lastUpdates[client.lastUpdates.length - 1] > client.lastUpdates[client.lastUpdates.length - 2] ? (MAXIMUM_POINTS - client.lastUpdates[client.lastUpdates.length - 2]) + client.lastUpdates[client.lastUpdates.length - 1] : client.lastUpdates[client.lastUpdates.length - 2] - client.lastUpdates[client.lastUpdates.length - 1];
+        if(amountData < 0)
+            throw new RuntimeException("eek");
+        else if(amountData <= 0)
             localMovementUpdate = false;
         buffer.putBits(localUpdate || localMovementUpdate ? 1 : 0, 1);
         if(localUpdate || localMovementUpdate) {
@@ -360,7 +376,6 @@ public final class Client extends Mob {
             }
             boolean remove = pClient == null || dx > 15 || dx < -15 || dy > 15 || dy < -15;
             if(remove) {
-                System.out.println("REMOVING " + remove);
                 client.listedPlayers--;
                 client.playerIndex[((IntegerNode) node).value >> 3] &= ~(1 << (((IntegerNode) node).value & 7));
                 buffer.putBits(1, 1);
@@ -370,7 +385,10 @@ public final class Client extends Mob {
             }
             boolean update = pClient.activeFlags != 0 || client.appearanceUpdates[((IntegerNode) node).value];
             boolean movementUpdate = true;
-            if((pClient.lastUpdates[pClient.lastUpdates.length - 1] + 1) % Client.MAXIMUM_STEPS > pClient.lastUpdates[pClient.lastUpdates.length - 2] || (pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]] & 3) == 3)
+            amountData = pClient.lastUpdates[pClient.lastUpdates.length - 1] > pClient.lastUpdates[pClient.lastUpdates.length - 2] ? (MAXIMUM_POINTS - pClient.lastUpdates[pClient.lastUpdates.length - 2]) + pClient.lastUpdates[pClient.lastUpdates.length - 1] : pClient.lastUpdates[pClient.lastUpdates.length - 2] - pClient.lastUpdates[pClient.lastUpdates.length - 1];
+            if(amountData < 0)
+                throw new RuntimeException("eek");
+            if(amountData <= 0 || (pClient.lastUpdates[pClient.lastUpdates[pClient.lastUpdates.length - 1]] & 3) == 3)
                 movementUpdate = false;
             buffer.putBits(update || movementUpdate ? 1 : 0, 1);
             if(update || movementUpdate) {
@@ -398,7 +416,6 @@ public final class Client extends Mob {
             if(pClient != null) {
                 int dx = pClient.coordX - client.coordX;
                 int dy = pClient.coordY - client.coordY;
-                System.out.println(((IntegerNode) node).value);
                 buffer.putBits(((IntegerNode) node).value, 11);
                 buffer.putBits(1, 1);
                 /* Unsure about what else this value could be used for */
