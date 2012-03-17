@@ -481,9 +481,22 @@ public final class Main implements Runnable {
                                     client.patchStates[0][1] = 3;
                                     /* APPEARANCE STUFF */
                                     client.appearanceStates = new int[12];
-                                    client.appearanceStates[0] = 31 | 256;
+                                    client.appearanceStates[0] = 20 | 256;
+                                    client.appearanceStates[1] = 31 | 256;
+                                    client.appearanceStates[2] = 39 | 256;
+                                    client.appearanceStates[3] = 1 | 256;
+                                    client.appearanceStates[4] = 33 | 256;
+                                    client.appearanceStates[5] = 42 | 256;
+                                    client.appearanceStates[6] = 16 | 256;
                                     client.colorIds = new int[5];
                                     client.animationIds = new int[7];
+                                    client.animationIds[0] = 0x328;
+                                    client.animationIds[1] = 0x327;
+                                    client.animationIds[2] = 0x333;
+                                    client.animationIds[3] = 0x334;
+                                    client.animationIds[4] = 0x335;
+                                    client.animationIds[5] = 0x338;
+                                    client.animationIds[6] = 0x338;
                                     client.incomingCipher = new IsaacCipher(seeds);
                                     for(int i = 0; i < seeds.length; i++)
                                         seeds[i] += 50;
@@ -619,6 +632,7 @@ public final class Main implements Runnable {
                             */
                            case 1:
                                Client.sendMessage(client, "Welcome to RuneTekk.");
+                               Client.sendTabInterface(client, 0, 1644);
                                client.activeFlags |= 1 << 7;
                                client.state = 2;
                                break;
@@ -778,81 +792,7 @@ public final class Main implements Runnable {
             reportError("Exception thrown while loading the server properties", ex);
             throw new RuntimeException();
         }
-        if(args[0].equals("odump")) {
-            ArchivePackage configPack = null;
-            try {
-                FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
-                configPack = new ArchivePackage(index.get(Integer.parseInt(serverProperties.getProperty("C-ID"))));
-                index.destroy();              
-            } catch(Exception ex) {
-                reportError("Exception thrown while initializing the config pack", ex);
-                throw new RuntimeException();
-            }
-            try {
-                ByteBuffer buffer = new ByteBuffer(configPack.getArchive("loc.dat"));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(serverProperties.getProperty("OUTDIR") + "objs.txt"));
-                int objectId = 0;
-                while(buffer.offset < buffer.payload.length) {
-                    while(true) {
-                        int opcode = buffer.getUbyte();
-                        if(opcode == 0)
-                            break;
-                        if(opcode == 1)
-                            buffer.offset += buffer.getUbyte() * 3;
-                        if(opcode == 2)
-                            writer.append("Object Id: " + objectId + ", " + buffer.getString() + "\n");
-                        if(opcode == 3)
-                            writer.append("\tExamine: " + buffer.getString() + "\n");
-                        if(opcode == 5)
-                            buffer.offset += buffer.getUbyte() * 2;
-                        if(opcode == 14)
-                            buffer.getUbyte();
-                        if(opcode == 15)
-                            buffer.getUbyte();
-                        if(opcode == 19)
-                            buffer.getUbyte();
-                        if(opcode == 24)
-                            buffer.getUword();
-                        if(opcode == 28)
-                            buffer.getUbyte();
-                        if(opcode == 29)
-                            buffer.getByte();
-                        if(opcode == 39)
-                            buffer.getByte();
-                        if(opcode >= 30 && opcode < 39)
-                            buffer.getString();
-                        if(opcode == 40)
-                            buffer.offset += buffer.getUbyte() * 4;
-                        if(opcode == 60)
-                            buffer.getUword();
-                        if(opcode == 65)
-                            buffer.getUword();
-                        if(opcode == 66)
-                            buffer.getUword();
-                        if(opcode == 67)
-                            buffer.getUword();
-                        if(opcode == 68)
-                            buffer.getUword();
-                        if(opcode == 69)
-                            buffer.getUbyte();
-                        if(opcode == 70)
-                            buffer.getUword();
-                        if(opcode == 71)
-                            buffer.getUword();
-                        if(opcode == 72)
-                            buffer.getUword();
-                        if(opcode == 75)
-                            buffer.getUbyte();
-                        if(opcode == 77)
-                            buffer.offset += 4 + (buffer.getUbyte() * 2);
-                    }
-                    objectId++;
-                }           
-            } catch(Exception ex) {
-                reportError("Exception thrown while dumping the object files", ex);
-                throw new RuntimeException();
-            }
-        } else if(args[0].equals("vdump")) {
+        if(args[0].equals("vdump")) {
             ArchivePackage configPack = null;
             try {
                 FileIndex index = new FileIndex(-1, new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("MAINFILE"), "r"), new RandomAccessFile(serverProperties.getProperty("CACHEDIR") + serverProperties.getProperty("C-INDEX"), "r"));
@@ -984,137 +924,154 @@ public final class Main implements Runnable {
             int[][] scriptInstructions = new int[amountWidgets][];
             int[][] scriptConditions = new int[amountWidgets][];
             int[][][] scriptOpcodes = new int[amountWidgets][][];
-            while(buffer.offset < buffer.payload.length) {
-                int widgetId = buffer.getUword();
-                if(widgetId == 65535) {
-                    buffer.getUword();
-                    widgetId = buffer.getUword();
-                }
-                int type = buffer.getUbyte();
-                int fieldType = buffer.getUbyte();
-                buffer.getUword();
-                buffer.getUword();
-                buffer.getUword();
-                buffer.getUbyte();
-                if(buffer.getUbyte() != 0)
-                    buffer.getUbyte();
-                int amountScriptInstructions = buffer.getUbyte();
-                if(amountScriptInstructions > 0) {
-                    scriptInstructions[widgetId] = new int[amountScriptInstructions];
-                    scriptConditions[widgetId] = new int[amountScriptInstructions];
-                    for(int i = 0; i < amountScriptInstructions; i++) {
-                        scriptInstructions[widgetId][i] = buffer.getUbyte();
-                        scriptConditions[widgetId][i] = buffer.getUword();
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(serverProperties.getProperty("OUTDIR") + "winfo.txt"));
+                while(buffer.offset < buffer.payload.length) {                    
+                    int widgetId = buffer.getUword();
+                    if(widgetId == 65535) {
+                        buffer.getUword();
+                        widgetId = buffer.getUword();
                     }
-                }
-                int amountScripts = buffer.getUbyte();
-                if(amountScripts > 0) {
-                    scriptOpcodes[widgetId] = new int[amountScripts][];
-                    for(int i = 0; i < amountScripts; i++) {
-                        int size = buffer.getUword();
-                        scriptOpcodes[widgetId][i] = new int[size];
-                        for(int j = 0; j < size; j++) {
-                            scriptOpcodes[widgetId][i][j] = buffer.getUword();
+                    int type = buffer.getUbyte();
+                    int hoverType = buffer.getUbyte();                 
+                    int actionCode = buffer.getUword();
+                    int width = buffer.getUword();
+                    int height = buffer.getUword();
+                    int alpha = buffer.getUbyte();
+                    int childId = -1;
+                    if((childId = buffer.getUbyte()) != 0)
+                        childId = (childId - 1 << 8) + buffer.getUbyte();
+                    else
+                        childId = -1;
+                    writer.append("Widget: " + widgetId + "\n\tWidget type: " + type + "\n\tField type: " + hoverType + "\n\tAction Code: " + actionCode + "\n\tWidth: " + width + "\n\tHeight: " + height + "\n\tAlpha: " + alpha + "\n\tChild Id: " + childId + "\n\t");
+                    int amountScriptInstructions = buffer.getUbyte();
+                    if(amountScriptInstructions > 0) {
+                        scriptInstructions[widgetId] = new int[amountScriptInstructions];
+                        scriptConditions[widgetId] = new int[amountScriptInstructions];
+                        for(int i = 0; i < amountScriptInstructions; i++) {
+                            scriptInstructions[widgetId][i] = buffer.getUbyte();
+                            scriptConditions[widgetId][i] = buffer.getUword();
                         }
                     }
-                }
-                if(type == 0) {
-                    buffer.getUword();
-                    buffer.getUbyte();
-                    int amountchildren = buffer.getUword();
-                    for(int i = 0; i < amountchildren; i++) {
-                        buffer.getUword();
-                        buffer.getUword();
-                        buffer.getUword();
-                    }
-                }
-                if(type == 1) {
-                    buffer.getUword();
-                    buffer.getUbyte();
-                }
-                if(type == 2) {
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    for(int i = 0; i < 20; i++) {
-                        int op = buffer.getUbyte();
-                        if(op == 1) {
-                            buffer.getUword();
-                            buffer.getUword();
-                            buffer.getString();
+                    int amountScripts = buffer.getUbyte();
+                    if(amountScripts > 0) {
+                        scriptOpcodes[widgetId] = new int[amountScripts][];
+                        for(int i = 0; i < amountScripts; i++) {
+                            int size = buffer.getUword();
+                            scriptOpcodes[widgetId][i] = new int[size];
+                            for(int j = 0; j < size; j++) {
+                                scriptOpcodes[widgetId][i][j] = buffer.getUword();
+                            }
                         }
                     }
-                    for(int i = 0; i < 5; i++) {
-                        buffer.getString();
+                    if(type == 0) {
+                        writer.append("Height: " + buffer.getUword() + "\n\t");
+                        writer.append("Active? " + (buffer.getUbyte() == 1) + "\n\t");
+                        int amountChildren = buffer.getUword();
+                        writer.append("Children: " + amountChildren + "\n\t\t");
+                        for(int i = 0; i < amountChildren; i++) {
+                            writer.append("Id: " + buffer.getUword() + "\n\t\t\t");
+                            writer.append("Off X: " + buffer.getUword() + "\n\t\t\t");
+                            writer.append("Off Y: " + buffer.getUword() + "\n\t\t");
+                        }
+                        writer.append("\n");
                     }
+                    if(type == 1) {
+                        buffer.getUword();
+                        buffer.getUbyte();
+                    }
+                    if(type == 2) {
+                        writer.append("Allows move? " + (buffer.getUbyte() == 1) + "\n\t");
+                        writer.append("Allows use with? " + (buffer.getUbyte() == 1) + "\n\t");
+                        writer.append("Allows use? " + (buffer.getUbyte() == 1) + "\n\t");
+                        writer.append("Allows swap? " + (buffer.getUbyte() == 1) + "\n\t");
+                        writer.append("Off x: " + buffer.getUbyte() + "\n\t");
+                        writer.append("Off y: " + buffer.getUbyte() + "\n\t");
+                        for(int i = 0; i < 20; i++) {
+                            int op = buffer.getUbyte();
+                            if(op == 1) {
+                                writer.append("Sprite off x: " + buffer.getUword() + "\n\t");
+                                writer.append("Sprite off y: " + buffer.getUword() + "\n\t");
+                                writer.append("Sprite: " + buffer.getString() + "\n\t");
+                            }
+                        }
+                        for(int i = 0; i < 5; i++) {
+                            writer.append("Item Option: " + buffer.getString() + "\n\t");
+                        }
 
-                }
-                if(type == 3)
-                    buffer.getUbyte();
-                if(type == 4 || type == 1) {
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                }
-                if(type == 4) {
-                    buffer.getString();
-                    buffer.getString();
-                }
-                if(type == 1 || type == 3 || type == 4)
-                    buffer.getDword();
-                if(type == 3 || type == 4) {
-                    buffer.getDword();
-                    buffer.getDword();
-                    buffer.getDword();
-                }
-                if(type == 5) {
-                    buffer.getString();
-                    buffer.getString();
-                }
-                if(type == 6) {
-                    int modelId = buffer.getUbyte();
-                    if(modelId != 0) {
-                        buffer.getUbyte();
                     }
-                    modelId = buffer.getUbyte();
-                    if(modelId != 0) {
-                        buffer.getUbyte();
+                    if(type == 3)
+                        writer.append("Solid quad? " + (buffer.getUbyte() == 1) + "\n\t");
+                    if(type == 4 || type == 1) {
+                        writer.append("Centered? " + (buffer.getUbyte() == 1) + "\n\t");
+                        writer.append("Font id: " + buffer.getUbyte() + "\n\t");
+                        writer.append("Shadow? " + (buffer.getUbyte() == 1) + "\n\t");
                     }
-                    modelId = buffer.getUbyte();
-                    if(modelId != 0)
-                        buffer.getUbyte();
-                    modelId = buffer.getUbyte();
-                    if(modelId != 0)
-                        buffer.getUbyte();
-                    buffer.getUword();
-                    buffer.getUword();
-                    buffer.getUword();
-                }
-                if(type == 7){
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getUbyte();
-                    buffer.getDword();
-                    buffer.getUword();
-                    buffer.getUword();
-                    buffer.getUbyte();
-                    for(int k4 = 0; k4 < 5; k4++) {
+                    if(type == 4) {
+                        writer.append("Inactive Text: " + buffer.getString() + "\n\t");
+                        writer.append("Active Text: " + buffer.getString() + "\n\t");
+                    }
+                    if(type == 1 || type == 3 || type == 4) {
+                        int color = buffer.getDword();
+                        writer.append("Inactive color: [R: " + (color >> 16) + ", G: " + ((color >> 8) & 255) + ", B: " + (color & 255) + "]\n\t");
+                    }
+                    if(type == 3 || type == 4) {
+                        int color = buffer.getDword();
+                        writer.append("Active color: [R: " + (color >> 16) + ", G: " + ((color >> 8) & 255) + ", B: " + (color & 255) + "]\n\t");
+                        buffer.getDword();
+                        buffer.getDword();
+                    }
+                    if(type == 5) {
+                        writer.append("Inactive sprite: " + buffer.getString() + "\n\t");
+                        writer.append("Active sprite: " + buffer.getString() + "\n\t");
+                    }
+                    if(type == 6) {
+                        int modelId = buffer.getUbyte();
+                        if(modelId != 0) {
+                            buffer.getUbyte();
+                        }
+                        modelId = buffer.getUbyte();
+                        if(modelId != 0) {
+                            buffer.getUbyte();
+                        }
+                        modelId = buffer.getUbyte();
+                        if(modelId != 0)
+                            buffer.getUbyte();
+                        modelId = buffer.getUbyte();
+                        if(modelId != 0)
+                            buffer.getUbyte();
+                        buffer.getUword();
+                        buffer.getUword();
+                        buffer.getUword();
+                    }
+                    if(type == 7){
+                        writer.append("Text centered? " + (buffer.getUbyte() == 1) + "\n\t");
+                        writer.append("Font id: " + buffer.getUbyte() + "\n\t");
+                        writer.append("Shadow? " + (buffer.getUbyte() == 1) + "\n\t");
+                        int color = buffer.getDword();
+                        writer.append("Inactive text color: [R: " + (color >> 16) + ", G: " + ((color >> 8) & 255) + ", B: " + (color & 255) + "]\n\t");
+                        writer.append("Off x: " + buffer.getUword() + "\n\t");
+                        writer.append("Clickable? " + (buffer.getUbyte() == 1) + "\n\t");
+                        for(int k4 = 0; k4 < 5; k4++) {
+                            String option = buffer.getString();
+                            if(!option.equals(""))
+                                writer.append("Option " + k4 + ": " + option + "\n\t");
+                        }
+                    }
+                    if(hoverType == 2 || type == 2) {
                         buffer.getString();
+                        buffer.getString();
+                        buffer.getUword();
                     }
+                    if(hoverType == 1 || hoverType == 4 || hoverType == 5 || hoverType == 6) {
+                        writer.append("Hover text: " + buffer.getString() + "\n\t");
+                    }
+                    writer.append("\n\n");
                 }
-                if(fieldType == 2 || type == 2) {
-                    buffer.getString();
-                    buffer.getString();
-                    buffer.getUword();
-                }
-                if(type == 8)
-                    buffer.getString();
-                if(fieldType == 1 || fieldType == 4 || fieldType == 5 || fieldType == 6) {
-                    buffer.getString();
-                }
+                writer.close();
+            } catch(Exception ex) {
+                reportError("Exception thrown while dumping the widget information", ex);
+                throw new RuntimeException();
             }
             try {               
                 BufferedWriter writer = new BufferedWriter(new FileWriter(serverProperties.getProperty("OUTDIR") + "wscripts.txt"));
@@ -1375,6 +1332,7 @@ public final class Main implements Runnable {
                 }
                 is.close();
                 os.writeByte(0);
+                os.close();
             } catch(Exception ex) {
                 reportError("Exception thrown while dumping the region files", ex);
                 throw new RuntimeException();
@@ -1494,7 +1452,6 @@ public final class Main implements Runnable {
                     os.write(Integer.parseInt(tokens[3]));
                 }
                 os.write(0);
-                os.flush();
                 os.close();
                 is.close();
             } catch(Exception ex) {

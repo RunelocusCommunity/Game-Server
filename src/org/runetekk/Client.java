@@ -285,7 +285,7 @@ public final class Client extends Mob {
         buffer.offset = position;
         buffer.putByte(71 + client.outgoingCipher.getNextValue());
         buffer.putWord(interId);
-        buffer.putByteA(tabId);
+        buffer.putByte128(tabId);
         client.oWritePosition += buffer.offset - position;
     }
     

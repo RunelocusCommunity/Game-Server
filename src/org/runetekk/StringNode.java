@@ -5,7 +5,7 @@ package org.runetekk;
  * @version 1.0.0
  * @author RuneTekk Development (SiniSoul)
  */
-public class StringNode extends ListNode {
+public final class StringNode extends ListNode {
     
     /**
      * The value of this node.

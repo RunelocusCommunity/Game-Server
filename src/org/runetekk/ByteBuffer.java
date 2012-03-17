@@ -68,6 +68,14 @@ public final class ByteBuffer {
     }
     
     /**
+     * Puts a byte translated 128 into the payload.
+     * @param value The byte value.
+     */
+    void putByte128(int value) {
+        payload[offset++] = (byte) (value + 128);
+    }
+    
+    /**
      * Puts a word into the payload.
      * @param value The word value.
      */
