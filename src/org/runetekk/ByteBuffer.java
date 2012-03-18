@@ -94,6 +94,15 @@ public final class ByteBuffer {
     }
     
     /**
+     * Puts a little endian word plus 128 into the payload.
+     * @param value The word value.
+     */
+    void putWordLe128(int value) {
+        payload[offset++] = (byte) (value + 128 & 0xFF);
+        payload[offset++] = (byte) (value >> 8);
+    }
+    
+    /**
      * Puts a word plus 128 into the payload.
      * @param value The word value.
      */
@@ -109,6 +118,15 @@ public final class ByteBuffer {
     int getUword() {
         return  ((payload[offset++] & 0xFF) << 8) | 
                  (payload[offset++] & 0xFF);
+    }
+    
+    /**
+     * Gets an unsigned word translated by 128 casted to an integer. 
+     * @return The unsigned word value.
+     */
+    int getUword128() {
+        return  ((payload[offset++] & 0xFF) << 8) | 
+                 (payload[offset++] - 128 & 0xFF);
     }
     
     /**
@@ -140,6 +158,29 @@ public final class ByteBuffer {
         payload[offset++] = (byte) (value >> 16);
     }
     
+    
+    /**
+     * Puts a dword type b into this buffer.
+     * @param value The dword value. 
+     */
+    void putDwordB(int value) {
+        payload[offset++] = (byte) (value >> 16);
+        payload[offset++] = (byte) (value >> 24);
+        payload[offset++] = (byte)  value;
+        payload[offset++] = (byte) (value >> 8);
+    }
+    
+    /**
+     * Puts a dword into the payload.
+     * @param value The dword value.
+     */
+    void putDword(long value) {
+        payload[offset++] = (byte) (value >> 24);
+        payload[offset++] = (byte) (value >> 16);
+        payload[offset++] = (byte) (value >> 8);
+        payload[offset++] = (byte)  value;
+    }
+    
     /**
      * Gets an unsigned dword from this buffer casted to an integer.
      * @return The unsigned dword value.
@@ -164,6 +205,19 @@ public final class ByteBuffer {
         payload[offset++] = (byte) (value >> 16);
         payload[offset++] = (byte) (value >> 8);
         payload[offset++] = (byte) (value & 0xFF);
+    }
+    
+    /**
+     * Puts a smart type b into the payload.
+     * @param value The smart value.
+     */
+    void putSmartB(int value) {
+        if(value >= 0 && value < 128)
+            payload[offset++] = (byte) value;
+        else {
+            payload[offset++] = (byte) ((value >> 8) | 128);
+            payload[offset++] = (byte)   value;
+        }
     }
     
     /**

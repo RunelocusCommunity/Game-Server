@@ -18,7 +18,12 @@ public class ListNode {
     ListNode childNode;
     
     /**
-     * Removes the node from the current queue list it is in.
+     * The current key of this {@link ListNode}.
+     */
+    long currentKey;
+    
+    /**
+     * Removes the node from the current list it is in.
      */
     public final void removeFromList() {
         if(parentNode != null) {

@@ -39,7 +39,7 @@ public final class Main implements Runnable {
     private static final int[] INCOMING_SIZES;
     
     /**
-     * The private key for deciphering the enciphered login block.
+     * The private currentKey for deciphering the enciphered login block.
      */
     private static final BigInteger PRIVATE_KEY;
     
@@ -497,6 +497,15 @@ public final class Main implements Runnable {
                                     client.animationIds[4] = 0x335;
                                     client.animationIds[5] = 0x338;
                                     client.animationIds[6] = 0x338;
+                                    /* ITEMS STUFF */
+                                    client.widgetItems = new HashTable(10);  
+                                    Item[] items = new Item[Client.INVENTORY_SIZE];
+                                    Item item = items[0] = new Item();
+                                    item.amount = 5;
+                                    Item item2 = items[1] = new Item();
+                                    item2.id = 1;
+                                    item2.amount = 5;
+                                    client.widgetItems.put(new ItemArray(items), 3214);
                                     client.incomingCipher = new IsaacCipher(seeds);
                                     for(int i = 0; i < seeds.length; i++)
                                         seeds[i] += 50;
@@ -602,6 +611,39 @@ public final class Main implements Runnable {
                                             removeClient(position);
                                             client.destroy();
                                             break;
+                                            
+                                        /* Drop option */
+                                        case 87:
+                                            int itemId = buffer.getUword128();
+                                            int widgetId = buffer.getUword();
+                                            int slot = buffer.getUword128();
+                                            ListNode itemsNode = null;
+                                            if((itemsNode = client.widgetItems.get(widgetId)) == null)
+                                                throw new RuntimeException();
+                                            Item[] items = ((ItemArray) itemsNode).items;
+                                            if(slot < 0 || slot >= items.length || items[slot] == null || items[slot].id != itemId)
+                                                throw new RuntimeException();
+                                            items[slot] = null;
+                                            Client.sendUpdateWidgetItems(client, widgetId, items, new int[] { slot });
+                                            break;
+                                            
+                                        /* Move option */
+                                        case 214:                                      
+                                            widgetId = buffer.getUwordLe128();
+                                            int mode = buffer.getUbyte();
+                                            int startSlot = buffer.getUwordLe128();
+                                            int endSlot = buffer.getUwordLe();
+                                            itemsNode = null;
+                                            if((itemsNode = client.widgetItems.get(widgetId)) == null)
+                                                throw new RuntimeException();
+                                            items = ((ItemArray) itemsNode).items;
+                                            if(startSlot < 0 || startSlot >= items.length || items[startSlot] == null || 
+                                               endSlot < 0 || endSlot >= items.length)
+                                                throw new RuntimeException();
+                                            Item tempItem = items[startSlot];
+                                            items[startSlot] = items[endSlot];
+                                            items[endSlot] = tempItem;
+                                            break;
                                     }
                                 }
                                 break;
@@ -632,7 +674,8 @@ public final class Main implements Runnable {
                             */
                            case 1:
                                Client.sendMessage(client, "Welcome to RuneTekk.");
-                               Client.sendTabInterface(client, 0, 1644);
+                               Client.sendTabInterface(client, Client.INVENTORY_TAB, 3213);
+                               Client.sendWidgetItems(client, 3214, ((ItemArray) client.widgetItems.get((long) 3214)).items);
                                client.activeFlags |= 1 << 7;
                                client.state = 2;
                                break;
@@ -1531,7 +1574,7 @@ public final class Main implements Runnable {
             
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,        
             -3, -3, -3, -3, -3, -3, -3, -1,  0, -3,
-            -3, -3, -3, -3, -3, -3,  4, -3, -3, -3,
+            -3, -3, -3, -3, -3, -3,  4,  6, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -1, -3,           
             -3, -3, -3, -1, -3, -3, -3, -3, -3, -3,
             
@@ -1547,7 +1590,7 @@ public final class Main implements Runnable {
             -3,  4, -3, -3, -3, -3, -3, -3, -3, -3,        
             -3, -3,  0, -3, -3, -3, -3, -3, -3, -3,
             
-             4, -3,  0, -3, -3, -3, -3, -3, -3, -3,
+             4, -3,  0, -3,  7, -3, -3, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -1, -3, -3, -3,
             -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
             -3,  4, -3, -3, -3, -3, -3, -3, -1, -3,

@@ -23,9 +23,74 @@ public final class Client extends Mob {
     public final static int PLAYER_UPDATES = 256;
     
     /**
-     * The amount of chunks that can be viewed by the player on all sides.
+     * The attack tab id in the interface toolbar.
      */
-    public final static int CHUNK_RANGE = 2;
+    public final static int ATTACK_TAB = 0;
+    
+    /**
+     * The level and experience tab id in the interface toolbar.
+     */
+    public final static int LEVELS_TAB = 1;
+    
+    /**
+     * The quest tab id in the interface toolbar.
+     */
+    public final static int QUEST_TAB = 2;
+    
+    /**
+     * The inventory tab id in the interface toolbar.
+     */
+    public final static int INVENTORY_TAB = 3;
+    
+    /**
+     * The equipment tab id in the interface toolbar.
+     */
+    public final static int EQUIPMENT_TAB = 4;
+    
+    /**
+     * The prayer tab id in the interface toolbar.
+     */
+    public final static int PRAYER_TAB = 5;
+    
+    /**
+     * The magic tab id in the interface toolbar.
+     */
+    public final static int MAGIC_TAB = 6;
+    
+    /**
+     * The ignore tab id in the interface toolbar.
+     */
+    public final static int IGNORE_TAB = 7;
+    
+    /**
+     * The friend tab id in the interface toolbar.
+     */
+    public final static int FRIEND_TAB = 8;
+    
+    /**
+     * The logout tab id in the interface toolbar.
+     */
+    public final static int LOGOUT_TAB = 10;
+    
+    /**
+     * The setting tab id in the interface toolbar.
+     */
+    public final static int SETTING_TAB = 11;
+        
+    /**
+     * The energy tab id in the interface toolbar.
+     */
+    public final static int ENERGY_TAB = 12;
+    
+    /**
+     * The music tab id in the interface toolbar.
+     */
+    public final static int MUSIC_TAB = 13;
+    
+    /**
+     * The size of the inventory.
+     */
+    public final static int INVENTORY_SIZE = 28;   
     
     /**
      * The offset for each type of walk step in the amount of coordinates.
@@ -78,7 +143,7 @@ public final class Client extends Mob {
     IntegerNode localId;
     
     /**
-     * The generated server session key for this {@link Client}.
+     * The generated server session currentKey for this {@link Client}.
      */
     long sessionKey;
     
@@ -230,6 +295,11 @@ public final class Client extends Mob {
     long[][] patchTimestamps;
     
     /**
+     * The item arrays for the active widgets of this client.
+     */
+    HashTable widgetItems;
+    
+    /**
      * The time that the client will timeoutStamp.
      */
     long timeoutStamp;
@@ -256,6 +326,83 @@ public final class Client extends Mob {
         buffer.putByte(253 + client.outgoingCipher.getNextValue());
         buffer.putByte(message.length() + 1);
         buffer.putString(message);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+        
+    /**
+     * Sends an update to a widget to populate the items.
+     * @param client The client to write the message to.
+     * @param widgetId The widget id.
+     * @param items The items.
+     */
+    public static void sendWidgetItems(Client client, int widgetId, Item[] items) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(53 + client.outgoingCipher.getNextValue());
+        buffer.putWord(0);
+        buffer.putWord(widgetId);
+        buffer.putWord(items.length);
+        for(Item item : items) {
+            int id = (item == null ? -1 : item.id) + 1;
+            int amount = item == null ? 0 : item.amount;
+            if(amount >= 255) {
+                buffer.putByte(255);
+                buffer.putDwordB(amount);
+            } else
+                buffer.putByte(amount);
+            buffer.putWordLe128(id);
+        }
+        int oldOffset = buffer.offset;
+        buffer.offset = position + 1;
+        buffer.putWord(oldOffset - (position + 3));
+        client.oWritePosition += oldOffset - position;
+    }
+    
+    /**
+     * Sends an update to a widget with items.
+     * @param client The client to write the message to.
+     * @param widgetId The widget id.
+     * @param items The items to send.
+     * @param updateSlots The slots to update.
+     */
+    public static void sendUpdateWidgetItems(Client client, int widgetId, Item[] items, int[] updateSlots) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(34 + client.outgoingCipher.getNextValue());
+        buffer.putWord(0);
+        buffer.putWord(widgetId);
+        for(int i = 0; i < updateSlots.length; i++) {
+            Item item = items[updateSlots[i]];
+            int id = (item == null ? -1 : item.id) + 1;
+            int amount = item == null ? 0 : item.amount;
+            buffer.putSmartB(updateSlots[i]);
+            buffer.putWord(id);
+            if(amount >= 255) {
+                buffer.putByte(255);
+                buffer.putDword(amount);
+            } else
+                buffer.putByte(amount);
+        }
+        int oldOffset = buffer.offset;
+        buffer.offset = position + 1;
+        buffer.putWord(oldOffset - (position + 3));
+        client.oWritePosition += oldOffset - position;
+    }
+    
+    /**
+     * Sends an update to a widget to clear the items
+     * @param client The client to write the message to.
+     * @param widgetId The widget id.
+     */
+    public static void sendClearWidgetItems(Client client, int widgetId) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(72 + client.outgoingCipher.getNextValue());
+        buffer.putWord(widgetId);
         client.oWritePosition += buffer.offset - position;
     }
     
@@ -581,8 +728,8 @@ public final class Client extends Mob {
      * @param client The client to populate its list for.
      */
     public static void populatePlayers(Client client) {
-        for(int chunkX = (client.coordX >> 3) - Client.CHUNK_RANGE; chunkX <= (client.coordX >> 3) + Client.CHUNK_RANGE; chunkX++) {
-            for(int chunkY = (client.coordY >> 3) - Client.CHUNK_RANGE; chunkY <= (client.coordY >> 3) + Client.CHUNK_RANGE; chunkY++) {
+        for(int chunkX = (client.coordX >> 3) - 2; chunkX <= (client.coordX >> 3) + 2; chunkX++) {
+            for(int chunkY = (client.coordY >> 3) - 2; chunkY <= (client.coordY >> 3) + 2; chunkY++) {
                 Region region = null;
                 if(Main.regions != null && Main.regions[chunkX >> 3] != null && (region = Main.regions[chunkX >> 3][chunkY >> 3]) != null) {
                     Chunk chunk = null;
@@ -598,8 +745,8 @@ public final class Client extends Mob {
                             int dCx = (pClient.coordX >> 3) - (client.coordX >> 3);
                             int dCy = (pClient.coordY >> 3) - (client.coordY >> 3);
                             if(pos == client.localId.value || (client.playerIndex[pos >> 3] & (1 << (pos & 7))) != 0 || 
-                               dCx >= Client.CHUNK_RANGE  || dCy >= Client.CHUNK_RANGE || 
-                               dCx <= -Client.CHUNK_RANGE || dCy <= -Client.CHUNK_RANGE)
+                               dCx >= 2  || dCy >= 2 || 
+                               dCx <= -2 || dCy <= -2)
                                 continue;
                             ListNode idNode = new IntegerNode(pos);
                             idNode.parentNode = client.addedPlayers.parentNode;
