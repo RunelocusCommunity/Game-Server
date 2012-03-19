@@ -52,7 +52,7 @@ public final class IoWriter implements Runnable {
             synchronized(this) {
                 if(isPaused)
                     break;
-                ListNode node = main.activeList;
+                ListNode node = main.activeClientList;
                 while((node = node.childNode) != null) { 
                     if(!(node instanceof IntegerNode))
                         break;

@@ -56,20 +56,26 @@ public class Entity extends ListNode {
             if(Main.regions != null && Main.regions[coordX >> 6] != null && (region = Main.regions[coordX >> 6][coordY >> 6]) != null) {
                 if(region.chunks != null && region.chunks[(coordX >> 3) - ((coordX >> 6) << 3)] != null &&
                                    (chunk = region.chunks[(coordX >> 3) - ((coordX >> 6) << 3)]
-                                                     [(coordY >> 3) - ((coordY >> 6) << 3)]) != null) { 
-                    if(updateRegion && this instanceof Client && !((Client) this).isLowMemory && region.songId != -1) {
-                        int songId = region.songId;
-                        Client client = (Client) this;
-                        Client.sendMusic(client, songId);
-                        if(Main.musicNames.length - 1 >= songId && Main.musicNames[songId] != null) {
-                            if((client.activeMusic[songId >> 3] & (1 << (songId & 7))) == 0) {
-                                Client.sendMessage(client, "@red@You have unlocked the music track: " + Main.musicNames[region.songId] + ".");
-                                client.activeMusic[songId >> 3] |= 1 << (songId & 7);
+                                                     [(coordY >> 3) - ((coordY >> 6) << 3)]) != null) {
+                    ListNode list = null;
+                    if(updateRegion && this instanceof Client) {
+                        list = chunk.activePlayers;
+                        if(!((Client) this).isLowMemory && region.songId != -1) {
+                            int songId = region.songId;
+                            Client client = (Client) this;
+                            Client.sendMusic(client, songId);
+                            if(Main.musicNames.length - 1 >= songId && Main.musicNames[songId] != null) {
+                                if((client.activeMusic[songId >> 3] & (1 << (songId & 7))) == 0) {
+                                    Client.sendMessage(client, "@red@You have unlocked the music track: " + Main.musicNames[region.songId] + ".");
+                                    client.activeMusic[songId >> 3] |= 1 << (songId & 7);
+                                }
                             }
                         }
+                    } else if(this instanceof GroundItem) {
+                        list = chunk.activeItems;
                     }
-                    parentNode = chunk.activeEntities.parentNode;
-                    childNode = chunk.activeEntities;
+                    parentNode = list.parentNode;
+                    childNode = list;
                     parentNode.childNode = this;
                     childNode.parentNode = this;   
                     rUpdatedHash = rHash;

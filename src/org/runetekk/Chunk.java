@@ -8,16 +8,24 @@ package org.runetekk;
 public final class Chunk {
     
     /**
-     * The list of active entities within this chunk.
+     * The list of active players within this chunk.
      */
-    ListNode activeEntities;
+    ListNode activePlayers;
+    
+    /**
+     * The list of active items within this chunk.
+     */
+    ListNode activeItems;
     
     /**
      * Constructs a new {@link Chunk};
      */
     Chunk() {
-        activeEntities = new ListNode();
-        activeEntities.parentNode = activeEntities;
-        activeEntities.childNode = activeEntities;
+        activePlayers = new ListNode();
+        activePlayers.parentNode = activePlayers;
+        activePlayers.childNode = activePlayers;
+        activeItems = new ListNode();
+        activeItems.parentNode = activeItems;
+        activeItems.childNode = activeItems;
     }
 }

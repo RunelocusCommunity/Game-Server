@@ -300,6 +300,21 @@ public final class Client extends Mob {
     HashTable widgetItems;
     
     /**
+     * The list of items spawned by this client.
+     */
+    ListNode spawnedItems;
+        
+    /**
+     * The list of items active in the client.
+     */
+    ListNode activeItems;
+    
+    /**
+     * The index of added items on the clients map.
+     */
+    byte[] itemIndex;
+    
+    /**
      * The time that the client will timeoutStamp.
      */
     long timeoutStamp;
@@ -466,6 +481,89 @@ public final class Client extends Mob {
             buffer.putByte(value);
         else
             buffer.putDwordA(value);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
+     * Sends the local server client info to the client.
+     * @param client The client to send the info to.
+     * @param isMember The client is a member.
+     */
+    public static void sendInfo(Client client, boolean isMember) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(249 + client.outgoingCipher.getNextValue());
+        buffer.putByte128(isMember ? 0 : 1);
+        buffer.putWordLe128(client.localId.value);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
+     * Sends the map coordinates for spawning packets.
+     * @param client The client to send the coordinates to.
+     * @param coordX The map coordinate x.
+     * @param coordY The map coordinate y.
+     */
+    public static void sendMapCoords(Client client, int coordX, int coordY) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(85 + client.outgoingCipher.getNextValue());
+        buffer.putByteA(coordX);
+        buffer.putByteA(coordY);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
+     * Sends a new ground item to the client.
+     * @param client The client to send the ground item to.
+     * @param groundItem The ground item to send.
+     * @param spoof Option to spoof the packet with the next isaac value.
+     */
+    public static void sendGroundItem(Client client, GroundItem groundItem, boolean spoof) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(215 + (spoof ? client.outgoingCipher.getNextValue() : 0));
+        buffer.putWord128(groundItem.id);
+        buffer.putByteB((groundItem.coordX - ((groundItem.coordX >> 3) << 3)) << 4 | 
+                         groundItem.coordY - ((groundItem.coordY >> 3) << 3));
+        buffer.putWord128(-1);
+        buffer.putWord(groundItem.amount);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
+     * Sends for a ground item to be removed.
+     * @param client The client to remove the ground item from.
+     * @param groundItem The ground item to remove.
+     * @param spoof Option to spoof the packet with the next isaac value.
+     */
+    public static void sendRemoveGroundItem(Client client, GroundItem groundItem, boolean spoof) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(156 + (spoof ? client.outgoingCipher.getNextValue() : 0));
+        buffer.putByte128((groundItem.coordX - ((groundItem.coordX >> 3) << 3)) << 4 | 
+                          groundItem.coordY - ((groundItem.coordY >> 3) << 3));
+        buffer.putWord(groundItem.id);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
+     * Sends the coordinates of the map chunk to reset.
+     * @param client The client to send the coordinates to.
+     * @param coordX The map coordinate x.
+     * @param coordY The map coordinate y.
+     */
+    public static void resetMapChunk(Client client, int coordX, int coordY) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(64 + client.outgoingCipher.getNextValue());
+        buffer.putByteA(coordX);
+        buffer.putByteB(coordY);
         client.oWritePosition += buffer.offset - position;
     }
     
@@ -734,29 +832,105 @@ public final class Client extends Mob {
                 if(Main.regions != null && Main.regions[chunkX >> 3] != null && (region = Main.regions[chunkX >> 3][chunkY >> 3]) != null) {
                     Chunk chunk = null;
                     if(region.chunks != null && region.chunks[chunkX - ((chunkX >> 3) << 3)] != null && (chunk = region.chunks[chunkX - ((chunkX >> 3) << 3)][chunkY - ((chunkY >> 3) << 3)]) != null) {
-                        ListNode node = chunk.activeEntities;
+                        ListNode node = chunk.activePlayers;
                         while((node = node.childNode) != null) {
                             if(!(node instanceof Entity) || client.listedPlayers > Client.PLAYER_UPDATES)
                                 break;
                             if(!(node instanceof Client))
                                 continue;
                             Client pClient = (Client) node;
-                            int pos = pClient.localId.value;
+                            int position = pClient.localId.value;
                             int dCx = (pClient.coordX >> 3) - (client.coordX >> 3);
                             int dCy = (pClient.coordY >> 3) - (client.coordY >> 3);
-                            if(pos == client.localId.value || (client.playerIndex[pos >> 3] & (1 << (pos & 7))) != 0 || 
+                            if(position == client.localId.value || (client.playerIndex[position >> 3] & (1 << (position & 7))) != 0 || 
                                dCx >= 2  || dCy >= 2 || 
                                dCx <= -2 || dCy <= -2)
                                 continue;
-                            ListNode idNode = new IntegerNode(pos);
+                            ListNode idNode = new IntegerNode(position);
                             idNode.parentNode = client.addedPlayers.parentNode;
                             idNode.childNode = client.addedPlayers;
                             idNode.parentNode.childNode = idNode;
                             idNode.childNode.parentNode = idNode;
-                            client.playerIndex[pos >> 3] |= 1 << (pos & 7);
+                            client.playerIndex[position >> 3] |= 1 << (position & 7);
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    /**
+     * Populates the added list for item that are around the client.
+     * @param client The client to populate its list for.
+     */
+    public static void populateItems(Client client) {
+        for(int chunkX = client.updatedChunkX; chunkX <= client.updatedChunkX + 12; chunkX++) {
+            for(int chunkY = client.updatedChunkY; chunkY <= client.updatedChunkY + 12; chunkY++) {
+                boolean sendCoords = true;
+                Region region = null;
+                if(Main.regions != null && Main.regions[chunkX >> 3] != null && (region = Main.regions[chunkX >> 3][chunkY >> 3]) != null) {
+                    Chunk chunk = null;
+                    if(region.chunks != null && region.chunks[chunkX - ((chunkX >> 3) << 3)] != null && (chunk = region.chunks[chunkX - ((chunkX >> 3) << 3)][chunkY - ((chunkY >> 3) << 3)]) != null) {
+                        ListNode node = chunk.activeItems;
+                        while((node = node.childNode) != null) {
+                            if(!(node instanceof Entity))
+                                break;
+                            if(!(node instanceof GroundItem))
+                                continue;
+                            GroundItem groundItem = (GroundItem) node;
+                            if(groundItem.destroyTime < System.currentTimeMillis()) {
+                                groundItem.destroy();
+                                continue;
+                            }
+                            int position = groundItem.localId;
+                            int dCx = (groundItem.coordX >> 3) - (client.coordX >> 3);
+                            int dCy = (groundItem.coordY >> 3) - (client.coordY >> 3);
+                            if(groundItem.appearTime > System.currentTimeMillis() && groundItem.clientId != client.localId.value || (client.itemIndex[position >> 3] & (1 << (position & 7))) != 0 || 
+                               dCx >= 6  || dCy >= 6 || 
+                               dCx <= -6 || dCy <= -6)
+                                continue;
+                            if(sendCoords) {
+                                sendMapCoords(client, (chunkX - client.updatedChunkX) << 3, (chunkY - client.updatedChunkY) << 3);
+                                sendCoords = false;
+                            }
+                            sendGroundItem(client, groundItem, true);
+                            ListNode idNode = new IntegerNode(groundItem.currentUpdate << 16 | position);
+                            idNode.parentNode = client.activeItems.parentNode;
+                            idNode.childNode = client.activeItems;
+                            idNode.parentNode.childNode = idNode;
+                            idNode.childNode.parentNode = idNode;
+                            client.itemIndex[position >> 3] |= 1 << (position & 7);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Processes the items currently in the clients active item list.
+     * @param client The client to process the items for.
+     */
+    public static void processItems(Client client) {
+        ListNode node = client.activeItems;
+        while((node = node.childNode) != null) {
+            if(!(node instanceof IntegerNode))
+                break;
+            GroundItem groundItem = Main.groundItems[((IntegerNode) node).value & 0xFFFF];
+            int dCx = 0;
+            int dCy = 0;
+            if(groundItem != null) {
+                dCx = (groundItem.coordX >> 3) - client.updatedChunkX;
+                dCy = (groundItem.coordY >> 3) - client.updatedChunkY;
+            }
+            boolean remove = groundItem == null || groundItem.remove || dCx > 12  || dCy > 12 || dCx < 0 || dCy < 0;
+            if(remove) {
+                node.removeFromList();
+                if(groundItem != null) {
+                    Client.sendMapCoords(client, dCx << 3, dCy << 3);
+                    Client.sendRemoveGroundItem(client, groundItem, true);
+                }
+                client.itemIndex[(((IntegerNode) node).value & 0xFFFF) >> 3] &= ~(1 << (((IntegerNode) node).value & 7));
             }
         }
     }

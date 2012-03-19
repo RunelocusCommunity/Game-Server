@@ -66,6 +66,14 @@ public final class ByteBuffer {
     void putByteA(int value) {
         payload[offset++] = (byte) (-value);
     }
+           
+    /**
+     * Puts a byte type b into the payload.
+     * @param value The byte value.
+     */
+    void putByteB(int value) {
+        payload[offset++] = (byte) (128 - value);
+    }
     
     /**
      * Puts a byte translated 128 into the payload.

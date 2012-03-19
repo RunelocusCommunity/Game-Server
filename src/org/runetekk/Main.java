@@ -69,6 +69,11 @@ public final class Main implements Runnable {
     static Client[] clientArray;
     
     /**
+     * The {@link GroundItem} array.
+     */
+    static GroundItem[] groundItems;
+    
+    /**
      * The music names array.
      */
     static String[] musicNames;
@@ -89,6 +94,11 @@ public final class Main implements Runnable {
     static final int MAXIMUM_CLIENTS = 2048;
     
     /**
+     * The maximum amount of items allowed to spawn on this server.
+     */
+    static final int MAXIMUM_GROUNDITEMS = 5000;
+    
+    /**
      * The local thread.
      */
     private Thread thread;
@@ -106,17 +116,22 @@ public final class Main implements Runnable {
     /**
      * The list of clients currently connected to the server.
      */
-    ListNode activeList;
+    ListNode activeClientList;
     
     /**
      * The list of client ids removed from the server.
      */
-    ListNode removedList;
+    ListNode removedClientList;
     
     /**
      * The offset in the client list.
      */
-    int listOffset;
+    int clientListOffset;
+    
+    /**
+     * The offset in the item list.
+     */
+    int itemListOffset;
     
     /**
      * The {@link IoWriter} for this handler.
@@ -291,18 +306,18 @@ public final class Main implements Runnable {
                         destroy();
                 }     
                 if(acceptedClient != null) {
-                    int position = listOffset;
+                    int position = clientListOffset;
                     if(position >= MAXIMUM_CLIENTS) {
                         position = -1;
-                        synchronized(removedList) {
-                            ListNode node = removedList.childNode;
+                        synchronized(removedClientList) {
+                            ListNode node = removedClientList.childNode;
                             if(node != null) {
                                 position = ((IntegerNode) node).value;
                                 node.removeFromList();
                             }   
                         }
                     } else
-                        ++listOffset;
+                        ++clientListOffset;
                     try {
                         byte[] response = new byte[9];
                         if(position < 0) {
@@ -336,8 +351,8 @@ public final class Main implements Runnable {
                             response[14] = (byte) (sessionKey >>> 16L);
                             response[15] = (byte) (sessionKey >>> 8L);
                             response[16] = (byte) (sessionKey & 0xFFL);
-                            positionNode.parentNode = activeList.parentNode;
-                            positionNode.childNode = activeList;
+                            positionNode.parentNode = activeClientList.parentNode;
+                            positionNode.childNode = activeClientList;
                             positionNode.parentNode.childNode = positionNode;
                             positionNode.childNode.parentNode = positionNode;
                             acceptedClient.sessionKey = sessionKey;
@@ -350,7 +365,7 @@ public final class Main implements Runnable {
                         acceptedClient.destroy();
                     }
                 }
-                ListNode node = activeList;
+                ListNode node = activeClientList;
                 while((node = node.childNode) != null) { 
                     if(!(node instanceof IntegerNode))
                         break;
@@ -506,6 +521,15 @@ public final class Main implements Runnable {
                                     item2.id = 1;
                                     item2.amount = 5;
                                     client.widgetItems.put(new ItemArray(items), 3214);
+                                    /* GROUND ITEM STUFF */
+                                    client.spawnedItems = new ListNode();
+                                    client.spawnedItems.parentNode = client.spawnedItems;
+                                    client.spawnedItems.childNode = client.spawnedItems;
+                                    client.activeItems = new ListNode();
+                                    client.activeItems.parentNode = client.activeItems;
+                                    client.activeItems.childNode = client.activeItems;
+                                    client.itemIndex = new byte[(MAXIMUM_GROUNDITEMS + 7) >> 3];
+                                    /* ISAAC STUFF */
                                     client.incomingCipher = new IsaacCipher(seeds);
                                     for(int i = 0; i < seeds.length; i++)
                                         seeds[i] += 50;
@@ -562,6 +586,7 @@ public final class Main implements Runnable {
                                         }
                                         client.iReadPosition = (client.iReadPosition + size) % Client.BUFFER_SIZE;
                                     }
+                                    pswitch:
                                     switch(opcode) {
                                         
                                         /* Ping */
@@ -622,7 +647,36 @@ public final class Main implements Runnable {
                                                 throw new RuntimeException();
                                             Item[] items = ((ItemArray) itemsNode).items;
                                             if(slot < 0 || slot >= items.length || items[slot] == null || items[slot].id != itemId)
-                                                throw new RuntimeException();
+                                                throw new RuntimeException(); 
+                                            int offset = 0;
+                                            while(true) {
+                                                if(offset++ >= MAXIMUM_GROUNDITEMS)
+                                                    break pswitch;
+                                                if(groundItems[itemListOffset] != null && !groundItems[itemListOffset].remove) {
+                                                    offset++;
+                                                    itemListOffset = (itemListOffset + 1) % MAXIMUM_GROUNDITEMS;
+                                                    continue;
+                                                } else
+                                                    break;
+                                            } 
+                                            GroundItem groundItem = new GroundItem();
+                                            groundItem.localId = itemListOffset;
+                                            groundItem.clientId = client.localId.value;
+                                            groundItem.coordX = client.coordX;
+                                            groundItem.coordY = client.coordY;
+                                            groundItem.coordZ = client.coordZ;
+                                            groundItem.id = items[slot].id;
+                                            groundItem.amount = items[slot].amount;
+                                            groundItem.referenceNode = new IntegerNode(itemListOffset);
+                                            groundItem.referenceNode.parentNode = activeClientList.parentNode;
+                                            groundItem.referenceNode.childNode = activeClientList;
+                                            groundItem.referenceNode.parentNode.childNode = groundItem.referenceNode;
+                                            groundItem.referenceNode.childNode.parentNode = groundItem.referenceNode; 
+                                            groundItem.appearTime = System.currentTimeMillis() + 30000L;
+                                            groundItem.destroyTime = groundItem.appearTime + 30000L;
+                                            groundItem.updateRegion();
+                                            groundItems[itemListOffset] = groundItem;
+                                            itemListOffset = (itemListOffset + 1) % MAXIMUM_GROUNDITEMS;
                                             items[slot] = null;
                                             Client.sendUpdateWidgetItems(client, widgetId, items, new int[] { slot });
                                             break;
@@ -655,7 +709,7 @@ public final class Main implements Runnable {
                         continue;
                     }
                 }           
-                node = activeList;
+                node = activeClientList;
                 while((node = node.childNode) != null) { 
                    if(!(node instanceof IntegerNode))
                        break;
@@ -674,8 +728,9 @@ public final class Main implements Runnable {
                             */
                            case 1:
                                Client.sendMessage(client, "Welcome to RuneTekk.");
-                               Client.sendTabInterface(client, Client.INVENTORY_TAB, 3213);
+                               Client.sendInfo(client, true);
                                Client.sendWidgetItems(client, 3214, ((ItemArray) client.widgetItems.get((long) 3214)).items);
+                               Client.sendTabInterface(client, Client.INVENTORY_TAB, 3213);
                                client.activeFlags |= 1 << 7;
                                client.state = 2;
                                break;
@@ -697,6 +752,7 @@ public final class Main implements Runnable {
                             */
                            case 3:
                                Client.populatePlayers(client);
+                               Client.populateItems(client);
                                client.state = 4;
                                break;
                              
@@ -705,6 +761,7 @@ public final class Main implements Runnable {
                             */
                            case 4:
                                Client.sendPlayerUpdate(client);
+                               Client.processItems(client);
                                client.state = 5;
                                break;
                                
@@ -780,10 +837,10 @@ public final class Main implements Runnable {
       * @param client The client to remove.
       */
      void removeClient(IntegerNode client) {
-         synchronized(removedList) {             
+         synchronized(removedClientList) {             
              client.removeFromList();
-             client.parentNode = removedList.parentNode;
-             client.childNode = removedList;
+             client.parentNode = removedClientList.parentNode;
+             client.childNode = removedClientList;
              client.parentNode.childNode = client;
              client.childNode.parentNode = client;
              clientArray[client.value] = null;
@@ -805,8 +862,8 @@ public final class Main implements Runnable {
                 } catch(InterruptedException ex) {
                 }
             }
-            activeList = null;
-            removedList = null;
+            activeClientList = null;
+            removedClientList = null;
             clientArray = null;
             thread = null;
         }
@@ -1544,13 +1601,14 @@ public final class Main implements Runnable {
      */
     private Main(int portOff) {
         try {
-            activeList = new ListNode();
-            activeList.parentNode = activeList;
-            activeList.childNode = activeList;
-            removedList = new ListNode();
-            removedList.parentNode = removedList;
-            removedList.childNode = removedList;
+            activeClientList = new ListNode();
+            activeClientList.parentNode = activeClientList;
+            activeClientList.childNode = activeClientList;
+            removedClientList = new ListNode();
+            removedClientList.parentNode = removedClientList;
+            removedClientList.childNode = removedClientList;
             clientArray = new Client[MAXIMUM_CLIENTS];
+            groundItems = new GroundItem[MAXIMUM_GROUNDITEMS];
             nextGc = System.currentTimeMillis() + GC_TIME;
             serverSocket = new ServerSocket();
             serverSocket.setSoTimeout(2);
