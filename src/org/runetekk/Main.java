@@ -515,11 +515,11 @@ public final class Main implements Runnable {
                                     /* ITEMS STUFF */
                                     client.widgetItems = new HashTable(10);  
                                     Item[] items = new Item[Client.INVENTORY_SIZE];
-                                    Item item = items[0] = new Item();
-                                    item.amount = 5;
-                                    Item item2 = items[1] = new Item();
-                                    item2.id = 1;
-                                    item2.amount = 5;
+                                    for(int i = 0; i < items.length; i++) {
+                                        Item item = items[i] = new Item();
+                                        item.id = 1038;
+                                        item.amount = 1;
+                                    }
                                     client.widgetItems.put(new ItemArray(items), 3214);
                                     /* GROUND ITEM STUFF */
                                     client.spawnedItems = new ListNode();
@@ -665,11 +665,12 @@ public final class Main implements Runnable {
                                             groundItem.coordX = client.coordX;
                                             groundItem.coordY = client.coordY;
                                             groundItem.coordZ = client.coordZ;
+                                            System.out.println("X: " + client.coordX + ", Y: " + client.coordY);
                                             groundItem.id = items[slot].id;
                                             groundItem.amount = items[slot].amount;
                                             groundItem.referenceNode = new IntegerNode(itemListOffset);
-                                            groundItem.referenceNode.parentNode = activeClientList.parentNode;
-                                            groundItem.referenceNode.childNode = activeClientList;
+                                            groundItem.referenceNode.parentNode = client.spawnedItems.parentNode;
+                                            groundItem.referenceNode.childNode = client.spawnedItems;
                                             groundItem.referenceNode.parentNode.childNode = groundItem.referenceNode;
                                             groundItem.referenceNode.childNode.parentNode = groundItem.referenceNode; 
                                             groundItem.appearTime = System.currentTimeMillis() + 30000L;
@@ -738,7 +739,8 @@ public final class Main implements Runnable {
                            /**
                             * Initial loop state.
                             */
-                           case 2:
+                           case 2:   
+                               Client.populateItems(client);
                                if(client.activeFlags != 0)
                                   Client.writeFlaggedUpdates(client, client.flagBuffer, client.activeFlags);
                                client.updateSteps();
@@ -751,8 +753,7 @@ public final class Main implements Runnable {
                             * Update state.
                             */
                            case 3:
-                               Client.populatePlayers(client);
-                               Client.populateItems(client);
+                               Client.populatePlayers(client);                                  
                                client.state = 4;
                                break;
                              
@@ -760,7 +761,7 @@ public final class Main implements Runnable {
                             * Write update state.
                             */
                            case 4:
-                               Client.sendPlayerUpdate(client);
+                               Client.sendPlayerUpdate(client); 
                                Client.processItems(client);
                                client.state = 5;
                                break;

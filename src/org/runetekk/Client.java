@@ -510,8 +510,8 @@ public final class Client extends Mob {
         int position = client.oWritePosition;
         buffer.offset = position;
         buffer.putByte(85 + client.outgoingCipher.getNextValue());
-        buffer.putByteA(coordX);
         buffer.putByteA(coordY);
+        buffer.putByteA(coordX);
         client.oWritePosition += buffer.offset - position;
     }
     
@@ -546,7 +546,7 @@ public final class Client extends Mob {
         buffer.offset = position;
         buffer.putByte(156 + (spoof ? client.outgoingCipher.getNextValue() : 0));
         buffer.putByte128((groundItem.coordX - ((groundItem.coordX >> 3) << 3)) << 4 | 
-                          groundItem.coordY - ((groundItem.coordY >> 3) << 3));
+                           groundItem.coordY - ((groundItem.coordY >> 3) << 3));
         buffer.putWord(groundItem.id);
         client.oWritePosition += buffer.offset - position;
     }
@@ -864,6 +864,8 @@ public final class Client extends Mob {
      * @param client The client to populate its list for.
      */
     public static void populateItems(Client client) {
+        if(client.updatedChunkX < 0 && client.updatedChunkY < 0)
+            return;
         for(int chunkX = client.updatedChunkX; chunkX <= client.updatedChunkX + 12; chunkX++) {
             for(int chunkY = client.updatedChunkY; chunkY <= client.updatedChunkY + 12; chunkY++) {
                 boolean sendCoords = true;
@@ -886,10 +888,10 @@ public final class Client extends Mob {
                             int dCx = (groundItem.coordX >> 3) - (client.coordX >> 3);
                             int dCy = (groundItem.coordY >> 3) - (client.coordY >> 3);
                             if(groundItem.appearTime > System.currentTimeMillis() && groundItem.clientId != client.localId.value || (client.itemIndex[position >> 3] & (1 << (position & 7))) != 0 || 
-                               dCx >= 6  || dCy >= 6 || 
-                               dCx <= -6 || dCy <= -6)
+                               dCx >= 6  || dCy >= 6 || dCx <= -6 || dCy <= -6 || groundItem.coordZ != client.coordZ)
                                 continue;
                             if(sendCoords) {
+                                System.out.println("Mx: " + ((chunkX - client.updatedChunkX) << 3) + "My: " + ((chunkY - client.updatedChunkY) << 3));
                                 sendMapCoords(client, (chunkX - client.updatedChunkX) << 3, (chunkY - client.updatedChunkY) << 3);
                                 sendCoords = false;
                             }
@@ -920,14 +922,14 @@ public final class Client extends Mob {
             int dCx = 0;
             int dCy = 0;
             if(groundItem != null) {
-                dCx = (groundItem.coordX >> 3) - client.updatedChunkX;
-                dCy = (groundItem.coordY >> 3) - client.updatedChunkY;
+                dCx = ((groundItem.coordX >> 3) - client.updatedChunkX) << 3;
+                dCy = ((groundItem.coordY >> 3) - client.updatedChunkY) << 3;
             }
-            boolean remove = groundItem == null || groundItem.remove || dCx > 12  || dCy > 12 || dCx < 0 || dCy < 0;
+            boolean remove = groundItem == null || groundItem.coordZ != client.coordZ ||  groundItem.remove || dCx > 104  || dCy > 104 || dCx < 0 || dCy < 0;
             if(remove) {
                 node.removeFromList();
-                if(groundItem != null) {
-                    Client.sendMapCoords(client, dCx << 3, dCy << 3);
+                if(groundItem != null && groundItem.remove) {
+                    Client.sendMapCoords(client, dCx, dCy);
                     Client.sendRemoveGroundItem(client, groundItem, true);
                 }
                 client.itemIndex[(((IntegerNode) node).value & 0xFFFF) >> 3] &= ~(1 << (((IntegerNode) node).value & 7));
