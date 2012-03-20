@@ -17,7 +17,6 @@ public final class CustomChunk extends Chunk {
      */
     CustomChunk() {
         chunkHashes = new int[4];
-        chunkHashes[0] = 1 | (2810 >> 3) << 14 | (3467 >> 3) << 3;
-        chunkHashes[1] = 1 | (2900 >> 3) << 14 | (3467 >> 3) << 3;
+        chunkHashes[0] = 1 | (3200 >> 3) << 14 | (3200 >> 3) << 3;
     }  
 }

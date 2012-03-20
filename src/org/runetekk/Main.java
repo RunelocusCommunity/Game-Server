@@ -534,7 +534,8 @@ public final class Main implements Runnable {
                                     client.activeItems.childNode = client.activeItems;
                                     client.itemIndex = new byte[(MAXIMUM_GROUNDITEMS + 7) >> 3];
                                     /* SKILL STUFF */
-                                    client.skillInformation = new int[Client.AMOUNT_SKILLS];
+                                    client.skillExperience = new int[Client.AMOUNT_SKILLS];
+                                    client.skillHashes = new int[Client.AMOUNT_SKILLS];
                                     /* ISAAC STUFF */
                                     client.incomingCipher = new IsaacCipher(seeds);
                                     for(int i = 0; i < seeds.length; i++)
@@ -738,6 +739,11 @@ public final class Main implements Runnable {
                                Client.sendInfo(client, true);
                                Client.sendWidgetItems(client, 3214, ((ItemArray) client.widgetItems.get((long) 3214)).items);
                                Client.sendTabInterface(client, Client.INVENTORY_TAB, 3213);
+                               client.skillExperience[3] = 1154;
+                               client.skillHashes[3] = 10;
+                               for(int i = 0; i < Client.AMOUNT_SKILLS; i++)
+                                   Client.sendSkillUpdate(client, i);
+                               Client.sendTabInterface(client, Client.LEVELS_TAB, 3917);
                                client.activeFlags |= 1 << 7;
                                client.state = 2;
                                break;

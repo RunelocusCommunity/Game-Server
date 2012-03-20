@@ -341,9 +341,15 @@ public final class Client extends Mob {
     byte[] itemIndex;
     
     /**
-     * The skill information for the client.
+     * The skill hashes that contain information such as the dynamic and static
+     * level along with if the skill needs to be updated during the next cycle.
      */
-    int[] skillInformation;
+    int[] skillHashes;
+    
+    /**
+     * The current amount of experience in each skill.
+     */
+    int[] skillExperience;
     
     /**
      * The time that the client will timeoutStamp.
@@ -627,6 +633,23 @@ public final class Client extends Mob {
         buffer.putByte(64 + client.outgoingCipher.getNextValue());
         buffer.putByteA(coordX);
         buffer.putByteB(coordY);
+        client.oWritePosition += buffer.offset - position;
+    }
+    
+    /**
+     * Sends an update to the experience and dynamic level of a skill.
+     * @param client The client to send the skill information to.
+     * @param id The skill id.
+     */
+    public static void sendSkillUpdate(Client client, int id) {
+        ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
+        int position = client.oWritePosition;
+        buffer.offset = position;
+        buffer.putByte(134 + client.outgoingCipher.getNextValue());
+        buffer.putByte(id);
+        buffer.putDwordA(client.skillExperience[id]);
+        int dynamicLevel = client.skillHashes[id] & 0xFF;
+        buffer.putByte(dynamicLevel <= 0 ? 1 : dynamicLevel);
         client.oWritePosition += buffer.offset - position;
     }
     

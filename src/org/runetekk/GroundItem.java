@@ -63,11 +63,4 @@ public final class GroundItem extends Entity {
         referenceNode = null;
         remove = true;
     }
-    
-    /**
-     * Constructs a new {@link GroundItem};
-     */
-    GroundItem() {
-        
-    }
 }
