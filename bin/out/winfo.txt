@@ -2276,7 +2276,7 @@ Widget: 8292
 		Id: 8387
 			Off X: 45
 			Off Y: 108
-		Id: 8388
+		Id: \\\
 			Off X: 28
 			Off Y: 88
 		Id: 8389

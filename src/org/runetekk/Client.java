@@ -93,6 +93,31 @@ public final class Client extends Mob {
     public final static int INVENTORY_SIZE = 28;   
     
     /**
+     * The amount of skills.
+     */
+    public final static int AMOUNT_SKILLS = 21;
+    
+    /**
+     * The names of all the skills.
+     */
+    public final static String[] SKILL_NAMES = {
+        "attack", "defence", "strength", "hitpoints", "ranged", "prayer", "magic", 
+        "cooking", "woodcutting", "fletching", "fishing", "firemaking", "crafting",
+        "smithing", "mining", "herblore", "agility", "thieving", "slayer", "farming", 
+        "runecraft"
+    };
+    
+    /**
+     * The characters used to encode strings into a base 37 value.
+     */
+    public static final char ENCODING_CHARACTERS[] = {
+        '_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
+        'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 
+        't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', 
+        '3', '4', '5', '6', '7', '8', '9'
+    };
+    
+    /**
      * The offset for each type of walk step in the amount of coordinates.
      */
     public final static int[][] WALK_DELTA;
@@ -299,20 +324,26 @@ public final class Client extends Mob {
      */
     HashTable widgetItems;
     
-    /**
-     * The list of items spawned by this client.
-     */
-    ListNode spawnedItems;
-        
+            
     /**
      * The list of items active in the client.
      */
     ListNode activeItems;
     
     /**
+     * The list of items spawned by this client.
+     */
+    ListNode spawnedItems;
+    
+    /**
      * The index of added items on the clients map.
      */
     byte[] itemIndex;
+    
+    /**
+     * The skill information for the client.
+     */
+    int[] skillInformation;
     
     /**
      * The time that the client will timeoutStamp.
@@ -343,13 +374,12 @@ public final class Client extends Mob {
         buffer.putString(message);
         client.oWritePosition += buffer.offset - position;
     }
-    
-        
+       
     /**
      * Sends an update to a widget to populate the items.
      * @param client The client to write the message to.
      * @param widgetId The widget id.
-     * @param items The items.
+     * @param items The items to send on the widget.
      */
     public static void sendWidgetItems(Client client, int widgetId, Item[] items) {
         ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
@@ -423,17 +453,50 @@ public final class Client extends Mob {
     
     /**
      * Sends the current chunk coordinates of where the client is.
+     * If the client is currently located on a custom map then the
+     * map is sent to the client.
      * @param client The client to write the packet to.
      */
     public static void sendCurrentChunk(Client client) {
         ByteBuffer buffer = new ByteBuffer(client.outgoingBuffer);
         int position = client.oWritePosition;
         buffer.offset = position;
-        buffer.putByte(73 + client.outgoingCipher.getNextValue());
-        buffer.putWord128(client.coordX >> 3);
-        buffer.putWord(client.coordY >> 3);
-        client.oWritePosition += buffer.offset - position;
+        int chunkX = client.coordX >> 3;
+        int chunkY = client.coordY >> 3;
+        if(Main.regions[client.coordX >> 6][client.coordY >> 6].chunks[chunkX - ((chunkX >> 3) << 3)][chunkY - ((chunkY >> 3) << 3)] instanceof CustomChunk) {           
+            buffer.putByte(241 + client.outgoingCipher.getNextValue());
+            buffer.putWord(0);
+            buffer.putWord128(chunkY);
+            buffer.initializeBitOffset();
+            for(int z = 0; z < 4; z++) {
+                for(int x = chunkX - 6; x <= chunkX + 6; x++) {
+                    for(int y = chunkY - 6; y <= chunkY + 6; y++) {
+                        Chunk chunk = Main.regions[x >> 3] != null && 
+                                      Main.regions[x >> 3][y >> 3] != null && 
+                                      Main.regions[x >> 3][y >> 3].chunks[x - ((x >> 3) << 3)] != null ? 
+                                      Main.regions[x >> 3][y >> 3].chunks[x - ((x >> 3) << 3)][y - ((y >> 3) << 3)] : null;
+                        int hash = chunk != null && chunk instanceof CustomChunk ? ((CustomChunk) chunk).chunkHashes[z] : 0;                  
+                        buffer.putBits(hash & 1, 1);
+                        if((hash & 1) != 0)
+                            buffer.putBits(hash, 26);
+                    }
+                }
+            }
+            buffer.resetBitOffset();
+            buffer.putWord(chunkX);
+            int oldOffset = buffer.offset;
+            buffer.offset = position + 1;
+            buffer.putWord(oldOffset - (position + 3));
+            client.oWritePosition += oldOffset - position;
+        } else {
+            buffer.putByte(73 + client.outgoingCipher.getNextValue());
+            buffer.putWord128(chunkX);
+            buffer.putWord(chunkY);
+            client.oWritePosition += buffer.offset - position;
+        }             
     }
+    
+
     
     /**
      * Sets the tab interface id for a client.
@@ -887,11 +950,10 @@ public final class Client extends Mob {
                             int position = groundItem.localId;
                             int dCx = (groundItem.coordX >> 3) - (client.coordX >> 3);
                             int dCy = (groundItem.coordY >> 3) - (client.coordY >> 3);
-                            if(groundItem.appearTime > System.currentTimeMillis() && groundItem.clientId != client.localId.value || (client.itemIndex[position >> 3] & (1 << (position & 7))) != 0 || 
+                            if(groundItem.appearTime > System.currentTimeMillis() && groundItem.creatorId != client.localId.value || (client.itemIndex[position >> 3] & (1 << (position & 7))) != 0 || 
                                dCx >= 6  || dCy >= 6 || dCx <= -6 || dCy <= -6 || groundItem.coordZ != client.coordZ)
                                 continue;
-                            if(sendCoords) {
-                                System.out.println("Mx: " + ((chunkX - client.updatedChunkX) << 3) + "My: " + ((chunkY - client.updatedChunkY) << 3));
+                            if(sendCoords) {                              
                                 sendMapCoords(client, (chunkX - client.updatedChunkX) << 3, (chunkY - client.updatedChunkY) << 3);
                                 sendCoords = false;
                             }
@@ -958,6 +1020,26 @@ public final class Client extends Mob {
         }
         for(; l % 37L == 0L && l != 0L; l /= 37L);
         return l;
+    }
+    
+    /**
+     * Decodes a base 37 value into a string.
+     * @param value The value.
+     * @return The decoded string.
+     */
+    public static String decodeBase37(long value) {
+        if(value <= 0L || value >= 0x5b5b57f8a98a5dd1L)
+            return "invalid_name";
+        if(value % 37L == 0L)
+            return "invalid_name";
+        int offset = 0;
+        char chars[] = new char[12];
+        while(value != 0L)  {
+            long l1 = value;
+            value /= 37L;
+            chars[11 - offset++] = ENCODING_CHARACTERS[(int) (l1 - value * 37L)];
+        }
+        return new String(chars, 12 - offset, offset);
     }
     
     /**

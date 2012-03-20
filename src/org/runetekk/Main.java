@@ -79,12 +79,12 @@ public final class Main implements Runnable {
     static String[] musicNames;
     
     /**
-     * The farming type configuration ids.
+     * The farming type configurations.
      */
     static int[][] farmingTypeConfigs;
     
     /**
-     * The farming patch states.
+     * The farming patch configurations.
      */
     static int[][][] farmingPatchConfigs;
     
@@ -94,7 +94,7 @@ public final class Main implements Runnable {
     static final int MAXIMUM_CLIENTS = 2048;
     
     /**
-     * The maximum amount of items allowed to spawn on this server.
+     * The maximum amount of ground items allowed to spawn on this server.
      */
     static final int MAXIMUM_GROUNDITEMS = 5000;
     
@@ -206,6 +206,10 @@ public final class Main implements Runnable {
                     break;
             }
         }
+        regions[Entity.DEFAULT_X >> 6] = new Region[256];
+        Region region = regions[Entity.DEFAULT_X >> 6][Entity.DEFAULT_Y >> 6] = new Region();
+        region.chunks = new Chunk[8][8];
+        region.chunks[(Entity.DEFAULT_X >> 3) - ((Entity.DEFAULT_X >> 6) << 3)][(Entity.DEFAULT_Y >> 3) - ((Entity.DEFAULT_Y >> 6) << 3)] = new CustomChunk();
     }
     
     /**
@@ -529,6 +533,8 @@ public final class Main implements Runnable {
                                     client.activeItems.parentNode = client.activeItems;
                                     client.activeItems.childNode = client.activeItems;
                                     client.itemIndex = new byte[(MAXIMUM_GROUNDITEMS + 7) >> 3];
+                                    /* SKILL STUFF */
+                                    client.skillInformation = new int[Client.AMOUNT_SKILLS];
                                     /* ISAAC STUFF */
                                     client.incomingCipher = new IsaacCipher(seeds);
                                     for(int i = 0; i < seeds.length; i++)
@@ -661,7 +667,7 @@ public final class Main implements Runnable {
                                             } 
                                             GroundItem groundItem = new GroundItem();
                                             groundItem.localId = itemListOffset;
-                                            groundItem.clientId = client.localId.value;
+                                            groundItem.creatorId = client.localId.value;
                                             groundItem.coordX = client.coordX;
                                             groundItem.coordY = client.coordY;
                                             groundItem.coordZ = client.coordZ;
@@ -1572,6 +1578,7 @@ public final class Main implements Runnable {
                 loadRegions(is);
                 is.close();
             } catch(Exception ex) {
+                ex.printStackTrace();
                 reportError("Exception thrown while reading the regions file", ex);
                 throw new RuntimeException();
             }

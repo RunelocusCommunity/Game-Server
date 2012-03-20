@@ -5,7 +5,7 @@ package org.runetekk;
  * @version 1.0.0
  * @author RuneTekk Development (SiniSoul)
  */
-public final class Chunk {
+public class Chunk {
     
     /**
      * The list of active players within this chunk.

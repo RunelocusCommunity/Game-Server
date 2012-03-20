@@ -15,7 +15,7 @@ public final class GroundItem extends Entity {
     /**
      * The local id of the client who spawned this item.
      */
-    int clientId;
+    int creatorId;
     
     /**
      * The item id of this ground item.
